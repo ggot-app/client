@@ -11,6 +11,7 @@ export default function MyPageStackNavigation() {
       <MyPageStack.Screen
         name='MyPage'
         component={MyPage}
+        options={{ title: 'My page'}}
       />
     </MyPageStack.Navigator>
   );

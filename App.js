@@ -38,3 +38,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   }
 });
+
+function apple () {
+
+}

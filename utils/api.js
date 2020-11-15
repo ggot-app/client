@@ -1,4 +1,3 @@
-import * as GoogleSignIn from 'expo-google-sign-in';
 import * as Google from 'expo-google-app-auth';
 import axios from '../utils/axios';
 import getEnvVars from '../environment';
@@ -15,7 +14,7 @@ export const signInWithGoogleAsync = async () => {
     if (result.type === 'success') {
       const { email, photoUrl } = result.user;
 
-      return creatingToken(email, photoUrl);
+      return getLogIn(email, photoUrl);
     } else {
       return { cancelled: true };
     }
@@ -24,7 +23,7 @@ export const signInWithGoogleAsync = async () => {
   }
 };
 
-const creatingToken = async (email, photoUrl) => {
+const getLogIn = async (email, photoUrl) => {
   try {
     const response = await axios.post('/user/login', {
       email: email,

@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, View, Button } from 'react-native';
 import { signInWithGoogleAsync } from '../utils/api';
 
-export default function App() {
+export default function LogIn() {
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>

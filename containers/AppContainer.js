@@ -18,6 +18,4 @@ export default AppContainer = () => {
       <TabNavigation />
     </NavigationContainer>
   );
-
-  return;
 };
