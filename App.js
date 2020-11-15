@@ -1,40 +1,49 @@
-import React, { useState, useEffect } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import { AppLoading } from 'expo';
 import * as Permissions from 'expo-permissions';
-import LogIn from './containers/LogIn';
+
+import AppContainer from './containers/AppContainer';
+import reducer from './reducers/index';
+
+const store = createStore(reducer);
 
 export default function App() {
-  useEffect(() => {
-    (async () => {
-      try {
-        const { status } = await Permissions.askAsync(
-          Permissions.LOCATION,
-          Permissions.CAMERA,
-          Permissions.CAMERA_ROLL
-        );
-        if (status !== 'granted') {
-          alert('접근 권한을 설정해주세요')
-        }
-      } catch (err) {
-        console.warn(err);
-      }
-    })();
-  },[]);
+  const [ isLoaded, setIsLoaded ] = useState(false);
 
-  return (
-    <View style={styles.container}>
-      <LogIn />
-      <StatusBar style="auto" />
-    </View>
+  const getAssets = async () => {
+
+  };
+
+  const checkPermission = async () => {
+    const { status } = await Permissions.askAsync(
+      Permissions.LOCATION,
+      Permissions.CAMERA,
+      Permissions.CAMERA_ROLL
+    );
+
+    if (status !== 'granted') alert('접근 권한을 설정해주세요');
+  };
+  const preLoad = async () => {
+    try {
+      getAssets();
+      checkPermission();
+    } catch (e) {
+      console.warn(e);
+    }
+  };
+
+  useEffect(() => {
+    preLoad();
+    setIsLoaded(true);
+  }, []);
+
+  return !isLoaded ? (
+    <AppLoading/>
+  ) : (
+    <Provider store={store}>
+      <AppContainer/>
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
-});

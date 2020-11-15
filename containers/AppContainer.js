@@ -1,17 +1,35 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { getUserLogin } from '../actions/index';
+import { LOGIN_TOKEN } from '../constants/index';
+import AxiosInstance from '../utils/axios';
 
 import TabNavigation from '../navigation/TabNavigation';
+import LoginContainer from './LoginContainer';
 
 export default AppContainer = () => {
-  // const isLogin = useSelector(state => state.user.isLogin);
+  const isLoggedIn = useSelector(state => state.user.isloggedIn);
+  const dispatch = useDispatch();
 
-  // if (!isLogin) {
-  //   return (
+  useEffect(() => {
+    (async function () {
+      try {
+        const loginToken = await AsyncStorage.getItem(LOGIN_TOKEN);
 
-  //   );
-  // }
+        if (loginToken) {
+          dispatch(getUserLogin());
+          AxiosInstance.defaults.headers.common['Authorization'] = loginToken;
+        }
+      } catch (e) {
+        console.warn(e);
+      }
+    })();
+  }, []);
+
+  if (!isLoggedIn) return <LoginContainer />;
 
   return (
     <NavigationContainer>
@@ -19,5 +37,4 @@ export default AppContainer = () => {
     </NavigationContainer>
   );
 
-  return;
 };
