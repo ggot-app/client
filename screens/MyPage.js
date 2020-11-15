@@ -1,53 +1,73 @@
 import * as React from 'react';
-import { Button, StyleSheet, Image, View } from 'react-native';
+import { StyleSheet, Text, Image, View } from 'react-native';
+
+import Button from '../components/Button';
 
 export default function MyPage({ navigation }) {
+  const buttonProperties = [
+    {title: '내 꽃', func: () => navigation.navigate('Home')},
+    {title: '남 꽃', func: () => console.log('남 꽃 버튼입니다')},
+    {title: '로그아웃', func: () => console.log('로그아웃 버튼입니다')},
+    {title: '회원탈퇴', func: () => console.log('회원탈퇴 버튼입니다')}
+  ];
+
   return (
-    <View>
+    <View style={styles.contentWrapper}>
       <View style={styles.profileContainer}>
         <Image
           source={{
             uri: 'https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F99D8E6495DF3A01901'
           }}
           style={{
-            width: 200,
-            height: 200,
+            width: 150,
+            height: 150,
             borderRadius: 200 / 2
           }}
         />
+        <Text style={styles.emailContainer}>
+          PENGSU@naver.com
+        </Text>
       </View>
-      <View style={styles.middleContainer}>
-        {/* <Button
-          title='내 꽂'
-          onPress={() => }
-        />
-        <Button
-          title='남 꽂'
-          onPress={() => }
-        /> */}
-      </View>
-      <View stye={styles.bottomContainer}>
-        {/* <Button
-          title='로그아웃'
-          onPress={() => }
-        /> */}
-        {/* <Button
-          title='회원탈퇴'
-          onPress={() => }
-        /> */}
+      <View style={styles.buttonContainer}>
+        {
+          buttonProperties.map((item, key) => {
+            return (
+              <Button
+                title={item.title}
+                onChange={item.func}
+                key={key}
+              />
+            );
+          })
+        }
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  contentWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   profileContainer: {
-    flex: 1,
+    flex: 2,
+    width: '90%',
+    marginTop: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderColor: '#BEDFF7'
   },
-  middleContainer: {
-    flex: 1,
+  emailContainer: {
+    alignItems:'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    fontSize: 15
   },
-  bottomContainer: {
-    flex: 1,
+  buttonContainer: {
+    flex: 2,
+    width: '80%',
+    marginBottom: 40
   }
-})
+});

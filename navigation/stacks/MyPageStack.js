@@ -11,7 +11,10 @@ export default function MyPageStackNavigation() {
       <MyPageStack.Screen
         name='MyPage'
         component={MyPage}
-        options={{ title: 'My page'}}
+        options={{
+          title: 'My page',
+          headerTitleAlign: 'center'
+        }}
       />
     </MyPageStack.Navigator>
   );
