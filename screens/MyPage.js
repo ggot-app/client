@@ -17,14 +17,14 @@ export default function MyPage({ navigation }) {
         />
       </View>
       <View style={styles.middleContainer}>
-        <Button
+        {/* <Button
           title='내 꽂'
           onPress={() => }
         />
         <Button
           title='남 꽂'
           onPress={() => }
-        />
+        /> */}
       </View>
       <View stye={styles.bottomContainer}>
         {/* <Button

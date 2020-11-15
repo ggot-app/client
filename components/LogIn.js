@@ -1,18 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, View, Button } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { signInWithGoogleAsync } from '../utils/api';
 
 export default function LogIn() {
+  const dispatch = useDispatch();
+
   return (
     <View style={styles.container}>
-      <View style={styles.buttonContainer}>
-        <Button
-          title='Google LogIn'
-          onPress={() => signInWithGoogleAsync()}
-        />
-      </View>
-      <StatusBar style="auto" />
+      <TouchableOpacity
+        style={styles.loginButton}
+        onPress={() => signInWithGoogleAsync(dispatch)}
+      >
+        <Text>google login</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -24,8 +25,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  buttonContainer: {
-    justifyContent: 'center',
-    alignItems: 'center'
+  loginButton: {
+    backgroundColor: "#DDDDDD",
+    padding: 10,
   }
 });
