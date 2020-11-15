@@ -8,7 +8,7 @@ import { LOGIN_TOKEN } from '../constants/index';
 import AxiosInstance from '../utils/axios';
 
 import TabNavigation from '../navigation/TabNavigation';
-import LoginContainer from './LoginContainer';
+import Login from '../components/LogIn';
 
 export default AppContainer = () => {
   const isLoggedIn = useSelector(state => state.user.isloggedIn);
@@ -29,12 +29,11 @@ export default AppContainer = () => {
     })();
   }, []);
 
-  if (!isLoggedIn) return <LoginContainer />;
+  if (!isLoggedIn) return <Login />;
 
   return (
     <NavigationContainer>
       <TabNavigation />
     </NavigationContainer>
   );
-
 };

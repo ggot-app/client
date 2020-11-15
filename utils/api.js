@@ -8,7 +8,7 @@ import { getUserLogin } from '../actions/index';
 
 const { GOOGLE_API_ID } = getEnvVars();
 
-export const signInWithGoogleAsync = async (dispatch, navigation) => {
+export const signInWithGoogleAsync = async dispatch => {
   try {
     const result = await Google.logInAsync({
       androidClientId: GOOGLE_API_ID,
@@ -18,7 +18,7 @@ export const signInWithGoogleAsync = async (dispatch, navigation) => {
     if (result.type === 'success') {
       const { email, photoUrl } = result.user;
 
-      return getLogin(navigation, email, photoUrl);
+      return getLogIn(dispatch, email, photoUrl);
     } else {
       return { cancelled: true };
     }
@@ -27,7 +27,7 @@ export const signInWithGoogleAsync = async (dispatch, navigation) => {
   }
 };
 
-const getLogin = async (navigation, email, photoUrl) => {
+const getLogIn = async (dispatch, email, photoUrl) => {
   try {
     const response = await axios.post('/user/login', {
       email: email,
@@ -37,11 +37,9 @@ const getLogin = async (navigation, email, photoUrl) => {
 
     if (result === SUCCESS) {
       await AsyncStorage.setItem(LOGIN_TOKEN, token);
-      // dispatch(getUserLogin());
-      navigation.navigate('Main');
-    }
 
-    //여기 1번
+      dispatch(getUserLogin());
+    }
   } catch (err) {
     console.log(err);
   }
