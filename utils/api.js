@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import axios from './axios';
 import getEnvVars from '../environment';
-import { SUCCESS, LOGIN_TOKEN } from '../constants/index';
+import { SUCCESS, LOGIN_DATA } from '../constants/index';
 import { getUserLogin } from '../actions/index';
 
 const { GOOGLE_API_ID } = getEnvVars();
@@ -33,12 +33,17 @@ const getLogIn = async (dispatch, email, photoUrl) => {
       email: email,
       profileUrl: photoUrl
     });
-    const { result, token, userData } = response.data;
+
+    const { result, token, ggotUser } = response.data;
 
     if (result === SUCCESS) {
-      await AsyncStorage.setItem(LOGIN_TOKEN, token);
-
-      dispatch(getUserLogin());
+      const loginData = {
+        TOKEN: token,
+        USER: ggotUser,
+      };
+      await AsyncStorage.setItem(LOGIN_DATA, JSON.stringify(loginData));
+      dispatch(getUserLogin(ggotUser));
+      axios.defaults.headers.common['Authorization'] = token;
     }
   } catch (err) {
     console.log(err);

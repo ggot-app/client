@@ -7,6 +7,7 @@ import {
 const initialState = {
   isloggedIn: false,
   coords: null,
+  userData: null,
 };
 
 export default function user(state = initialState, action) {
@@ -14,10 +15,12 @@ export default function user(state = initialState, action) {
     case USER_LOGIN:
       return {
         isloggedIn: true,
+        userData: action.data
       };
     case USER_LOGOUT:
       return {
         isloggedIn: false,
+        userData: null
       };
     case GET_USER_LOCATION:
       return {

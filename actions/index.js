@@ -6,9 +6,10 @@ import {
   GET_USER_LOCATION,
 } from '../constants/actionTypes';
 
-export const getUserLogin = () => {
+export const getUserLogin = userData => {
   return {
     type: USER_LOGIN,
+    data: userData,
   };
 };
 
