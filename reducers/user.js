@@ -1,6 +1,5 @@
 import { USER_LOGIN, USER_LOGOUT } from "../constants/actionTypes";
 
-
 const initialState = {
   isloggedIn: false,
 };

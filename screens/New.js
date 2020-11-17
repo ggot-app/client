@@ -1,10 +1,11 @@
-import * as React from 'react';
-import { Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Button, Image, View, Platform, StyleSheet } from 'react-native';
 
-export default function New() {
+export default function New({ route }) {
+  const { selectedPhotoList } = route.params;
+
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>New</Text>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
     </View>
   );
 }

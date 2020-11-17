@@ -33,7 +33,7 @@ const getLogIn = async (dispatch, email, photoUrl) => {
       email: email,
       profileUrl: photoUrl
     });
-    const { result, token } = response.data;
+    const { result, token, userData } = response.data;
 
     if (result === SUCCESS) {
       await AsyncStorage.setItem(LOGIN_TOKEN, token);
