@@ -17,7 +17,6 @@ export default AppContainer = () => {
   useEffect(() => {
     (async function () {
       try {
-        // await AsyncStorage.removeItem(LOGIN_TOKEN);
         const loginToken = await AsyncStorage.getItem(LOGIN_TOKEN);
 
         if (loginToken) {

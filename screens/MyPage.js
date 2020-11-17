@@ -1,13 +1,28 @@
 import * as React from 'react';
+import { useDispatch } from 'react-redux';
 import { StyleSheet, Text, Image, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { getUserLogout } from '../actions/index';
 
 import Button from '../components/Button';
 
 export default function MyPage({ navigation }) {
+  const dispatch = useDispatch();
+  const logOut = () => {
+    (async function () {
+      try {
+        await AsyncStorage.removeItem(LOGIN_TOKEN);
+      } catch (error) {
+        console.warn(e);
+      }
+    })();
+    dispatch(getUserLogout());
+  };
   const buttonProperties = [
     {title: '내 꽃', func: () => navigation.navigate('Home')},
     {title: '남 꽃', func: () => console.log('남 꽃 버튼입니다')},
-    {title: '로그아웃', func: () => console.log('로그아웃 버튼입니다')},
+    {title: '로그아웃', func: logOut},
     {title: '회원탈퇴', func: () => console.log('회원탈퇴 버튼입니다')}
   ];
 
