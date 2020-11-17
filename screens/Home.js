@@ -1,10 +1,32 @@
-import * as React from 'react';
-import { StyleSheet, Button, Text, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { StyleSheet, View } from 'react-native';
+import * as Location from 'expo-location';
+
+import { getUserLocation } from '../actions/index';
+
+import Map from '../components/Map';
 
 export default function Home() {
+  const dispatch = useDispatch();
+
+  const getCurrentPosition = async () => {
+    const location = await Location.getCurrentPositionAsync({});
+    dispatch(getUserLocation({
+      lat: location.coords.latitude,
+      lng: location.coords.longitude,
+    }));
+  };
+
+  useEffect(() => {
+    getCurrentPosition();
+  }, []);
+
   return (
     <View style={styles.contentWrapper}>
-      <View style={styles.mapWrapper}></View>
+      <View style={styles.mapWrapper}>
+        <Map />
+      </View>
       <View style={styles.photoListWrapper}></View>
     </View>
   );

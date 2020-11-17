@@ -3,6 +3,7 @@ import {
   USER_LOGOUT,
   COUNT_PHOTO,
   DECOUNT_PHOTO,
+  GET_USER_LOCATION,
 } from '../constants/actionTypes';
 
 export const getUserLogin = () => {
@@ -28,5 +29,12 @@ export const deCountPhoto = itemList => {
   return {
     type: DECOUNT_PHOTO,
     itemList,
+  };
+};
+
+export const getUserLocation = coords => {
+  return {
+    type: GET_USER_LOCATION,
+    coords,
   };
 };

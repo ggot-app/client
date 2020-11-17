@@ -1,31 +1,36 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { StyleSheet, View, Text } from 'react-native';
 
 import MapView, { Marker } from 'react-native-maps';
 
 export default function Map() {
-  const vanillaCodingLocation = [37.506059, 127.059130];
+  const userLocation = useSelector(state => state.user.coords);
+  if (!userLocation) userLocation = [37.506059, 127.059130];
 
   return (
     <View style={styles.contentWrapper}>
-      <MapView
-        style={styles.mapStyle}
-        initialRegion={{
-          latitude: vanillaCodingLocation[0],
-          longitude: vanillaCodingLocation[1],
-          latitudeDelta: 0,
-          longitudeDelta: 0.005
-        }}
-      >
-        <Marker
-          coordinate={{
-            latitude: vanillaCodingLocation[0],
-            longitude: vanillaCodingLocation[1]
+      {
+        userLocation &&
+        <MapView
+          style={styles.mapStyle}
+          initialRegion={{
+            latitude: userLocation.lat,
+            longitude: userLocation.lng,
+            latitudeDelta: 0,
+            longitudeDelta: 0.005
           }}
-          title='vanillaCoding'
-          description='Here is vanillaCoding 🥰 '
-        />
-      </MapView>
+        >
+          <Marker
+            coordinate={{
+              latitude: userLocation.lat,
+              longitude: userLocation.lng,
+            }}
+            title='vanillaCoding'
+            description='Here is vanillaCoding 🥰 '
+          />
+        </MapView>
+      }
     </View>
   );
 }
