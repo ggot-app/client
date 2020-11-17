@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { getUserLogin } from '../actions/index';
-import { LOGIN_TOKEN } from '../constants/index';
+import { LOGIN_DATA } from '../constants/index';
 import AxiosInstance from '../utils/axios';
 
 import TabNavigation from '../navigation/TabNavigation';
@@ -17,11 +17,12 @@ export default AppContainer = () => {
   useEffect(() => {
     (async function () {
       try {
-        const loginToken = await AsyncStorage.getItem(LOGIN_TOKEN);
+        const loginData = await AsyncStorage.getItem(LOGIN_DATA);
 
-        if (loginToken) {
-          dispatch(getUserLogin());
-          AxiosInstance.defaults.headers.common['Authorization'] = loginToken;
+        if (loginData) {
+          const { TOKEN, USER } = JSON.parse(loginData);
+          dispatch(getUserLogin(USER));
+          AxiosInstance.defaults.headers.common['Authorization'] = TOKEN;
         }
       } catch (e) {
         console.warn(e);

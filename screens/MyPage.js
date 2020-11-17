@@ -6,13 +6,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getUserLogout } from '../actions/index';
 
 import Button from '../components/Button';
+import { LOGIN_DATA } from '../constants';
 
 export default function MyPage({ navigation }) {
   const dispatch = useDispatch();
   const logOut = () => {
     (async function () {
       try {
-        await AsyncStorage.removeItem(LOGIN_TOKEN);
+        await AsyncStorage.removeItem(LOGIN_DATA);
       } catch (error) {
         console.warn(e);
       }

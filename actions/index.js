@@ -5,9 +5,10 @@ import {
   DECOUNT_PHOTO,
 } from '../constants/actionTypes';
 
-export const getUserLogin = () => {
+export const getUserLogin = userData => {
   return {
     type: USER_LOGIN,
+    data: userData,
   };
 };
 
