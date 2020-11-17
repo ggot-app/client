@@ -24,9 +24,6 @@ export default function HomeStackNavigation() {
               </TouchableOpacity>
             </View>
           ),
-          headerTitleStyle: {
-            backgroundColor: 'red'
-          }
         }}
       />
     </HomeStack.Navigator>

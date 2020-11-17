@@ -16,9 +16,13 @@ import Button from '../components/Button';
 import Map from '../components/Map';
 // import { creatingNewPhoto } from '../utils/api';
 
-export default function New({ navigation }) {
+import React, { useState, useEffect } from 'react';
+import { Button, Image, View, Platform, StyleSheet } from 'react-native';
+
+export default function New({ route, navigation}) {
   // newPage로 photoURL location이 넘어와야함
   // 바닐라코딩 37.506059 127.059130
+  const { selectedPhotoList } = route.params;
   const [description, setDescription] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -30,12 +34,12 @@ export default function New({ navigation }) {
             uri: 'https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F99D8E6495DF3A01901'
           }}
           style={styles.apple}
-          />
+        />
       </View>
       <TouchableOpacity
         style={styles.mapWrapper}
         onPress={() => navigation.navigate('Location')}
-        >
+      >
         <Map />
       </TouchableOpacity>
       <View style={styles.descriptionWrapper}>
@@ -68,7 +72,7 @@ export default function New({ navigation }) {
             <Text style={styles.modalText}>
               Hi
             </Text>
-            <TouchableHighlight style={{...styles.openButton}}
+            <TouchableHighlight style={{ ...styles.openButton }}
               onPress={() => {
                 navigation.navigate('MyPage');
                 setModalVisible(!modalVisible)
@@ -84,6 +88,7 @@ export default function New({ navigation }) {
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   contentWrapper: {
