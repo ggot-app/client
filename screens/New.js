@@ -8,16 +8,13 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  TouchableHighlight,
-  KeyboardAvoidingView,
+  TouchableHighlight
 } from 'react-native';
 
 import Button from '../components/Button';
 import Map from '../components/Map';
 // import { creatingNewPhoto } from '../utils/api';
 
-import React, { useState, useEffect } from 'react';
-import { Button, Image, View, Platform, StyleSheet } from 'react-native';
 
 export default function New({ route, navigation}) {
   // newPage로 photoURL location이 넘어와야함
