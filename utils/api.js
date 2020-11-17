@@ -44,3 +44,20 @@ const getLogIn = async (dispatch, email, photoUrl) => {
     console.log(err);
   }
 };
+
+// photo schema에 들어가는 내용을 넣어줘야함
+// resistered_by, location, photo_url, description, published_at
+export const creatingNewPhoto = async (userId, description) => {
+  try {
+    const response = await axios.post(`/users/${userId}/photos`, {
+      description: description
+    });
+    const { result } = response.data;
+
+    if (result === SUCCESS) {
+      // modal open
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};

@@ -21,7 +21,7 @@ export default function MyPage({ navigation }) {
           style={{
             width: 150,
             height: 150,
-            borderRadius: 200 / 2
+            borderRadius: 100
           }}
         />
         <Text style={styles.emailContainer}>
