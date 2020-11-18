@@ -1,25 +1,16 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { StyleSheet, View } from 'react-native';
-import * as Location from 'expo-location';
+import { useSelector } from 'react-redux';
+import { StyleSheet, View, FlatList } from 'react-native';
 
-import { getUserLocation } from '../actions/index';
+import { getPhotosByLocation } from '../utils/api';
 
 import Map from '../components/Map';
 
 export default function Home() {
-  const dispatch = useDispatch();
-
-  const getCurrentPosition = async () => {
-    const location = await Location.getCurrentPositionAsync({});
-    dispatch(getUserLocation({
-      lat: location.coords.latitude,
-      lng: location.coords.longitude,
-    }));
-  };
+  const coords = useSelector(state => state.user.coords);
 
   useEffect(() => {
-    getCurrentPosition();
+    getPhotosByLocation(coords);
   }, []);
 
   return (
@@ -27,7 +18,13 @@ export default function Home() {
       <View style={styles.mapWrapper}>
         <Map />
       </View>
-      <View style={styles.photoListWrapper}></View>
+      <View style={styles.photoListWrapper}>
+        {/* <FlatList
+          data={}
+          renderItem={}
+          showsVerticalScrollIndicator={false}
+        /> */}
+      </View>
     </View>
   );
 }

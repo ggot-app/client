@@ -13,13 +13,11 @@ import {
 
 import Button from '../components/Button';
 import Map from '../components/Map';
-// import { creatingNewPhoto } from '../utils/api';
-
+import { creatingNewPhoto } from '../utils/api';
 
 export default function New({ route, navigation}) {
-  // newPage로 photoURL location이 넘어와야함
-  // 바닐라코딩 37.506059 127.059130
   const { selectedPhotoList } = route.params;
+  console.log(selectedPhotoList);
   const [description, setDescription] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -85,7 +83,6 @@ export default function New({ route, navigation}) {
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   contentWrapper: {
