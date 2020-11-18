@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { format } from 'date-fns';
 import {
   View,
   Text,
@@ -11,15 +13,35 @@ import {
   TouchableHighlight
 } from 'react-native';
 
-import Button from '../components/Button';
 import Map from '../components/Map';
 import { creatingNewPhoto } from '../utils/api';
 
 export default function New({ route, navigation}) {
   const { selectedPhotoList } = route.params;
   console.log(selectedPhotoList);
+  // newPage로 photoURL location이 넘어와야함
+  // 바닐라코딩 37.506059 127.059130
   const [description, setDescription] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+
+  const user_Id = useSelector(state => state.user.userData._id);
+  const currentDate = format(new Date(), 'yyyy-MM-dd');
+  // const markedLocation = { latitude: 37.506059, longitude: 127.059130 };
+  const { selectedPhotoList } = route.params;
+  const photoUrlList = selectedPhotoList.map(item => item.uri);
+  // const list = [
+  //   'https://lh3.googleusercontent.com/proxy/SNk9eQwz_i0RlQ5IdS1cUg7MmUSX__jRi8v0DGZoVhRIlCG2rWcHCRpGgEYNeUg0i4Ntw2JbwOHWzpwE3ZfZMgvGI9PHSIvxurJjuj6M1HJBZBm4MoeWSASWxg',
+  //   'https://dimg.donga.com/wps/NEWS/IMAGE/2019/11/02/98183065.2.jpg',
+  //   'https://lh3.googleusercontent.com/proxy/1uXL8zY03F5B6wXtSrDKpzqf5ZhRS7XJtgUftJrdn1FFngFJrHlNhDNf7PR4EhRmaaaeV0y_ynpCFBglSEFoEFMCF3HByu-2fPkXseQUttKlz1dYEhUSmb4OjPxqFgk',
+  //   'https://i.ytimg.com/vi/2pqDYuLIL2k/maxresdefault.jpg',
+  //   'https://img.khan.co.kr/news/2020/09/24/l_2020092401002988200236491.jpg'
+  // ];
+
+  const photoInfo = {
+    resistered_by: user_Id,
+    date: currentDate,
+    description: description
+  };
 
   return (
     <View style={styles.contentWrapper}>
@@ -28,7 +50,7 @@ export default function New({ route, navigation}) {
           source={{
             uri: 'https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F99D8E6495DF3A01901'
           }}
-          style={styles.apple}
+          style={styles.image}
         />
       </View>
       <TouchableOpacity
@@ -47,12 +69,17 @@ export default function New({ route, navigation}) {
         />
       </View>
       <View style={styles.buttonWrapper}>
-        <Button
-          title='사진 등록하기'
-          onChange={() =>
-            setModalVisible(true)
-          }
-        />
+        <TouchableOpacity
+          style={styles.enroll}
+          onPress={() => {
+            creatingNewPhoto(user_Id, photoInfo, photoUrlList);
+            setModalVisible(true);
+          }}
+        >
+          <Text style={styles.text}>
+            사진등록하기
+          </Text>
+        </TouchableOpacity>
       </View>
       <Modal
         animationType='slide'
@@ -70,7 +97,7 @@ export default function New({ route, navigation}) {
             <TouchableHighlight style={{ ...styles.openButton }}
               onPress={() => {
                 navigation.navigate('MyPage');
-                setModalVisible(!modalVisible)
+                setModalVisible(!modalVisible);
               }}
             >
               <Text style={styles.buttonText}>
@@ -88,7 +115,7 @@ const styles = StyleSheet.create({
   contentWrapper: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   photoWrapper: {
     flex: 2,
@@ -96,7 +123,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  apple: {
+  image: {
     width: '80%',
     height: '80%'
   },
@@ -122,14 +149,26 @@ const styles = StyleSheet.create({
   },
   buttonWrapper: {
     flex: 0.5,
-    width: '95%'
+    width: '95%',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  enroll: {
+    width: '100%',
+    backgroundColor: '#BEDFF7',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 15
+  },
+  text: {
+    fontSize: 15
   },
   centeredView: {
     flex: 1,
     justifyContent: 'center',
     backgroundColor: 'black',
     opacity: 0.7,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   modalView: {
     margin: 20,
@@ -142,13 +181,9 @@ const styles = StyleSheet.create({
   },
   modalText: {
     marginBottom: 15,
-    textAlign: 'center'
-  },
-  modalText: {
-    color: 'red',
+    textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: 50,
-    textAlign: 'center'
+    fontSize: 50
   },
   buttonText: {
     color: 'red',

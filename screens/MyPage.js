@@ -18,6 +18,7 @@ export default function MyPage({ navigation }) {
         console.warn(e);
       }
     })();
+
     dispatch(getUserLogout());
   };
   const buttonProperties = [

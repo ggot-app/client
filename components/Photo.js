@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   photoBox: {
     margin: 0.5,
     flex: 1,
-    aspectRatio: 1,
+    aspectRatio: 1
   },
   photoDim: {
     width: '100%',
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignItems: 'flex-end',
     backgroundColor: 'rgba(0,0,0,0.6)',
-    zIndex: 100,
+    zIndex: 100
   },
   photoDimNumber: {
     width: 20,
@@ -58,6 +58,6 @@ const styles = StyleSheet.create({
   },
   photoItem: {
     flex: 1,
-    aspectRatio: 1,
-  },
+    aspectRatio: 1
+  }
 });
