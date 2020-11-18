@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { StyleSheet, Text, Image, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -9,6 +9,7 @@ import Button from '../components/Button';
 import { LOGIN_DATA } from '../constants';
 
 export default function MyPage({ navigation }) {
+  const userData = useSelector(state => state.user.userData);
   const dispatch = useDispatch();
   const logOut = () => {
     (async function () {
@@ -33,7 +34,7 @@ export default function MyPage({ navigation }) {
       <View style={styles.profileContainer}>
         <Image
           source={{
-            uri: 'https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F99D8E6495DF3A01901'
+            uri: `${userData.profile_url}`
           }}
           style={{
             width: 150,
@@ -42,7 +43,7 @@ export default function MyPage({ navigation }) {
           }}
         />
         <Text style={styles.emailContainer}>
-          PENGSU@naver.com
+          {userData.email}
         </Text>
       </View>
       <View style={styles.buttonContainer}>

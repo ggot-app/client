@@ -9,9 +9,9 @@ import Map from '../components/Map';
 export default function Home() {
   const coords = useSelector(state => state.user.coords);
 
-  useEffect(() => {
-    getPhotosByLocation(coords);
-  }, []);
+  // useEffect(() => {
+  //   getPhotosByLocation(coords);
+  // }, []);
 
   return (
     <View style={styles.contentWrapper}>
