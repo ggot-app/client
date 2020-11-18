@@ -34,7 +34,9 @@ export default function NewStackNavigation() {
                 style={styles.gelleryNextButton}
               >
                 <Text style={{ color: '#2699FB' }}>
-                  다음
+                  {
+                    selectedPhotoList.length ? '다음' : ''
+                  }
                 </Text>
               </TouchableOpacity>
             </View>

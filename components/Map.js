@@ -5,8 +5,12 @@ import { StyleSheet, View, Text } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
 export default function Map() {
-  const userLocation = useSelector(state => state.user.coords);
-  if (!userLocation) userLocation = [37.506059, 127.059130];
+  let userLocation = useSelector(state => state.user.coords);
+
+  if (!userLocation) userLocation = {
+    lat: 37.506059,
+    lng: 127.059130,
+  };
 
   return (
     <View style={styles.contentWrapper}>
@@ -14,6 +18,7 @@ export default function Map() {
         userLocation &&
         <MapView
           style={styles.mapStyle}
+          maxZoomLevel={15}
           initialRegion={{
             latitude: userLocation.lat,
             longitude: userLocation.lng,

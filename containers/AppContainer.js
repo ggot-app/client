@@ -14,20 +14,22 @@ export default AppContainer = () => {
   const isLoggedIn = useSelector(state => state.user.isloggedIn);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    (async function () {
-      try {
-        const loginData = await AsyncStorage.getItem(LOGIN_DATA);
+  const getLogin = async () => {
+    try {
+      const loginData = await AsyncStorage.getItem(LOGIN_DATA);
 
-        if (loginData) {
-          const { TOKEN, USER } = JSON.parse(loginData);
-          dispatch(getUserLogin(USER));
-          AxiosInstance.defaults.headers.common['Authorization'] = TOKEN;
-        }
-      } catch (e) {
-        console.warn(e);
+      if (loginData) {
+        const { TOKEN, USER } = JSON.parse(loginData);
+        dispatch(getUserLogin(USER));
+        AxiosInstance.defaults.headers.common['Authorization'] = TOKEN;
       }
-    })();
+    } catch (error) {
+      console.warn(error);
+    }
+  };
+
+  useEffect(() => {
+    getLogin();
   }, []);
 
   if (!isLoggedIn) return <Login />;

@@ -1,33 +1,73 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { StyleSheet, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, RefreshControl, FlatList, Image, TouchableOpacity } from 'react-native';
 import * as Location from 'expo-location';
 
-import { getUserLocation } from '../actions/index';
+import { getPhotosByLocation } from '../utils/api';
 
 import Map from '../components/Map';
 
-export default function Home() {
-  const dispatch = useDispatch();
+export default function Home({ route, navigation }) {
+  const [ refreshing, setRefreshing ] = useState(true);
+  const [ data, setData ] = useState([]);
 
-  const getCurrentPosition = async () => {
-    const location = await Location.getCurrentPositionAsync({});
-    dispatch(getUserLocation({
-      lat: location.coords.latitude,
-      lng: location.coords.longitude,
-    }));
+  const onRefresh = () => {
+    (async function () {
+      const location = await Location.getCurrentPositionAsync({});
+
+      if (location) {
+        const coords = {
+          lat: location.coords.latitude,
+          lng: location.coords.longitude,
+        };
+        const result = await getPhotosByLocation(coords);
+        setRefreshing(false);
+        setData(result);
+      }
+    })();
+  };
+  const renderItem = ({ item }) => {
+    return (
+      <View
+        style={styles.photoContainer}
+      >
+        <Image
+          style={styles.photo}
+          source={{ uri: item.uri }}
+        />
+      </View>
+    );
   };
 
   useEffect(() => {
-    getCurrentPosition();
-  }, []);
+    onRefresh();
+  }, [ refreshing ]);
 
   return (
     <View style={styles.contentWrapper}>
       <View style={styles.mapWrapper}>
-        <Map />
+        <TouchableOpacity
+          style={styles.mapContainer}
+          onPress={() => navigation.navigate('PhotoMap')}
+        >
+          <Map />
+        </TouchableOpacity>
       </View>
-      <View style={styles.photoListWrapper}></View>
+      <View style={styles.photoListWrapper}>
+        <FlatList
+          style={styles.photoList}
+          data={data}
+          renderItem={renderItem}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={item => item.uri}
+          numColumns={3}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => setRefreshing(true)}
+            />
+          }
+        />
+      </View>
     </View>
   );
 }
@@ -37,17 +77,34 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'red',
   },
   mapWrapper: {
     width: '100%',
     flex: 1,
-    backgroundColor: 'yellow',
-    margin: 10,
   },
   photoListWrapper: {
     width: '100%',
     flex: 3,
-    backgroundColor: 'green',
+    flexDirection: 'row',
+  },
+  photoList: {
+    flex: 1,
+    padding: 1,
+    backgroundColor: 'white'
+  },
+  photoContainer: {
+    flex: 1,
+    aspectRatio: 1,
+    padding: 1
+  },
+  photo: {
+    width: '100%',
+    height: '100%',
+    flex: 1,
+    backgroundColor: 'yellow'
+  },
+  mapContainer: {
+    width: '100%',
+    height: '100%',
   },
 });

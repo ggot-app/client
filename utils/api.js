@@ -89,3 +89,12 @@ export const creatingNewPhoto = async (user_Id, photoInfo, photoUrlList) => {
     console.log(err);
   }
 };
+
+export const getPhotosByLocation = async coords => {
+  try {
+    const response = await axios.get(`/photo/location?lat=${coords.lat}&lng=${coords.lng}`);
+    return response.data;
+  } catch (err) {
+    console.warn(err);
+  }
+};

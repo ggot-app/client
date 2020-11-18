@@ -1,7 +1,7 @@
 import {
   USER_LOGIN,
   USER_LOGOUT,
-  GET_USER_LOCATION
+  SET_USER_LOCATION
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -22,7 +22,7 @@ export default function user(state = initialState, action) {
         isloggedIn: false,
         userData: null
       };
-    case GET_USER_LOCATION:
+    case SET_USER_LOCATION:
       return {
         ...state,
         coords: action.coords,
