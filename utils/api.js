@@ -12,7 +12,7 @@ export const signInWithGoogleAsync = async dispatch => {
   try {
     const result = await Google.logInAsync({
       androidClientId: GOOGLE_API_ID,
-      scopes: ['profile', 'email'],
+      scopes: ['profile', 'email']
     });
 
     if (result.type === 'success') {
@@ -39,8 +39,9 @@ const getLogIn = async (dispatch, email, photoUrl) => {
     if (result === SUCCESS) {
       const loginData = {
         TOKEN: token,
-        USER: ggotUser,
+        USER: ggotUser
       };
+
       await AsyncStorage.setItem(LOGIN_DATA, JSON.stringify(loginData));
       dispatch(getUserLogin(ggotUser));
       axios.defaults.headers.common['Authorization'] = token;
@@ -52,15 +53,37 @@ const getLogIn = async (dispatch, email, photoUrl) => {
 
 // photo schema에 들어가는 내용을 넣어줘야함
 // resistered_by, location, photo_url, description, published_at
-export const creatingNewPhoto = async (userId, description) => {
+export const creatingNewPhoto = async (user_Id, photoInfo, photoUrlList) => {
+  // const { latitude, longitude } = photoInfo.markedLocation;
+  const { resistered_by, date, description } = photoInfo;
+  const formdata = new FormData();
+
+  photoUrlList.forEach(uri => {
+    const name = 'dsfsd';
+    const locationPhoto = { uri, name, type: 'image/jpeg' };
+
+    formdata.append('file', locationPhoto);
+  });
+
+  // formdata.append('name', name);
+  formdata.append('date', date);
+  // formdata.append('latitude', latitude);
+  // formdata.append('longitude', longitude);
+  formdata.append('resistered_by', resistered_by);
+  formdata.append('description', description);
+
   try {
-    const response = await axios.post(`/users/${userId}/photos`, {
-      description: description
+    const response = await axios.post(`/users/${user_Id}/photos`, {
+      data: formdata,
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
     });
     const { result } = response.data;
 
     if (result === SUCCESS) {
-      // modal open
+      // modal opens
+      console.log('success');
     }
   } catch (err) {
     console.log(err);

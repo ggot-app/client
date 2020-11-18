@@ -47,7 +47,7 @@ export default function Gallery() {
       });
       setAsset(assets);
     } catch (err) {
-      console.warn(err)
+      console.warn(err);
     }
   };
 
