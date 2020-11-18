@@ -1,8 +1,13 @@
-import { USER_LOGIN, USER_LOGOUT } from '../constants/actionTypes';
+import {
+  USER_LOGIN,
+  USER_LOGOUT,
+  GET_USER_LOCATION
+} from '../constants/actionTypes';
 
 const initialState = {
   isloggedIn: false,
-  userData: null
+  coords: null,
+  userData: null,
 };
 
 export default function user(state = initialState, action) {
@@ -16,6 +21,11 @@ export default function user(state = initialState, action) {
       return {
         isloggedIn: false,
         userData: null
+      };
+    case GET_USER_LOCATION:
+      return {
+        ...state,
+        coords: action.coords,
       };
     default:
       return state;
