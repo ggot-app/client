@@ -6,7 +6,7 @@ export default function Button({ title, onChange }) {
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => onChange(path)}
+        onPress={() => onChange()}
       >
         <Text style={styles.text}>
           {title}

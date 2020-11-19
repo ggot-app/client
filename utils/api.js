@@ -51,38 +51,42 @@ const getLogIn = async (dispatch, email, photoUrl) => {
   }
 };
 
-// photo schema에 들어가는 내용을 넣어줘야함
-// resistered_by, location, photo_url, description, published_at
 export const creatingNewPhoto = async (user_Id, photoInfo, photoUrlList) => {
-  // const { latitude, longitude } = photoInfo.markedLocation;
-  const { resistered_by, date, description } = photoInfo;
+  const { latitude, longitude } = photoInfo.location;
+  const { resistered_by, published_at, description } = photoInfo;
   const formdata = new FormData();
 
-  photoUrlList.forEach(uri => {
-    const name = 'dsfsd';
-    const locationPhoto = { uri, name, type: 'image/jpeg' };
+  photoUrlList.forEach((item) => {
+    const name = `${user_Id}${item.fileName.split('.')[0]}`;
+    const uri = item.uri;
 
-    formdata.append('file', locationPhoto);
+    const photoProperties = { uri, name, type: 'image/jpg' };
+
+    formdata.append('image', photoProperties);
   });
 
-  // formdata.append('name', name);
-  formdata.append('date', date);
-  // formdata.append('latitude', latitude);
-  // formdata.append('longitude', longitude);
-  formdata.append('resistered_by', resistered_by);
+  formdata.append('latitude', latitude);
+  formdata.append('longitude', longitude);
   formdata.append('description', description);
+  formdata.append('published_at', published_at);
+  formdata.append('resistered_by', resistered_by);
 
   try {
-    const response = await axios.post(`/users/${user_Id}/photos`, {
-      data: formdata,
+    const response = await axios.post(
+    `/users/${user_Id}/photos`,
+    formdata,
+    {
       headers: {
+        Accept: 'application/json',
         'Content-Type': 'multipart/form-data'
       }
     });
+
     const { result } = response.data;
 
     if (result === SUCCESS) {
-      // modal opens
+      // modal opens : redux 꽂기
+      // modal open => description and selected photo page reset
       console.log('success');
     }
   } catch (err) {

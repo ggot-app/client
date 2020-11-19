@@ -16,30 +16,28 @@ import {
 import Map from '../components/Map';
 import { creatingNewPhoto } from '../utils/api';
 
-
-export default function New({ route, navigation }) {
+export default function New({ route, navigation}) {
   // newPage로 photoURL location이 넘어와야함
-  // 바닐라코딩 37.506059 127.059130
+  const { selectedPhotoList } = route.params;
   const [description, setDescription] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
 
+  const user_email = useSelector(state => state.user.userData.email);
   const user_Id = useSelector(state => state.user.userData._id);
   const currentDate = format(new Date(), 'yyyy-MM-dd');
-  // const markedLocation = { latitude: 37.506059, longitude: 127.059130 };
-  const { selectedPhotoList } = route.params;
-  const photoUrlList = selectedPhotoList.map(item => item.uri);
-  // const list = [
-  //   'https://lh3.googleusercontent.com/proxy/SNk9eQwz_i0RlQ5IdS1cUg7MmUSX__jRi8v0DGZoVhRIlCG2rWcHCRpGgEYNeUg0i4Ntw2JbwOHWzpwE3ZfZMgvGI9PHSIvxurJjuj6M1HJBZBm4MoeWSASWxg',
-  //   'https://dimg.donga.com/wps/NEWS/IMAGE/2019/11/02/98183065.2.jpg',
-  //   'https://lh3.googleusercontent.com/proxy/1uXL8zY03F5B6wXtSrDKpzqf5ZhRS7XJtgUftJrdn1FFngFJrHlNhDNf7PR4EhRmaaaeV0y_ynpCFBglSEFoEFMCF3HByu-2fPkXseQUttKlz1dYEhUSmb4OjPxqFgk',
-  //   'https://i.ytimg.com/vi/2pqDYuLIL2k/maxresdefault.jpg',
-  //   'https://img.khan.co.kr/news/2020/09/24/l_2020092401002988200236491.jpg'
-  // ];
+  const markedLocation = { latitude: 37.506059, longitude: 127.059130 };
+  const photoUrlList = selectedPhotoList.map(item => {
+    return {
+      uri: item.uri,
+      fileName: item.filename
+    };
+  });
 
   const photoInfo = {
-    resistered_by: user_Id,
-    date: currentDate,
-    description: description
+    resistered_by: user_email,
+    location: markedLocation,
+    description: description,
+    published_at: currentDate
   };
 
   return (
@@ -109,7 +107,6 @@ export default function New({ route, navigation }) {
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   contentWrapper: {
