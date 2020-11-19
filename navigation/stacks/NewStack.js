@@ -34,9 +34,10 @@ export default function NewStackNavigation() {
                 style={styles.gelleryNextButton}
               >
                 <Text style={{ color: '#2699FB' }}>
-                  {
+                  {/* {
                     selectedPhotoList.length ? '다음' : ''
-                  }
+                  } */}
+                  ㄷㅏ음
                 </Text>
               </TouchableOpacity>
             </View>
@@ -46,6 +47,19 @@ export default function NewStackNavigation() {
       <NewStack.Screen
         name='New'
         component={New}
+        options={({ route, navigation }) => ({
+          headerLeft: () => (
+            <View style={styles.locationNextButton}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Gallery')}
+              >
+              <Text>
+                뒤로가기
+              </Text>
+              </TouchableOpacity>
+            </View>
+          )
+        })}
       />
       <NewStack.Screen
         name='Location'

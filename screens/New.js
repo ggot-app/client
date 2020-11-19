@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import ViewPager from '@react-native-community/viewpager';
 import { format } from 'date-fns';
 import {
   View,
@@ -24,6 +25,7 @@ export default function New({ route, navigation}) {
 
   const user_email = useSelector(state => state.user.userData.email);
   const user_Id = useSelector(state => state.user.userData._id);
+
   const currentDate = format(new Date(), 'yyyy-MM-dd');
   const markedLocation = { latitude: 37.506059, longitude: 127.059130 };
   const photoUrlList = selectedPhotoList.map(item => {
@@ -42,14 +44,22 @@ export default function New({ route, navigation}) {
 
   return (
     <View style={styles.contentWrapper}>
-      <View style={styles.photoWrapper}>
-        <Image
-          source={{
-            uri: 'https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F99D8E6495DF3A01901'
-          }}
-          style={styles.image}
-        />
-      </View>
+      <ViewPager style={styles.viewPagerWrapper} initialPage={0}>
+        {
+          photoUrlList.map((item, index) => {
+            return (
+            <View style={styles.photoWrapper} key={`${index}`}>
+              <Image
+                source={{
+                  uri: `${item.uri}`
+                }}
+                style={styles.image}
+              />
+            </View>
+            );
+          })
+        }
+      </ViewPager>
       <TouchableOpacity
         style={styles.mapWrapper}
         onPress={() => navigation.navigate('Location')}
@@ -114,15 +124,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  photoWrapper: {
+  viewPagerWrapper: {
     flex: 2,
+    flexDirection: 'row',
     width: '80%',
     justifyContent: 'center',
     alignItems: 'center'
   },
+  photoWrapper: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   image: {
-    width: '80%',
-    height: '80%'
+    width: '85%',
+    height: '85%'
   },
   mapWrapper: {
     flex: 1,

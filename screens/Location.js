@@ -6,7 +6,7 @@ import Map from '../components/Map';
 export default function Location({ navigation, route }) {
   return (
     <View style={styles.locationWrapper}>
-      {/* <Map /> */}
+      <Map />
     </View>
   );
 }
