@@ -17,8 +17,7 @@ import {
 import Map from '../components/Map';
 import { creatingNewPhoto } from '../utils/api';
 
-export default function New({ route, navigation}) {
-  // newPage로 photoURL location이 넘어와야함
+export default function New({ route, navigation }) {
   const { selectedPhotoList } = route.params;
   const [ description, setDescription ] = useState('');
   const [ modalVisible, setModalVisible ] = useState(false);
@@ -34,7 +33,6 @@ export default function New({ route, navigation}) {
       fileName: item.filename
     };
   });
-
   const photoInfo = {
     resistered_by: user_email,
     location: markedLocation,
@@ -92,9 +90,6 @@ export default function New({ route, navigation}) {
         animationType='slide'
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed');
-        }}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>

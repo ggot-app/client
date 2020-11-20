@@ -15,7 +15,9 @@ export default function HomeStackNavigation() {
         component={Home}
         options={{
           headerTitle: () => (
-            <View style={{ alignItems: 'center', flex: 1 }}>
+            <View
+              style={{ alignItems: 'center', flex: 1 }}
+            >
               <Text style={{ color: '#2699FB' }}>
                 내 주변 꽂
               </Text>
@@ -26,8 +28,7 @@ export default function HomeStackNavigation() {
       <HomeStack.Screen
         name='PhotoMap'
         component={PhotoMap}
-      >
-      </HomeStack.Screen>
+      />
     </HomeStack.Navigator>
   );
 }

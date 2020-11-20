@@ -2,9 +2,8 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Location from 'expo-location';
 
-import { getUserLogin, setUserLocation } from '../actions/index';
+import { getUserLogin } from '../actions/index';
 import { LOGIN_DATA } from '../constants/index';
 import AxiosInstance from '../utils/axios';
 
@@ -15,16 +14,6 @@ export default AppContainer = () => {
   const isLoggedIn = useSelector(state => state.user.isloggedIn);
   const dispatch = useDispatch();
 
-  const getLocation = async () => {
-    const location = await Location.getCurrentPositionAsync({});
-
-    if (location) {
-      dispatch(setUserLocation({
-        lat: location.coords.latitude,
-        lng: location.coords.longitude,
-      }));
-    }
-  };
   const getLogin = async () => {
     try {
       const loginData = await AsyncStorage.getItem(LOGIN_DATA);
@@ -34,7 +23,6 @@ export default AppContainer = () => {
         dispatch(getUserLogin(USER));
         AxiosInstance.defaults.headers.common['Authorization'] = TOKEN;
       }
-      getLocation();
     } catch (error) {
       console.warn(error);
     }
