@@ -21,12 +21,8 @@ export default function Home({ navigation }) {
       const userLocation = await Location.getCurrentPositionAsync({});
 
       if (userLocation) {
-        const coords = {
-          lat: userLocation.coords.latitude,
-          lng: userLocation.coords.longitude,
-        };
-        const result = await getPhotosByLocation(coords);
-        dispatch(setUserLocation(coords));
+        const result = await getPhotosByLocation(userLocation.coords);
+        dispatch(setUserLocation(userLocation.coords));
         setRefreshing(false);
         setData(result);
       }
@@ -40,7 +36,7 @@ export default function Home({ navigation }) {
         <TouchableOpacity
           style={styles.photoTouchContainer}
           onPress={() => {
-            setModalVisible(true)
+            setModalVisible(true);
             setfocusedItemNumber(index);
           }}
         >
@@ -64,7 +60,7 @@ export default function Home({ navigation }) {
           style={styles.mapContainer}
           onPress={() => navigation.navigate('PhotoMap', { data, focusNumber: 0 })}
         >
-          <Map />
+          <Map isScrollEnabled={false} />
         </TouchableOpacity>
       </View>
       <View style={styles.photoListWrapper}>
@@ -88,7 +84,12 @@ export default function Home({ navigation }) {
         transparent={true}
         visible={modalVisible}
       >
-        <PhotoModalView navigation={navigation} data={data} focusedItemNumber={focusedItemNumber} setModalVisible={setModalVisible}/>
+        <PhotoModalView
+          data={data}
+          navigation={navigation}
+          setModalVisible={setModalVisible}
+          focusedItemNumber={focusedItemNumber}
+        />
       </Modal>
     </View>
   );

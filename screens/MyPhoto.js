@@ -135,8 +135,7 @@ const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'black',
-    opacity: 0.8,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
     alignItems: 'center'
   },
   modalView: {

@@ -62,7 +62,7 @@ export default function New({ route, navigation }) {
         style={styles.mapWrapper}
         onPress={() => navigation.navigate('Location')}
       >
-        <Map />
+        <Map isScrollEnabled={false} />
       </TouchableOpacity>
       <View style={styles.descriptionWrapper}>
         <TextInput

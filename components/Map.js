@@ -1,10 +1,13 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { StyleSheet, View, Text } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
-export default function Map() {
+import { setUserLocation } from '../actions/index';
+
+export default function Map({ isScrollEnabled }) {
   const userLocation = useSelector(state => state.user.coords);
+  const dispatch = useDispatch();
 
   return (
     <View style={styles.contentWrapper}>
@@ -13,21 +16,20 @@ export default function Map() {
         <MapView
           style={styles.mapStyle}
           maxZoomLevel={20}
-          scrollEnabled={false}
+          scrollEnabled={isScrollEnabled}
           initialRegion={{
-            latitude: userLocation.lat,
-            longitude: userLocation.lng,
+            latitude: userLocation.latitude,
+            longitude: userLocation.longitude,
             latitudeDelta: 0,
             longitudeDelta: 0.009,
           }}
+          onPress={(e) => dispatch(setUserLocation(e.nativeEvent.coordinate))}
         >
           <Marker
             coordinate={{
-              latitude: userLocation.lat,
-              longitude: userLocation.lng,
+              latitude: userLocation.latitude,
+              longitude: userLocation.longitude,
             }}
-            title='vanillaCoding'
-            description='Here is vanillaCoding 🥰 '
           />
         </MapView>
       }

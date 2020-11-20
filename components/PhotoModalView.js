@@ -11,7 +11,7 @@ export default function PhotoModal({ navigation, data, focusedItemNumber, setMod
     <View
       style={styles.modalDim}
       onPress={() => {
-        setModalVisible(false)
+        setModalVisible(false);
       }}
     >
       <View style={styles.modalContent}>

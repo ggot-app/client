@@ -96,7 +96,7 @@ export const creatingNewPhoto = async (user_Id, photoInfo, photoUrlList) => {
 
 export const getPhotosByLocation = async coords => {
   try {
-    const response = await axios.get(`/photo/location?lat=${coords.lat}&lng=${coords.lng}`);
+    const response = await axios.get(`/photo/location?lat=${coords.latitude}&lng=${coords.longitude}`);
     return response.data;
   } catch (err) {
     console.warn(err);
