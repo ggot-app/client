@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ViewPager from '@react-native-community/viewpager';
 import { format } from 'date-fns';
 import {
   View,
   Text,
-  Alert,
   Modal,
   Image,
   TextInput,
@@ -16,25 +15,34 @@ import {
 
 import Map from '../components/Map';
 import { creatingNewPhoto } from '../utils/api';
+import { closeModal } from '../actions/index';
 
 export default function New({ route, navigation }) {
-  const { selectedPhotoList } = route.params;
+  const { selectedPhotoList, userMarkedLocation } = route.params;
   const [ description, setDescription ] = useState('');
-  const [ modalVisible, setModalVisible ] = useState(false);
 
-  const user_email = useSelector(state => state.user.userData.email);
-  const user_Id = useSelector(state => state.user.userData._id);
+  const dispatch = useDispatch();
+
+  const userId = useSelector(state => state.user.userData._id);
+  const userEmail = useSelector(state => state.user.userData.email);
+  const modalVisible = useSelector(state => state.modal.isModalOpened);
 
   const currentDate = format(new Date(), 'yyyy-MM-dd');
-  const markedLocation = { latitude: 37.506059, longitude: 127.059130 };
+
+  const markedLocation = {
+    latitude: userMarkedLocation?.latitude,
+    longitude: userMarkedLocation?.longitude
+  };
+
   const photoUrlList = selectedPhotoList.map(item => {
     return {
       uri: item.uri,
       fileName: item.filename
     };
   });
+
   const photoInfo = {
-    resistered_by: user_email,
+    resistered_by: userEmail,
     location: markedLocation,
     description: description,
     published_at: currentDate
@@ -77,8 +85,8 @@ export default function New({ route, navigation }) {
         <TouchableOpacity
           style={styles.enroll}
           onPress={() => {
-            creatingNewPhoto(user_Id, photoInfo, photoUrlList);
-            setModalVisible(true);
+            creatingNewPhoto(dispatch, userId, photoInfo, photoUrlList);
+            setDescription('');
           }}
         >
           <Text style={styles.text}>
@@ -100,7 +108,8 @@ export default function New({ route, navigation }) {
               style={{ ...styles.openButton }}
               onPress={() => {
                 navigation.navigate('MyPage');
-                setModalVisible(!modalVisible);
+                navigation.replace('Gallery');
+                dispatch(closeModal());
               }}
             >
               <Text style={styles.buttonText}>

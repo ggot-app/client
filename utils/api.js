@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from './axios';
 import getEnvVars from '../environment';
 import { SUCCESS, LOGIN_DATA } from '../constants/index';
-import { getUserLogin } from '../actions/index';
+import { getUserLogin, openModal, deleteSelectedPhotos } from '../actions/index';
 
 const { GOOGLE_API_ID } = getEnvVars();
 
@@ -51,13 +51,14 @@ const getLogIn = async (dispatch, email, photoUrl) => {
   }
 };
 
-export const creatingNewPhoto = async (user_Id, photoInfo, photoUrlList) => {
+export const creatingNewPhoto = async (dispatch, userId, photoInfo, photoUrlList) => {
   const { latitude, longitude } = photoInfo.location;
   const { resistered_by, published_at, description } = photoInfo;
+
   const formdata = new FormData();
 
   photoUrlList.forEach((item) => {
-    const name = `${user_Id}${item.fileName.split('.')[0]}`;
+    const name = `${userId}${item.fileName.split('.')[0]}`;
     const uri = item.uri;
 
     const photoProperties = { uri, name, type: 'image/jpg' };
@@ -73,7 +74,7 @@ export const creatingNewPhoto = async (user_Id, photoInfo, photoUrlList) => {
 
   try {
     const response = await axios.post(
-    `/users/${user_Id}/photos`,
+    `/users/${userId}/photos`,
     formdata,
     {
       headers: {
@@ -85,9 +86,8 @@ export const creatingNewPhoto = async (user_Id, photoInfo, photoUrlList) => {
     const { result } = response.data;
 
     if (result === SUCCESS) {
-      // modal opens : redux 꽂기
-      // modal open => description and selected photo page reset
-      console.log('success');
+      dispatch(openModal());
+      dispatch(deleteSelectedPhotos());
     }
   } catch (err) {
     console.log(err);
@@ -97,6 +97,7 @@ export const creatingNewPhoto = async (user_Id, photoInfo, photoUrlList) => {
 export const getPhotosByLocation = async coords => {
   try {
     const response = await axios.get(`/photo/location?lat=${coords.latitude}&lng=${coords.longitude}`);
+
     return response.data;
   } catch (err) {
     console.warn(err);

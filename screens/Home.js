@@ -14,16 +14,21 @@ export default function Home({ navigation }) {
   const photoData = useSelector(state => state.photosByLocation.photoData);
   const [ modalVisible, setModalVisible ] = useState(false);
   const [ refreshing, setRefreshing ] = useState(true);
+  const [ data, setData ] = useState([]);
+  const [ focusedItemNumber, setfocusedItemNumber ] = useState(null);
 
-  const onRefresh = async() => {
-    const userLocation = await Location.getCurrentPositionAsync({});
+  const onRefresh = () => {
+    (async function () {
+      const userLocation = await Location.getCurrentPositionAsync({});
 
-    if (userLocation) {
-      const result = await getPhotosByLocation(userLocation.coords);
-      dispatch(setUserLocation(userLocation.coords));
-      dispatch(setPhotoData(result));
-      setRefreshing(false);
-    }
+      if (userLocation) {
+        const result = await getPhotosByLocation(userLocation.coords);
+
+        dispatch(setUserLocation(userLocation.coords));
+        setRefreshing(false);
+        setData(result);
+      }
+    })();
   };
   const renderItem = ({ index, item }) => {
     return (
@@ -33,7 +38,7 @@ export default function Home({ navigation }) {
         <TouchableOpacity
           style={styles.photoTouchContainer}
           onPress={() => {
-            setModalVisible(true)
+            setModalVisible(true);
             dispatch(setPhotoFocus(index));
           }}
         >

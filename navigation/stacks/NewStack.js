@@ -11,6 +11,7 @@ const NewStack = createStackNavigator();
 
 export default function NewStackNavigation() {
   const selectedPhotoList = useSelector(state => state.selectedPhotos.selectedList);
+  const userMarkedLocation = useSelector(state => state.user.coords);
 
   return (
     <NewStack.Navigator
@@ -34,10 +35,9 @@ export default function NewStackNavigation() {
                 style={styles.gelleryNextButton}
               >
                 <Text style={{ color: '#2699FB' }}>
-                  {/* {
+                  {
                     selectedPhotoList.length ? '다음' : ''
-                  } */}
-                  ㄷㅏ음
+                  }
                 </Text>
               </TouchableOpacity>
             </View>
@@ -68,7 +68,7 @@ export default function NewStackNavigation() {
           headerRight: () => (
             <View style={styles.locationNextButton}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('New')}
+                onPress={() => navigation.navigate('New', { userMarkedLocation })}
               >
               <Text>
                 설정
