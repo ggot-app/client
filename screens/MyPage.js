@@ -2,11 +2,10 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StyleSheet, Text, Image, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+// 영준님 이거 분리기준 뭐예요?
 import { getUserLogout } from '../actions/index';
-
-import Button from '../components/Button';
 import { LOGIN_DATA } from '../constants';
+import Button from '../components/Button';
 
 export default function MyPage({ navigation }) {
   const userData = useSelector(state => state.user.userData);
@@ -22,8 +21,9 @@ export default function MyPage({ navigation }) {
 
     dispatch(getUserLogout());
   };
+  // 이 func 라는 변수명 수정해야함
   const buttonProperties = [
-    {title: '내 꽃', func: () => navigation.navigate('Home')},
+    {title: '내 꽃', func: () => navigation.navigate('MyPhoto')},
     {title: '남 꽃', func: () => console.log('남 꽃 버튼입니다')},
     {title: '로그아웃', func: logOut},
     {title: '회원탈퇴', func: () => console.log('회원탈퇴 버튼입니다')}
@@ -36,11 +36,7 @@ export default function MyPage({ navigation }) {
           source={{
             uri: `${userData.profile_url}`
           }}
-          style={{
-            width: 150,
-            height: 150,
-            borderRadius: 100
-          }}
+          style={styles.image}
         />
         <Text style={styles.emailContainer}>
           {userData.email}
@@ -76,6 +72,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderColor: '#BEDFF7'
+  },
+  image: {
+    width: 150,
+    height: 150,
+    borderRadius: 100
   },
   emailContainer: {
     alignItems:'center',

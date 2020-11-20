@@ -102,3 +102,13 @@ export const getPhotosByLocation = async coords => {
     console.warn(err);
   }
 };
+
+export const getPhotosByUserId = async user_Id => {
+  try {
+    const response = await axios.get(`users/${user_Id}/photos`);
+
+    return response.data;
+  } catch (err) {
+    console.warn(err);
+  }
+};

@@ -20,8 +20,8 @@ import { creatingNewPhoto } from '../utils/api';
 export default function New({ route, navigation}) {
   // newPage로 photoURL location이 넘어와야함
   const { selectedPhotoList } = route.params;
-  const [description, setDescription] = useState('');
-  const [modalVisible, setModalVisible] = useState(false);
+  const [ description, setDescription ] = useState('');
+  const [ modalVisible, setModalVisible ] = useState(false);
 
   const user_email = useSelector(state => state.user.userData.email);
   const user_Id = useSelector(state => state.user.userData._id);
@@ -48,14 +48,14 @@ export default function New({ route, navigation}) {
         {
           photoUrlList.map((item, index) => {
             return (
-            <View style={styles.photoWrapper} key={`${index}`}>
-              <Image
-                source={{
-                  uri: `${item.uri}`
-                }}
-                style={styles.image}
-              />
-            </View>
+              <View style={styles.photoWrapper} key={`${index}`}>
+                <Image
+                  source={{
+                    uri: `${item.uri}`
+                  }}
+                  style={styles.image}
+                />
+              </View>
             );
           })
         }
@@ -101,7 +101,8 @@ export default function New({ route, navigation}) {
             <Text style={styles.modalText}>
               Hi
             </Text>
-            <TouchableHighlight style={{ ...styles.openButton }}
+            <TouchableHighlight
+              style={{ ...styles.openButton }}
               onPress={() => {
                 navigation.navigate('MyPage');
                 setModalVisible(!modalVisible);
