@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { StyleSheet, View, RefreshControl, FlatList, Image, TouchableOpacity, Modal } from 'react-native';
 import * as Location from 'expo-location';
 
 import { getPhotosByLocation } from '../utils/api';
-import { setUserLocation } from '../actions/index';
+import { setUserLocation, setPhotoData, setPhotoFocus } from '../actions/index';
 
 import Map from '../components/Map';
 import PhotoModalView from '../components/PhotoModalView';
 
 export default function Home({ navigation }) {
   const dispatch = useDispatch();
+  const photoData = useSelector(state => state.photosByLocation.photoData);
   const [ modalVisible, setModalVisible ] = useState(false);
   const [ refreshing, setRefreshing ] = useState(true);
   const [ data, setData ] = useState([]);
   const [ focusedItemNumber, setfocusedItemNumber ] = useState(null);
-  
+
   const onRefresh = () => {
     (async function () {
       const userLocation = await Location.getCurrentPositionAsync({});
@@ -38,7 +39,7 @@ export default function Home({ navigation }) {
           style={styles.photoTouchContainer}
           onPress={() => {
             setModalVisible(true);
-            setfocusedItemNumber(index);
+            dispatch(setPhotoFocus(index));
           }}
         >
           <Image
@@ -59,7 +60,7 @@ export default function Home({ navigation }) {
       <View style={styles.mapWrapper}>
         <TouchableOpacity
           style={styles.mapContainer}
-          onPress={() => navigation.navigate('PhotoMap', { data, focusNumber: 0 })}
+          onPress={() => navigation.navigate('PhotoMap')}
         >
           <Map isScrollEnabled={false} />
         </TouchableOpacity>
@@ -67,7 +68,7 @@ export default function Home({ navigation }) {
       <View style={styles.photoListWrapper}>
         <FlatList
           style={styles.photoList}
-          data={data}
+          data={photoData}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
           keyExtractor={item => item.uri}
@@ -85,12 +86,7 @@ export default function Home({ navigation }) {
         transparent={true}
         visible={modalVisible}
       >
-        <PhotoModalView
-          data={data}
-          navigation={navigation}
-          setModalVisible={setModalVisible}
-          focusedItemNumber={focusedItemNumber}
-        />
+        <PhotoModalView navigation={navigation} setModalVisible={setModalVisible}/>
       </Modal>
     </View>
   );

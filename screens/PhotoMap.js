@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { StyleSheet, View, Image } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import ViewPager from '@react-native-community/viewpager';
@@ -71,7 +72,7 @@ export default function PhotoMap({ route, navigation }) {
         }}
       >
         {
-          userPhotoData.map(item => {
+          photoData.map(item => {
             return (
               <Marker
                 key={item.location.lat}
@@ -89,14 +90,14 @@ export default function PhotoMap({ route, navigation }) {
       >
         <ViewPager
           style={styles.itemContainer}
-          initialPage={1}
+          initialPage={0}
         >
           {
-            userPhotoData.map((item, i) => {
+            photoData.map((item, i) => {
               return (
                 <View
                   style={styles.itemBox}
-                  key={`${item.uriList[0]}${fromModal}`}
+                  key={item.uriList[0]}
                 >
                   <Image
                     style={styles.itemImage}
