@@ -28,7 +28,7 @@ export default function TabNavigation() {
       })}
       tabBarOptions={{
         activeTintColor: '#2699FB',
-        inactiveTintColor: 'gray',
+        inactiveTintColor: 'gray'
       }}
     >
       <Tab.Screen name='Home' component={HomeStack}/>

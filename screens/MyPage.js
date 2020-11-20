@@ -1,15 +1,22 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { StyleSheet, Text, Image, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// 영준님 이거 분리기준 뭐예요?
-import { getUserLogout } from '../actions/index';
-import { LOGIN_DATA } from '../constants';
+import {
+  Text,
+  View,
+  Image,
+  StyleSheet,
+} from 'react-native';
+
 import Button from '../components/Button';
+import { LOGIN_DATA } from '../constants';
+import { getUserLogout } from '../actions/index';
 
 export default function MyPage({ navigation }) {
   const userData = useSelector(state => state.user.userData);
+
   const dispatch = useDispatch();
+
   const logOut = () => {
     (async function () {
       try {

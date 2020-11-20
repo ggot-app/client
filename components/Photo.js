@@ -1,5 +1,11 @@
 import React from 'react';
-import { Image, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  StyleSheet,
+  TouchableOpacity
+} from 'react-native';
 
 export default function Photo({ item, selectedList, selectPhoto }) {
   return (

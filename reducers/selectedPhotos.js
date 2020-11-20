@@ -12,11 +12,11 @@ export default function selectedPhotos(state = initialState, action) {
   switch (action.type) {
     case COUNT_PHOTO:
       return {
-        selectedList: action.itemList,
+        selectedList: action.itemList
       };
     case DECOUNT_PHOTO:
       return {
-        selectedList: action.itemList,
+        selectedList: action.itemList
       };
     case DELETE_SELECTED_PHOTOS:
       return {

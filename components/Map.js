@@ -1,6 +1,6 @@
 import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { StyleSheet, View, Text } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
 import { setUserLocation } from '../actions/index';

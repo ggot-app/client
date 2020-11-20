@@ -1,7 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity
+} from 'react-native';
 
 import New from '../../screens/New';
 import Location from '../../screens/Location';
@@ -85,13 +90,13 @@ export default function NewStackNavigation() {
 const styles = StyleSheet.create({
   nextButtonContainer: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   locationNextButton: {
-    marginRight: 15,
+    marginRight: 15
   },
   gelleryNextButton: {
-    margin: 15,
+    margin: 15
   },
   photoCount: {
     textAlignVertical: 'center'

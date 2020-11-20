@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, StyleSheet, SafeAreaView, FlatList, Dimensions, TouchableOpacity } from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
+import {
+  View,
+  FlatList,
+  StyleSheet,
+  SafeAreaView
+} from 'react-native';
 
 import { countPhoto, deCountPhoto } from '../actions/index';
 import { ALERT_NUMBER_OF_POSSIBLE_IMAGE_UPLOADS } from '../constants/index';
@@ -10,17 +15,20 @@ import Photo from '../components/Photo';
 import SelectedPhoto from '../components/SelectedPhoto';
 
 export default function Gallery() {
+  const dispatch = useDispatch();
+
   const [ asset, setAsset ] = useState(null);
   const selectedList = useSelector(state => state.selectedPhotos.selectedList);
-  const dispatch = useDispatch();
 
   const deSelectPhoto = (_, item) => {
     const filteredSelectedList = selectedList.filter(el => el.uri !== item.uri);
+
     return dispatch(deCountPhoto(filteredSelectedList));
   };
   const selectPhoto = (_, item) => {
     if (selectedList.filter(el => el.uri === item.uri).length) return deSelectPhoto(_, item);
     if (selectedList.length >= 5) return alert(ALERT_NUMBER_OF_POSSIBLE_IMAGE_UPLOADS);
+
     return dispatch(countPhoto([ ...selectedList, item ]));
   };
   const renderPhoto = ({ item }) => {
@@ -43,7 +51,7 @@ export default function Gallery() {
   const getPhotos = async () => {
     try {
       const { assets } = await MediaLibrary.getAssetsAsync({
-        first: 18,
+        first: 18
       });
       setAsset(assets);
     } catch (err) {
@@ -84,15 +92,15 @@ export default function Gallery() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   photoListContainer: {
     padding: 1,
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   selectedList: {
-    width: 'auto',
+    width: 'auto'
   },
   selectedImageBox: {
     paddingTop: 5,
@@ -102,5 +110,5 @@ const styles = StyleSheet.create({
     width: 'auto',
     height: 80,
     backgroundColor: 'white'
-  },
+  }
 });
