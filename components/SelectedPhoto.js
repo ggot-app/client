@@ -1,6 +1,11 @@
 import React from 'react';
-import { Image, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import {
+  View,
+  Image,
+  StyleSheet,
+  TouchableOpacity
+} from 'react-native';
 
 export default function SelectedPhoto({ item, deSelectPhoto }) {
   return (
@@ -31,7 +36,7 @@ const styles = StyleSheet.create({
     height: '100%',
     position: 'absolute',
     alignItems: 'flex-end',
-    zIndex: 100,
+    zIndex: 100
   },
   selectedPhotoBox: {
     flex: 1,
@@ -43,10 +48,10 @@ const styles = StyleSheet.create({
   selectedPhotoItem: {
     borderRadius: 5,
     flex: 0.8,
-    aspectRatio: 1,
+    aspectRatio: 1
   },
   deselectButton: {
     borderRadius: 100,
-    backgroundColor: 'rgba(0,0,0,0.7)',
-  },
+    backgroundColor: 'rgba(0,0,0,0.7)'
+  }
 });

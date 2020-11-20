@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { View, Text } from 'react-native';
 
 import Home from '../../screens/Home';
 import PhotoMap from '../../screens/PhotoMap';
@@ -22,7 +22,7 @@ export default function HomeStackNavigation() {
                 내 주변 꽂
               </Text>
             </View>
-          ),
+          )
         }}
       />
       <HomeStack.Screen

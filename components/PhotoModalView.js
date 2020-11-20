@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { StyleSheet, TouchableOpacity, Text, View, Image } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
-import ViewPager from '@react-native-community/viewpager';
 import { AntDesign } from '@expo/vector-icons';
+import MapView, { Marker } from 'react-native-maps';
+import { useSelector, useDispatch } from 'react-redux';
+import ViewPager from '@react-native-community/viewpager';
+import {
+  Text,
+  View,
+  Image,
+  StyleSheet,
+  TouchableOpacity
+} from 'react-native';
 
 import { setPhotoFocus } from '../actions/index';
 
 export default function PhotoModal({ navigation, setModalVisible }) {
   const dispatch = useDispatch();
+
   const photoData = useSelector(state => state.photosByLocation.photoData);
   const focusedNumber = useSelector(state => state.photosByLocation.focusedNumber);
+
   const [ currentPageNumber, setCurrentPageNumber ] = useState(0);
 
   return (
@@ -100,33 +108,33 @@ const styles = StyleSheet.create({
   modalCloseButton: {
     paddingTop: 10,
     paddingBottom: 10,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   modalCloseText: {
-    color: 'white',
+    color: 'white'
   },
   modalDim: {
     width: '100%',
     height: '100%',
     backgroundColor: 'rgba(0,0,0,0.7)',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   modalContent: {
     width: '95%',
-    height: '80%',
+    height: '80%'
   },
   modalMapViewContainer: {
     width: '100%',
-    height: 100,
+    height: 100
   },
   modalMapView: {
     width: '100%',
-    height: '100%',
+    height: '100%'
   },
   modalImageContainer: {
     width: '100%',
-    aspectRatio: 1,
+    aspectRatio: 1
   },
   modalImageIndicator: {
     paddingTop: 10,
@@ -139,7 +147,7 @@ const styles = StyleSheet.create({
     height: 10,
     backgroundColor: 'white',
     borderTopWidth: 0.5,
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 0.5
   },
   indicatorDot: {
     margin: 2,
@@ -162,16 +170,16 @@ const styles = StyleSheet.create({
     height: 100,
     backgroundColor: 'white',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   modalImageBox: {
     width: '100%',
     height: '100%',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   modalImage: {
     width: '100%',
-    height: '100%',
-  },
+    height: '100%'
+  }
 });

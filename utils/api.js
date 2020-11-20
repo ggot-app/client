@@ -4,7 +4,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from './axios';
 import getEnvVars from '../environment';
 import { SUCCESS, LOGIN_DATA } from '../constants/index';
-import { getUserLogin, openModal, deleteSelectedPhotos } from '../actions/index';
+import {
+  openModal,
+  getUserLogin,
+  deleteSelectedPhotos
+} from '../actions/index';
 
 const { GOOGLE_API_ID } = getEnvVars();
 

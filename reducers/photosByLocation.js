@@ -5,7 +5,7 @@ import {
 
 const initialState = {
   photoData: null,
-  focusedNumber: null,
+  focusedNumber: null
 };
 
 export default function photosByLocation(state = initialState, action) {
@@ -13,12 +13,12 @@ export default function photosByLocation(state = initialState, action) {
     case SET_PHOTOS_DATA:
       return {
         ...state,
-        photoData: action.photoData,
+        photoData: action.photoData
       };
     case SET_PHOTOS_FOCUS:
       return {
         ...state,
-        focusedNumber: action.focusedNumber,
+        focusedNumber: action.focusedNumber
       };
     default:
       return state;

@@ -1,6 +1,11 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity
+} from 'react-native';
 
 import { signInWithGoogleAsync } from '../utils/api';
 

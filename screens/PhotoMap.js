@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { StyleSheet, View, Image } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import { StyleSheet, View, Image } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
 
-export default function PhotoMap({ route, navigation }) {
+export default function PhotoMap({ route }) {
   const { data, focusNumber, fromModal } = route.params;
+
   const [ userPhotoData, setUserPhotoData ] = useState([]);
   const [ focusMarkNumber, setFocusMarkNumber ] = useState(0);
 
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   },
   mapView: {
     flex: 1,
-    height: '100%',
+    height: '100%'
   },
   PhotoMapindicator: {
     position: 'absolute',
@@ -137,17 +137,17 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     backgroundColor: 'red',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   itemBox: {
     backgroundColor: 'yellow',
     width: '100%',
     height: '100%',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   itemImage: {
     width: '100%',
-    height: '100%',
-  },
+    height: '100%'
+  }
 });

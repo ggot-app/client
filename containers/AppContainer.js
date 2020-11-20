@@ -3,12 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import Login from '../components/LogIn';
+import AxiosInstance from '../utils/axios';
 import { getUserLogin } from '../actions/index';
 import { LOGIN_DATA } from '../constants/index';
-import AxiosInstance from '../utils/axios';
-
 import TabNavigation from '../navigation/TabNavigation';
-import Login from '../components/LogIn';
 
 export default AppContainer = () => {
   const isLoggedIn = useSelector(state => state.user.isloggedIn);

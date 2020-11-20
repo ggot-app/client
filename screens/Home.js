@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import * as Location from 'expo-location';
 import { useDispatch, useSelector } from 'react-redux';
 import { StyleSheet, View, RefreshControl, FlatList, Image, TouchableOpacity, Modal } from 'react-native';
-import * as Location from 'expo-location';
 
 import { getPhotosByLocation } from '../utils/api';
-import { setUserLocation, setPhotoData, setPhotoFocus } from '../actions/index';
+import { setUserLocation, setPhotoFocus } from '../actions/index';
 
 import Map from '../components/Map';
 import PhotoModalView from '../components/PhotoModalView';
 
 export default function Home({ navigation }) {
   const dispatch = useDispatch();
+
   const photoData = useSelector(state => state.photosByLocation.photoData);
+
   const [ modalVisible, setModalVisible ] = useState(false);
   const [ refreshing, setRefreshing ] = useState(true);
   const [ data, setData ] = useState([]);
-  const [ focusedItemNumber, setfocusedItemNumber ] = useState(null);
 
   const onRefresh = () => {
     (async function () {
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
   contentWrapper: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   mapWrapper: {
     width: '100%',
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
   photoListWrapper: {
     width: '100%',
     flex: 3,
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   photoList: {
     flex: 1,
@@ -115,11 +116,11 @@ const styles = StyleSheet.create({
   photoContainer: {
     flex: 1,
     aspectRatio: 1,
-    padding: 1,
+    padding: 1
   },
   photoTouchContainer: {
     width: '100%',
-    height: '100%',
+    height: '100%'
   },
   photo: {
     width: '100%',
@@ -129,6 +130,6 @@ const styles = StyleSheet.create({
   },
   mapContainer: {
     width: '100%',
-    height: '100%',
-  },
+    height: '100%'
+  }
 });
