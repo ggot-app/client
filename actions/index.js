@@ -46,12 +46,12 @@ export const setPhotosData = photoDataList => {
   return {
     type: SET_PHOTOS_DATA,
     photoDataList,
-  }
+  };
 };
 
 export const setPhotosFocus = focusedNumber => {
   return {
     type: SET_PHOTOS_FOCUS,
     focusedNumber,
-  }
+  };
 };
