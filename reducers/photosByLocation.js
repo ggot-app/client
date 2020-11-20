@@ -4,7 +4,7 @@ import {
 } from '../constants/actionTypes';
 
 const initialState = {
-  photoDataList: null,
+  photoData: null,
   focusedNumber: null,
 };
 
@@ -13,7 +13,7 @@ export default function photosByLocation(state = initialState, action) {
     case SET_PHOTOS_DATA:
       return {
         ...state,
-        photoDataList: action.photoDataList,
+        photoData: action.photoData,
       };
     case SET_PHOTOS_FOCUS:
       return {
