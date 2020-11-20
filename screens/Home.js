@@ -15,13 +15,14 @@ export default function Home({ navigation }) {
   const [ refreshing, setRefreshing ] = useState(true);
   const [ data, setData ] = useState([]);
   const [ focusedItemNumber, setfocusedItemNumber ] = useState(null);
-
+  
   const onRefresh = () => {
     (async function () {
       const userLocation = await Location.getCurrentPositionAsync({});
 
       if (userLocation) {
         const result = await getPhotosByLocation(userLocation.coords);
+
         dispatch(setUserLocation(userLocation.coords));
         setRefreshing(false);
         setData(result);

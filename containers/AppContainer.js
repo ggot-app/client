@@ -20,6 +20,7 @@ export default AppContainer = () => {
 
       if (loginData) {
         const { TOKEN, USER } = JSON.parse(loginData);
+
         dispatch(getUserLogin(USER));
         AxiosInstance.defaults.headers.common['Authorization'] = TOKEN;
       }

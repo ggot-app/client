@@ -3,7 +3,7 @@ import { StyleSheet, View, Text } from 'react-native';
 
 import Map from '../components/Map';
 
-export default function Location({ navigation, route }) {
+export default function Location() {
   return (
     <View style={styles.locationWrapper}>
       <Map isScrollEnabled={true} />

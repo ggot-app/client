@@ -35,5 +35,5 @@ export default function TabNavigation() {
       <Tab.Screen name='New' component={NewStack}/>
       <Tab.Screen name='MyPage' component={MyPageStack}/>
     </Tab.Navigator>
-  )
+  );
 }

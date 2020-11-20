@@ -1,4 +1,8 @@
-import { COUNT_PHOTO, DECOUNT_PHOTO } from '../constants/actionTypes';
+import {
+  COUNT_PHOTO,
+  DECOUNT_PHOTO,
+  DELETE_SELECTED_PHOTOS
+} from '../constants/actionTypes';
 
 const initialState = {
   selectedList: [],
@@ -13,6 +17,10 @@ export default function selectedPhotos(state = initialState, action) {
     case DECOUNT_PHOTO:
       return {
         selectedList: action.itemList,
+      };
+    case DELETE_SELECTED_PHOTOS:
+      return {
+        selectedList: []
       };
     default:
       return state;

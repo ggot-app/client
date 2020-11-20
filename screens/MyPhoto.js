@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 
 import { getPhotosByUserId } from '../utils/api';
-import { he } from 'date-fns/locale';
 
 export default function MyPhoto() {
   const [ myPhotoList, setMyPhotoList ] = useState([]);
@@ -119,14 +118,13 @@ const styles = StyleSheet.create({
   },
   myPhotoList: {
     width: '100%',
-    height: '100%',
-    backgroundColor: 'skyblue'
+    height: '100%'
   },
   myPhoto: {
     flex: 1,
     aspectRatio: 1,
     borderWidth: 1,
-    borderColor: 'red'
+    marginBottom: 1
   },
   image: {
     width: '100%',
