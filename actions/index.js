@@ -3,6 +3,9 @@ import {
   USER_LOGOUT,
   COUNT_PHOTO,
   DECOUNT_PHOTO,
+  SET_USER_LOCATION,
+  SET_PHOTOS_DATA,
+  SET_PHOTOS_FOCUS,
 } from '../constants/actionTypes';
 
 export const getUserLogin = userData => {
@@ -30,4 +33,25 @@ export const deCountPhoto = itemList => {
     type: DECOUNT_PHOTO,
     itemList,
   };
+};
+
+export const setUserLocation = coords => {
+  return {
+    type: SET_USER_LOCATION,
+    coords,
+  };
+};
+
+export const setPhotosData = photoDataList => {
+  return {
+    type: SET_PHOTOS_DATA,
+    photoDataList,
+  }
+};
+
+export const setPhotosFocus = focusedNumber => {
+  return {
+    type: SET_PHOTOS_FOCUS,
+    focusedNumber,
+  }
 };

@@ -1,39 +1,54 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, RefreshControl, FlatList, Image, TouchableOpacity } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { StyleSheet, View, RefreshControl, FlatList, Image, TouchableOpacity, Modal } from 'react-native';
 import * as Location from 'expo-location';
 
 import { getPhotosByLocation } from '../utils/api';
+import { setUserLocation } from '../actions/index';
 
 import Map from '../components/Map';
+import PhotoModalView from '../components/PhotoModalView';
 
-export default function Home({ route, navigation }) {
+export default function Home({ navigation }) {
+  const dispatch = useDispatch();
+  const [ modalVisible, setModalVisible ] = useState(false);
   const [ refreshing, setRefreshing ] = useState(true);
   const [ data, setData ] = useState([]);
+  const [ focusedItemNumber, setfocusedItemNumber ] = useState(null);
 
   const onRefresh = () => {
     (async function () {
-      const location = await Location.getCurrentPositionAsync({});
+      const userLocation = await Location.getCurrentPositionAsync({});
 
-      if (location) {
+      if (userLocation) {
         const coords = {
-          lat: location.coords.latitude,
-          lng: location.coords.longitude,
+          lat: userLocation.coords.latitude,
+          lng: userLocation.coords.longitude,
         };
         const result = await getPhotosByLocation(coords);
+        dispatch(setUserLocation(coords));
         setRefreshing(false);
         setData(result);
       }
     })();
   };
-  const renderItem = ({ item }) => {
+  const renderItem = ({ index, item }) => {
     return (
       <View
         style={styles.photoContainer}
       >
-        <Image
-          style={styles.photo}
-          source={{ uri: item.uri }}
-        />
+        <TouchableOpacity
+          style={styles.photoTouchContainer}
+          onPress={() => {
+            setModalVisible(true)
+            setfocusedItemNumber(index);
+          }}
+        >
+          <Image
+            style={styles.photo}
+            source={{ uri: item.uriList[0] }}
+          />
+        </TouchableOpacity>
       </View>
     );
   };
@@ -47,7 +62,7 @@ export default function Home({ route, navigation }) {
       <View style={styles.mapWrapper}>
         <TouchableOpacity
           style={styles.mapContainer}
-          onPress={() => navigation.navigate('PhotoMap')}
+          onPress={() => navigation.navigate('PhotoMap', { data, focusNumber: 0 })}
         >
           <Map />
         </TouchableOpacity>
@@ -68,6 +83,13 @@ export default function Home({ route, navigation }) {
           }
         />
       </View>
+      <Modal
+        animationType='slide'
+        transparent={true}
+        visible={modalVisible}
+      >
+        <PhotoModalView navigation={navigation} data={data} focusedItemNumber={focusedItemNumber} setModalVisible={setModalVisible}/>
+      </Modal>
     </View>
   );
 }
@@ -80,7 +102,7 @@ const styles = StyleSheet.create({
   },
   mapWrapper: {
     width: '100%',
-    flex: 1,
+    height: 100
   },
   photoListWrapper: {
     width: '100%',
@@ -95,7 +117,11 @@ const styles = StyleSheet.create({
   photoContainer: {
     flex: 1,
     aspectRatio: 1,
-    padding: 1
+    padding: 1,
+  },
+  photoTouchContainer: {
+    width: '100%',
+    height: '100%',
   },
   photo: {
     width: '100%',
