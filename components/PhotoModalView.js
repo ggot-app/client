@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { StyleSheet, TouchableOpacity, Text, View, Image } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import ViewPager from '@react-native-community/viewpager';
 import { AntDesign } from '@expo/vector-icons';
 
-export default function PhotoModal({ navigation, data, focusedItemNumber, setModalVisible }) {
-  const [ currentPage, setCurrentPage ] = useState(0);
+import { setPhotoFocus } from '../actions/index';
+
+export default function PhotoModal({ navigation, setModalVisible }) {
+  const dispatch = useDispatch();
+  const photoData = useSelector(state => state.photosByLocation.photoData);
+  const focusedNumber = useSelector(state => state.photosByLocation.focusedNumber);
+  const [ currentPageNumber, setCurrentPageNumber ] = useState(0);
 
   return (
     <View
@@ -24,10 +30,10 @@ export default function PhotoModal({ navigation, data, focusedItemNumber, setMod
         <ViewPager
           style={styles.modalImageContainer}
           initialPage={0}
-          onPageSelected={(e)=> setCurrentPage(e.nativeEvent.position)}
+          onPageSelected={(e)=> setCurrentPageNumber(e.nativeEvent.position)}
         >
           {
-            data[focusedItemNumber].uriList.map((uri, i) => {
+            photoData[focusedNumber].uriList.map((uri, i) => {
               return (
                 <View
                   style={styles.modalImageBox}
@@ -44,11 +50,11 @@ export default function PhotoModal({ navigation, data, focusedItemNumber, setMod
         </ViewPager>
         <View style={styles.modalImageIndicator}>
           {
-            data[focusedItemNumber].uriList.map((_, i) => {
+            photoData[focusedNumber].uriList.map((_, i) => {
               return (
                 <View
                   key={i}
-                  style={[styles.indicatorDot, currentPage === i ? styles.indicatorDotCurrent : styles.indicatorDot ]}
+                  style={[styles.indicatorDot, currentPageNumber === i ? styles.indicatorDotCurrent : styles.indicatorDot ]}
                 />
               );
             })
@@ -56,21 +62,22 @@ export default function PhotoModal({ navigation, data, focusedItemNumber, setMod
         </View>
         <View style={styles.modalDescription}>
           <Text>
-            {data[focusedItemNumber].description}
+            {photoData[focusedNumber].description}
           </Text>
         </View>
         <TouchableOpacity
           style={styles.modalMapViewContainer}
           onPress={() => {
             setModalVisible(false);
-            navigation.navigate('PhotoMap', { data, focusNumber: focusedItemNumber, fromModal: true });
+            dispatch(setPhotoFocus(currentPageNumber));
+            navigation.push('PhotoMap');
           }}
         >
           <MapView
             style={styles.modalMapView}
             initialRegion={{
-              latitude: data[focusedItemNumber].location.lat,
-              longitude: data[focusedItemNumber].location.lng,
+              latitude: photoData[focusedNumber].location.lat,
+              longitude: photoData[focusedNumber].location.lng,
               latitudeDelta: 0,
               longitudeDelta: 0.005
             }}
@@ -78,8 +85,8 @@ export default function PhotoModal({ navigation, data, focusedItemNumber, setMod
           >
             <Marker
               coordinate={{
-                latitude: data[focusedItemNumber].location.lat,
-                longitude: data[focusedItemNumber].location.lng,
+                latitude: photoData[focusedNumber].location.lat,
+                longitude: photoData[focusedNumber].location.lng,
               }}
             />
           </MapView>

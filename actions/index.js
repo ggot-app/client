@@ -42,14 +42,14 @@ export const setUserLocation = coords => {
   };
 };
 
-export const setPhotosData = photoDataList => {
+export const setPhotoData = photoData => {
   return {
     type: SET_PHOTOS_DATA,
-    photoDataList,
+    photoData,
   }
 };
 
-export const setPhotosFocus = focusedNumber => {
+export const setPhotoFocus = focusedNumber => {
   return {
     type: SET_PHOTOS_FOCUS,
     focusedNumber,
