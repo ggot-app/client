@@ -1,27 +1,52 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { StyleSheet, View, Image } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import ViewPager from '@react-native-community/viewpager';
+import { AntDesign } from '@expo/vector-icons';
 
 export default function PhotoMap({ route, navigation }) {
-  let photoData = useSelector(state => state.photosByLocation.photoData);
-  let focusedNumber = useSelector(state => state.photosByLocation.focusedNumber);
-  if (focusedNumber === null) focusedNumber = 0;
+  let mapInstance;
+  const { photoList, focusedPhotoNumber, fromModal } = route.params;
+  const [ list, setList ] = useState(photoList);
+  const [ focusedNumber, setFocusedNumber ] = useState(focusedPhotoNumber);
+
+  const changePhotoFocus = direction => {
+    if (direction === 'right') {
+      if (focusedNumber < list.length -1) {
+        mapInstance.animateToRegion({
+          latitude: list[focusedNumber + 1].location.lat,
+          longitude: list[focusedNumber + 1].location.lng,
+          latitudeDelta: 0,
+          longitudeDelta: 0.005
+        });
+        setFocusedNumber(focusedNumber + 1);
+      }
+    } else if (direction === 'left') {
+      if (focusedNumber > 0) {
+        mapInstance.animateToRegion({
+          latitude: list[focusedNumber - 1].location.lat,
+          longitude: list[focusedNumber - 1].location.lng,
+          latitudeDelta: 0,
+          longitudeDelta: 0.005
+        });
+        setFocusedNumber(focusedNumber - 1);
+      }
+    }
+  };
 
   return (
     <View style={styles.mapContainer}>
       <MapView
+        ref={(ref) => mapInstance = ref}
         style={styles.mapView}
         initialRegion={{
-          latitude: photoData[focusedNumber].location.lat,
-          longitude: photoData[focusedNumber].location.lng,
+          latitude: list[focusedNumber].location.lat,
+          longitude: list[focusedNumber].location.lng,
           latitudeDelta: 0,
           longitudeDelta: 0.005
         }}
       >
         {
-          photoData.map(item => {
+          list.map((item, i) => {
             return (
               <Marker
                 key={item.location.lat}
@@ -29,34 +54,43 @@ export default function PhotoMap({ route, navigation }) {
                   latitude: item.location.lat,
                   longitude: item.location.lng,
                 }}
-              />
+                onPress={() => {
+                  setFocusedNumber(i);
+                }}
+              >
+                {
+                  i === focusedNumber &&
+                  <View
+                    style={styles.markerDim}
+                  >
+                    <Image
+                      style={styles.markerPhoto}
+                      source={{uri: list[focusedNumber].uriList[0]}}
+                    />
+                  </View>
+                }
+              </Marker>
             );
           })
         }
       </MapView>
-      <View
-        style={styles.PhotoMapindicator}
-      >
-        <ViewPager
-          style={styles.itemContainer}
-          initialPage={0}
+      <View style={styles.PhotoMapindicator}>
+        <TouchableOpacity
+          onPress={() => changePhotoFocus('left')}
+          style={styles.currentPhotoChangeButton}
         >
-          {
-            photoData.map((item, i) => {
-              return (
-                <View
-                  style={styles.itemBox}
-                  key={item.uriList[0]}
-                >
-                  <Image
-                    style={styles.itemImage}
-                    source={{ uri: item.uriList[0] }}
-                  />
-                </View>
-              );
-            })
-          }
-        </ViewPager>
+          <AntDesign name='left' size={24} color='white'/>
+        </TouchableOpacity>
+        <Image
+          style={styles.currentPhoto}
+          source={{uri: list[focusedNumber].uriList[0]}}
+        />
+        <TouchableOpacity
+          onPress={() => changePhotoFocus('right')}
+          style={styles.currentPhotoChangeButton}
+        >
+          <AntDesign name='right' size={24} color='white'/>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -73,30 +107,41 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   PhotoMapindicator: {
+    display: 'flex',
+    flexDirection: 'row',
     position: 'absolute',
+    top: '75%',
     left: 0,
     right: 0,
-    bottom: 0,
+    bottom: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: 30
   },
-  itemContainer: {
-    width: 100,
+  currentPhoto: {
+    height: '100%',
     aspectRatio: 1,
-    backgroundColor: 'red',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  itemBox: {
-    backgroundColor: 'yellow',
-    width: '100%',
+  currentPhotoChangeButton: {
+    width: 30,
     height: '100%',
+    backgroundColor: 'rgba(0,0,0,0.1)',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  itemImage: {
-    width: '100%',
-    height: '100%',
+  markerPhoto: {
+    width: 50,
+    height: 50,
+    borderRadius: 100,
   },
+  markerDim: {
+    width: 60,
+    height: 60,
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 100,
+    zIndex: 100,
+  }
 });
