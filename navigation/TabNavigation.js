@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import HomeStack from './stacks/HomeStack';
 import NewStack from './stacks/NewStack';
+import HomeStack from './stacks/HomeStack';
 import MyPageStack from './stacks/MyPageStack';
 
 export default function TabNavigation() {

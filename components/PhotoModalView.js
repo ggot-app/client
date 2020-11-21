@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import MapView, { Marker } from 'react-native-maps';
-import { useSelector, useDispatch } from 'react-redux';
 import ViewPager from '@react-native-community/viewpager';
 import {
   Text,
@@ -11,7 +10,12 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-export default function PhotoModalView({ navigation, setModalVisible, photoList, focusedPhotoNumber }) {
+export default function PhotoModalView({
+  photoList,
+  navigation,
+  setModalVisible,
+  focusedPhotoNumber
+}) {
   const [ currentPageNumber, setCurrentPageNumber ] = useState(0);
 
   return (

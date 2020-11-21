@@ -9,14 +9,14 @@ import {
 } from 'react-native';
 
 import New from '../../screens/New';
-import Location from '../../screens/Location';
 import Gallery from '../../screens/Gallery';
+import Location from '../../screens/Location';
 
 const NewStack = createStackNavigator();
 
 export default function NewStackNavigation() {
-  const selectedPhotoList = useSelector(state => state.selectedPhotos.selectedList);
   const userMarkedLocation = useSelector(state => state.user.coords);
+  const selectedPhotoList = useSelector(state => state.selectedPhotos.selectedList);
 
   return (
     <NewStack.Navigator

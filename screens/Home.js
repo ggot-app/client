@@ -10,11 +10,12 @@ import Map from '../components/Map';
 import PhotoModalView from '../components/PhotoModalView';
 
 export default function Home({ navigation }) {
-  const dispatch = useDispatch();
   const [ photoList, setPhotoList ] = useState([]);
-  const [ focusedPhotoNumber, setFocusedPhotoNumber ] = useState(0);
-  const [ modalVisible, setModalVisible ] = useState(false);
   const [ refreshing, setRefreshing ] = useState(true);
+  const [ modalVisible, setModalVisible ] = useState(false);
+  const [ focusedPhotoNumber, setFocusedPhotoNumber ] = useState(0);
+
+  const dispatch = useDispatch();
 
   const onRefresh = async () => {
     const userLocation = await Location.getCurrentPositionAsync({});
@@ -34,7 +35,7 @@ export default function Home({ navigation }) {
         <TouchableOpacity
           style={styles.photoTouchContainer}
           onPress={() => {
-            setModalVisible(true)
+            setModalVisible(true);
             setFocusedPhotoNumber(index);
           }}
         >

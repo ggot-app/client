@@ -7,7 +7,11 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-export default function Photo({ item, selectedList, selectPhoto }) {
+export default function Photo({
+  item,
+  selectPhoto,
+  selectedList
+}) {
   return (
     <TouchableOpacity
       style={styles.photoBox}
