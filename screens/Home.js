@@ -9,23 +9,15 @@ import { setUserLocation } from '../actions/index';
 import Map from '../components/Map';
 import PhotoModalView from '../components/PhotoModalView';
 
-import { getPhotosByLocation } from '../utils/api';
-import { setUserLocation, setPhotoFocus } from '../actions/index';
-
 export default function Home({ navigation }) {
   const dispatch = useDispatch();
   const [ photoList, setPhotoList ] = useState([]);
   const [ focusedPhotoNumber, setFocusedPhotoNumber ] = useState(0);
   const [ modalVisible, setModalVisible ] = useState(false);
   const [ refreshing, setRefreshing ] = useState(true);
-  const [ data, setData ] = useState([]);
 
-  const onRefresh = () => {
-    (async function () {
-      const userLocation = await Location.getCurrentPositionAsync({});
-
-      if (userLocation) {
-        const result = await getPhotosByLocation(userLocation.coords);
+  const onRefresh = async () => {
+    const userLocation = await Location.getCurrentPositionAsync({});
 
     if (userLocation) {
       const result = await getPhotosByLocation(userLocation.coords);
@@ -91,6 +83,8 @@ export default function Home({ navigation }) {
         visible={modalVisible}
       >
         <PhotoModalView
+          photoList={photoList}
+          focusedPhotoNumber={focusedPhotoNumber}
           navigation={navigation}
           setModalVisible={setModalVisible}
         />
@@ -139,4 +133,3 @@ const styles = StyleSheet.create({
     height: '100%'
   }
 });
-

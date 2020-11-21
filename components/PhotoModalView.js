@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
-import { StyleSheet, TouchableOpacity, Text, View, Image } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { useSelector, useDispatch } from 'react-redux';
 import ViewPager from '@react-native-community/viewpager';
@@ -12,14 +11,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import { setPhotoFocus } from '../actions/index';
-
-export default function PhotoModalView({ navigation, setModalVisible }) {
-  const dispatch = useDispatch();
-
-  const photoData = useSelector(state => state.photosByLocation.photoData);
-  const focusedNumber = useSelector(state => state.photosByLocation.focusedNumber);
-
+export default function PhotoModalView({ navigation, setModalVisible, photoList, focusedPhotoNumber }) {
   const [ currentPageNumber, setCurrentPageNumber ] = useState(0);
 
   return (
