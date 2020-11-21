@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { StyleSheet, View, RefreshControl, FlatList, Image, TouchableOpacity, Modal } from 'react-native';
 import * as Location from 'expo-location';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  View,
-  Modal,
-  Image,
-  FlatList,
-  StyleSheet,
-  RefreshControl,
-  TouchableOpacity
-} from 'react-native';
+
+import { getPhotosByLocation } from '../utils/api';
+import { setUserLocation } from '../actions/index';
 
 import Map from '../components/Map';
 import PhotoModalView from '../components/PhotoModalView';
@@ -19,9 +14,8 @@ import { setUserLocation, setPhotoFocus } from '../actions/index';
 
 export default function Home({ navigation }) {
   const dispatch = useDispatch();
-
-  const photoData = useSelector(state => state.photosByLocation.photoData);
-
+  const [ photoList, setPhotoList ] = useState([]);
+  const [ focusedPhotoNumber, setFocusedPhotoNumber ] = useState(0);
   const [ modalVisible, setModalVisible ] = useState(false);
   const [ refreshing, setRefreshing ] = useState(true);
   const [ data, setData ] = useState([]);
@@ -33,11 +27,12 @@ export default function Home({ navigation }) {
       if (userLocation) {
         const result = await getPhotosByLocation(userLocation.coords);
 
-        dispatch(setUserLocation(userLocation.coords));
-        setRefreshing(false);
-        setData(result);
-      }
-    })();
+    if (userLocation) {
+      const result = await getPhotosByLocation(userLocation.coords);
+      dispatch(setUserLocation(userLocation.coords));
+      setPhotoList(result);
+      setRefreshing(false);
+    }
   };
   const renderItem = ({ index, item }) => {
     return (
@@ -47,8 +42,8 @@ export default function Home({ navigation }) {
         <TouchableOpacity
           style={styles.photoTouchContainer}
           onPress={() => {
-            setModalVisible(true);
-            dispatch(setPhotoFocus(index));
+            setModalVisible(true)
+            setFocusedPhotoNumber(index);
           }}
         >
           <Image
@@ -69,7 +64,7 @@ export default function Home({ navigation }) {
       <View style={styles.mapWrapper}>
         <TouchableOpacity
           style={styles.mapContainer}
-          onPress={() => navigation.navigate('PhotoMap')}
+          onPress={() => navigation.navigate('PhotoMap', { photoList: photoList, focusedPhotoNumber: 0, fromModal: false })}
         >
           <Map isScrollEnabled={false} />
         </TouchableOpacity>
@@ -77,7 +72,7 @@ export default function Home({ navigation }) {
       <View style={styles.photoListWrapper}>
         <FlatList
           style={styles.photoList}
-          data={photoData}
+          data={photoList}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
           keyExtractor={item => item.uri}
@@ -144,3 +139,4 @@ const styles = StyleSheet.create({
     height: '100%'
   }
 });
+

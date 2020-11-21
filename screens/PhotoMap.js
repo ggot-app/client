@@ -1,78 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { StyleSheet, View, Image } from 'react-native';
-import ViewPager from '@react-native-community/viewpager';
+import { AntDesign } from '@expo/vector-icons';
 
-export default function PhotoMap({ route }) {
-  const { data, focusNumber, fromModal } = route.params;
+export default function PhotoMap({ route, navigation }) {
+  let mapInstance;
+  const { photoList, focusedPhotoNumber, fromModal } = route.params;
+  const [ list, setList ] = useState(photoList);
+  const [ focusedNumber, setFocusedNumber ] = useState(focusedPhotoNumber);
 
-  const [ userPhotoData, setUserPhotoData ] = useState([]);
-  const [ focusMarkNumber, setFocusMarkNumber ] = useState(0);
-
-  useEffect(() => {
-    if (fromModal) {
-      const set = [
-        {
-          'description': '사진 1번입미다.',
-          'location': {
-            'lat': 37.505819,
-            'lng': 127.057972,
-          },
-          'uriList': [
-            'https://www.bloter.net/wp-content/uploads/2016/08/%EC%8A%A4%EB%A7%88%ED%8A%B8%ED%8F%B0-%EC%82%AC%EC%A7%84.jpg',
-            'https://rgo4.com/files/attach/images/2681740/851/579/024/0c2d684424cfdafca7ae9db913d3d46b.jpg',
-          ],
-        },
-        {
-          'description': '사진 2번입미다.',
-          'location': {
-            'lat': 37.505838,
-            'lng': 127.056136,
-          },
-          'uriList': [
-            'https://rgo4.com/files/attach/images/2681740/851/579/024/0c2d684424cfdafca7ae9db913d3d46b.jpg',
-          ],
-        },
-        {
-          'description': '사진 3번입미다.',
-          'location': {
-            'lat': 37.506181,
-            'lng': 127.060024,
-          },
-          'uriList': [
-            'https://www.ilovepc.co.kr/news/photo/201806/19539_35706_255.jpg',
-          ],
-        },
-        {
-          'description': '사진 4번입미다.',
-          'location': {
-            'lat': 37.507317,
-            'lng': 127.060659,
-          },
-          'uriList': [
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlD1ofBKHSDriEDZWpnQsK5i-ZIFrAkNuxoA&usqp=CAU',
-          ],
-        },
-      ];
-      setUserPhotoData(set);
+  const changePhotoFocus = direction => {
+    if (direction === 'right') {
+      if (focusedNumber < list.length -1) {
+        mapInstance.animateToRegion({
+          latitude: list[focusedNumber + 1].location.lat,
+          longitude: list[focusedNumber + 1].location.lng,
+          latitudeDelta: 0,
+          longitudeDelta: 0.005
+        });
+        setFocusedNumber(focusedNumber + 1);
+      }
+    } else if (direction === 'left') {
+      if (focusedNumber > 0) {
+        mapInstance.animateToRegion({
+          latitude: list[focusedNumber - 1].location.lat,
+          longitude: list[focusedNumber - 1].location.lng,
+          latitudeDelta: 0,
+          longitudeDelta: 0.005
+        });
+        setFocusedNumber(focusedNumber - 1);
+      }
     }
-    setFocusMarkNumber(focusNumber);
-    setUserPhotoData(data);
-  }, [userPhotoData]);
+  };
 
   return (
     <View style={styles.mapContainer}>
       <MapView
+        ref={(ref) => mapInstance = ref}
         style={styles.mapView}
         initialRegion={{
-          latitude: data[focusMarkNumber].location.latitude,
-          longitude: data[focusMarkNumber].location.longitude,
+          latitude: list[focusedNumber].location.lat,
+          longitude: list[focusedNumber].location.lng,
           latitudeDelta: 0,
           longitudeDelta: 0.005
         }}
       >
         {
-          photoData.map(item => {
+          list.map((item, i) => {
             return (
               <Marker
                 key={item.location.lat}
@@ -80,34 +54,43 @@ export default function PhotoMap({ route }) {
                   latitude: item.location.lat,
                   longitude: item.location.lng,
                 }}
-              />
+                onPress={() => {
+                  setFocusedNumber(i);
+                }}
+              >
+                {
+                  i === focusedNumber &&
+                  <View
+                    style={styles.markerDim}
+                  >
+                    <Image
+                      style={styles.markerPhoto}
+                      source={{uri: list[focusedNumber].uriList[0]}}
+                    />
+                  </View>
+                }
+              </Marker>
             );
           })
         }
       </MapView>
-      <View
-        style={styles.PhotoMapindicator}
-      >
-        <ViewPager
-          style={styles.itemContainer}
-          initialPage={0}
+      <View style={styles.PhotoMapindicator}>
+        <TouchableOpacity
+          onPress={() => changePhotoFocus('left')}
+          style={styles.currentPhotoChangeButton}
         >
-          {
-            photoData.map((item, i) => {
-              return (
-                <View
-                  style={styles.itemBox}
-                  key={item.uriList[0]}
-                >
-                  <Image
-                    style={styles.itemImage}
-                    source={{ uri: item.uriList[0] }}
-                  />
-                </View>
-              );
-            })
-          }
-        </ViewPager>
+          <AntDesign name='left' size={24} color='white'/>
+        </TouchableOpacity>
+        <Image
+          style={styles.currentPhoto}
+          source={{uri: list[focusedNumber].uriList[0]}}
+        />
+        <TouchableOpacity
+          onPress={() => changePhotoFocus('right')}
+          style={styles.currentPhotoChangeButton}
+        >
+          <AntDesign name='right' size={24} color='white'/>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -124,30 +107,41 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   PhotoMapindicator: {
+    display: 'flex',
+    flexDirection: 'row',
     position: 'absolute',
+    top: '75%',
     left: 0,
     right: 0,
-    bottom: 0,
+    bottom: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: 30
   },
-  itemContainer: {
-    width: 100,
-    aspectRatio: 1,
-    backgroundColor: 'red',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  itemBox: {
-    backgroundColor: 'yellow',
-    width: '100%',
+  currentPhoto: {
     height: '100%',
+    aspectRatio: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
-  itemImage: {
-    width: '100%',
-    height: '100%'
+  currentPhotoChangeButton: {
+    width: 30,
+    height: '100%',
+    backgroundColor: 'rgba(0,0,0,0.1)',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  markerPhoto: {
+    width: 50,
+    height: 50,
+    borderRadius: 100,
+  },
+  markerDim: {
+    width: 60,
+    height: 60,
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 100,
+    zIndex: 100,
   }
 });

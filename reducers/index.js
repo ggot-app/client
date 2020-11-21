@@ -3,11 +3,9 @@ import { combineReducers } from 'redux';
 import user from './user';
 import modal from './modal';
 import selectedPhotos from './selectedPhotos';
-import photosByLocation from './photosByLocation';
 
 export default combineReducers({
   user,
   modal,
   selectedPhotos,
-  photosByLocation,
 });
