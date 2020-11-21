@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import * as Location from 'expo-location';
 import { useDispatch, useSelector } from 'react-redux';
-import { StyleSheet, View, RefreshControl, FlatList, Image, TouchableOpacity, Modal } from 'react-native';
-
-import { getPhotosByLocation } from '../utils/api';
-import { setUserLocation, setPhotoFocus } from '../actions/index';
+import {
+  View,
+  Modal,
+  Image,
+  FlatList,
+  StyleSheet,
+  RefreshControl,
+  TouchableOpacity
+} from 'react-native';
 
 import Map from '../components/Map';
 import PhotoModalView from '../components/PhotoModalView';
+
+import { getPhotosByLocation } from '../utils/api';
+import { setUserLocation, setPhotoFocus } from '../actions/index';
 
 export default function Home({ navigation }) {
   const dispatch = useDispatch();
@@ -87,7 +95,10 @@ export default function Home({ navigation }) {
         transparent={true}
         visible={modalVisible}
       >
-        <PhotoModalView navigation={navigation} setModalVisible={setModalVisible}/>
+        <PhotoModalView
+          navigation={navigation}
+          setModalVisible={setModalVisible}
+        />
       </Modal>
     </View>
   );

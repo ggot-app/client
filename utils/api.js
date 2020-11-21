@@ -48,7 +48,7 @@ const getLogIn = async (dispatch, email, photoUrl) => {
 
       await AsyncStorage.setItem(LOGIN_DATA, JSON.stringify(loginData));
       dispatch(getUserLogin(ggotUser));
-      axios.defaults.headers.common['Authorization'] = token;
+      axios.defaults.headers.common['Authorization'] = token; // 적당한 위치가 아님
     }
   } catch (err) {
     console.log(err);

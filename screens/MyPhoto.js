@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ViewPager from '@react-native-community/viewpager';
 import {
   Text,
@@ -7,19 +7,40 @@ import {
   Modal,
   Image,
   FlatList,
+  Dimensions,
   StyleSheet,
   TouchableOpacity,
-  TouchableHighlight
+  TouchableHighlight,
+  ScrollView
 } from 'react-native';
 
 import { getPhotosByUserId } from '../utils/api';
+import { openModal, closeModal } from '../actions/index';
+
+// const window = Dimensions.get('window');
+// const screen = Dimensions.get('screen');
 
 export default function MyPhoto() {
   const [ myPhotoList, setMyPhotoList ] = useState([]);
-  const [ modalVisible, setModalVisible ] = useState(false);
-  const [ currentPhoto, setCurrentPhoto ] = useState([]);
+  const [ currentPhoto, setCurrentPhoto ] = useState([]); // 변수명이 적합하지 않음
+  // const [ dimensions, setDimenstions ] = useState({ window, screen });
 
+  const dispatch = useDispatch();
+
+  const modalVisible = useSelector(state => state.modal.isModalOpened);
   const user_Id = useSelector(state => state.user.userData._id);
+
+  // const onChange = ({ window, screen }) => {
+  //   setDimenstions({ window, screen });
+  // };
+
+  // useEffect(() => {
+  //   Dimensions.addEventListener('change', onChange);
+
+  //   return () => {
+  //     Dimensions.removeEventListener('change', onChange);
+  //   };
+  // });
 
   useEffect(() => {
     (async () => {
@@ -38,8 +59,12 @@ export default function MyPhoto() {
     <View style={styles.myPhotoWrapper}>
       <FlatList
         numColumns={3}
-        keyExtractor={(item) => item.published_at}
+        keyExtractor={(item) => item.photo_url_list[0]}
         data={myPhotoList}
+        // onEndReached={()=> {
+        //   console.log(1);
+        // }}
+        // onEndReachedThreshold={0.5}
         style={styles.myPhotoList}
         renderItem={({ item }) => {
           return (
@@ -47,8 +72,8 @@ export default function MyPhoto() {
               <TouchableOpacity
                 style={styles.myPhoto}
                 onPress={() => {
-                  setModalVisible(true);
                   setCurrentPhoto(item.photo_url_list);
+                  dispatch(openModal());
                 }}
               >
                 <Image
@@ -75,7 +100,7 @@ export default function MyPhoto() {
           <TouchableHighlight
               style={styles.closeButton}
               onPress={() => {
-                setModalVisible(!modalVisible);
+                dispatch(closeModal());
               }}
             >
               <Text style={styles.buttonText}>
