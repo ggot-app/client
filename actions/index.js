@@ -1,8 +1,6 @@
 import {
   USER_LOGIN,
   USER_LOGOUT,
-  OPEN_MODAL,
-  CLOSE_MODAL,
   COUNT_PHOTO,
   DECOUNT_PHOTO,
   SET_USER_LOCATION,
@@ -46,17 +44,5 @@ export const setUserLocation = coords => {
   return {
     type: SET_USER_LOCATION,
     coords
-  };
-};
-
-export const openModal = () => {
-  return {
-    type: OPEN_MODAL
-  };
-};
-
-export const closeModal = () => {
-  return {
-    type: CLOSE_MODAL
   };
 };

@@ -13,36 +13,52 @@ import {
 export default function PhotoModalView({
   photoList,
   navigation,
-  setModalVisible,
+  setIsModalVisible,
   focusedPhotoNumber
 }) {
-  const [ currentPageNumber, setCurrentPageNumber ] = useState(0);
+  const [ currentPhotoNumber, setCurrentPhotoNumber ] = useState(0);
+
+  const closingModal = () => setIsModalVisible(false);
+  const onChangeCurrentPhotoNumber = (e) => {
+    setCurrentPhotoNumber(e.nativeEvent.position);
+  };
+  const onChangePhotoMap = () => {
+    setIsModalVisible(false);
+    navigation.navigate(
+      'PhotoMap',
+      {
+        photoList,
+        focusedPhotoNumber
+      });
+  };
 
   return (
     <View
       style={styles.modalDim}
-      onPress={() => {
-        setModalVisible(false);
-      }}
+      onPress={closingModal}
     >
       <View style={styles.modalContent}>
         <TouchableOpacity
           style={styles.modalCloseButton}
-          onPress={() => setModalVisible(false)}
+          onPress={closingModal}
         >
-          <AntDesign name="closecircleo" size={24} color='white' />
+          <AntDesign
+            name="closecircleo"
+            size={24}
+            color='black'
+          />
         </TouchableOpacity>
         <ViewPager
-          style={styles.modalImageContainer}
           initialPage={0}
-          onPageSelected={(e)=> setCurrentPageNumber(e.nativeEvent.position)}
+          style={styles.modalViewPagerContainer}
+          onPageSelected={onChangeCurrentPhotoNumber}
         >
           {
-            photoList[focusedPhotoNumber].uriList.map((uri, i) => {
+            photoList[focusedPhotoNumber].photo_url_list.map((uri, index) => {
               return (
                 <View
+                  key={index}
                   style={styles.modalImageBox}
-                  key={i}
                 >
                   <Image
                     style={styles.modalImage}
@@ -55,11 +71,19 @@ export default function PhotoModalView({
         </ViewPager>
         <View style={styles.modalImageIndicator}>
           {
-            photoList[focusedPhotoNumber].uriList.map((_, i) => {
+            photoList[focusedPhotoNumber].photo_url_list.map((_, index) => {
               return (
                 <View
-                  key={i}
-                  style={[styles.indicatorDot, currentPageNumber === i ? styles.indicatorDotCurrent : styles.indicatorDot ]}
+                  key={index}
+                  style={
+                    [
+                      styles.indicatorDot,
+                      currentPhotoNumber === index ?
+                      styles.indicatorDotCurrent
+                       :
+                      styles.indicatorDot
+                    ]
+                  }
                 />
               );
             })
@@ -72,16 +96,13 @@ export default function PhotoModalView({
         </View>
         <TouchableOpacity
           style={styles.modalMapViewContainer}
-          onPress={() => {
-            setModalVisible(false);
-            navigation.navigate('PhotoMap', { photoList, focusedPhotoNumber });
-          }}
+          onPress={onChangePhotoMap}
         >
           <MapView
             style={styles.modalMapView}
             initialRegion={{
-              latitude: photoList[focusedPhotoNumber].location.lat,
-              longitude: photoList[focusedPhotoNumber].location.lng,
+              latitude: photoList[focusedPhotoNumber].location[0],
+              longitude: photoList[focusedPhotoNumber].location[1],
               latitudeDelta: 0,
               longitudeDelta: 0.005
             }}
@@ -89,8 +110,8 @@ export default function PhotoModalView({
           >
             <Marker
               coordinate={{
-                latitude: photoList[focusedPhotoNumber].location.lat,
-                longitude: photoList[focusedPhotoNumber].location.lng,
+                latitude: photoList[focusedPhotoNumber].location[0],
+                longitude: photoList[focusedPhotoNumber].location[1]
               }}
             />
           </MapView>
@@ -101,65 +122,64 @@ export default function PhotoModalView({
 }
 
 const styles = StyleSheet.create({
+  modalDim: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.8)'
+  },
+  modalContent: {
+    width: '90%',
+    height: '90%',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-end'
+  },
   modalCloseButton: {
     paddingTop: 10,
     paddingBottom: 10,
+    paddingRight: 10
+  },
+  modalViewPagerContainer: {
+    flex: 1,
+    width: '100%'
+  },
+  modalImageBox: {
     alignItems: 'center'
   },
-  modalCloseText: {
-    color: 'white'
-  },
-  modalDim: {
+  modalImage: {
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(0,0,0,0.7)',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  modalContent: {
-    width: '95%',
-    height: '80%'
-  },
-  modalMapViewContainer: {
-    width: '100%',
-    height: 100
-  },
-  modalMapView: {
-    width: '100%',
-    height: '100%'
-  },
-  modalImageContainer: {
-    width: '100%',
-    aspectRatio: 1
+    aspectRatio: 1.2
   },
   modalImageIndicator: {
-    paddingTop: 10,
-    paddingBottom: 10,
     display: 'flex',
+    width: '100%',
+    height: 20,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '100%',
-    height: 10,
-    backgroundColor: 'white',
-    borderTopWidth: 0.5,
-    borderBottomWidth: 0.5
-  },
-  indicatorDot: {
-    margin: 2,
-    width: 6,
-    height: 6,
-    borderRadius: 100,
-    borderWidth: 0.5,
-    backgroundColor: 'rgba(0,0,0,0)'
+    paddingTop: 20,
+    paddingBottom: 10
   },
   indicatorDotCurrent: {
     margin: 2,
-    width: 6,
-    height: 6,
+    width: 8,
+    height: 8,
     borderWidth: 0,
     borderRadius: 100,
-    backgroundColor: 'magenta'
+    marginLeft: 5,
+    backgroundColor: 'rosybrown'
+  },
+  indicatorDot: {
+    margin: 2,
+    width: 8,
+    height: 8,
+    borderRadius: 100,
+    borderWidth: 0.5,
+    marginLeft: 5,
+    backgroundColor: 'rgba(0,0,0,0)'
   },
   modalDescription: {
     width: '100%',
@@ -168,13 +188,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  modalImageBox: {
+  modalMapViewContainer: {
     width: '100%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center'
+    height: 100
   },
-  modalImage: {
+  modalMapView: {
     width: '100%',
     height: '100%'
   }

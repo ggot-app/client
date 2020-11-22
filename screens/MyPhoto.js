@@ -1,33 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import ViewPager from '@react-native-community/viewpager';
+import { useSelector } from 'react-redux';
 import {
-  Text,
   View,
   Modal,
   Image,
   FlatList,
   Dimensions,
+  ScrollView,
   StyleSheet,
-  TouchableOpacity,
-  TouchableHighlight,
-  ScrollView
+  TouchableOpacity
 } from 'react-native';
 
 import { getPhotosByUserId } from '../utils/api';
-import { openModal, closeModal } from '../actions/index';
+import PhotoModalView from '../components/PhotoModalView';
 
 // const window = Dimensions.get('window');
 // const screen = Dimensions.get('screen');
 
-export default function MyPhoto() {
+export default function MyPhoto({ navigation }) {
   const [ myPhotoList, setMyPhotoList ] = useState([]);
-  const [ currentPhoto, setCurrentPhoto ] = useState([]); // 변수명이 적합하지 않음
+  const [ isModalVisible, setIsModalVisible ] = useState(false);
+  const [ focusedPhotoNumber, setFocusedPhotoNumber ] = useState(0);
   // const [ dimensions, setDimenstions ] = useState({ window, screen });
 
-  const dispatch = useDispatch();
-
-  const modalVisible = useSelector(state => state.modal.isModalOpened);
   const user_Id = useSelector(state => state.user.userData._id);
 
   // const onChange = ({ window, screen }) => {
@@ -41,6 +36,25 @@ export default function MyPhoto() {
   //     Dimensions.removeEventListener('change', onChange);
   //   };
   // });
+
+  const renderItem = ({ index, item }) => {
+    return (
+      <View style={styles.contentWrpper}>
+        <TouchableOpacity
+          style={styles.myPhoto}
+          onPress={() => {
+            setIsModalVisible(true);
+            setFocusedPhotoNumber(index);
+          }}
+        >
+          <Image
+            style={styles.photo}
+            source={{ uri: item.photo_url_list[0] }}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   useEffect(() => {
     (async () => {
@@ -59,72 +73,26 @@ export default function MyPhoto() {
     <View style={styles.myPhotoWrapper}>
       <FlatList
         numColumns={3}
-        keyExtractor={(item) => item.photo_url_list[0]}
         data={myPhotoList}
+        renderItem={renderItem}
+        style={styles.myPhotoList}
+        keyExtractor={(item) => item.photo_url_list[0]}
         // onEndReached={()=> {
         //   console.log(1);
         // }}
         // onEndReachedThreshold={0.5}
-        style={styles.myPhotoList}
-        renderItem={({ item }) => {
-          return (
-            <View style={styles.contentWrpper}>
-              <TouchableOpacity
-                style={styles.myPhoto}
-                onPress={() => {
-                  setCurrentPhoto(item.photo_url_list);
-                  dispatch(openModal());
-                }}
-              >
-                <Image
-                  source={{
-                    uri: item.photo_url_list[0]
-                  }}
-                  style={styles.image}
-                />
-              </TouchableOpacity>
-            </View>
-          );
-        }}
       />
       <Modal
         animationType='slide'
         transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed');
-        }}
+        visible={isModalVisible}
       >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-          <TouchableHighlight
-              style={styles.closeButton}
-              onPress={() => {
-                dispatch(closeModal());
-              }}
-            >
-              <Text style={styles.buttonText}>
-                X
-              </Text>
-            </TouchableHighlight>
-            <ViewPager style={styles.viewPager} initialPage={0}>
-              {
-                currentPhoto.map((item, index) => {
-                  return (
-                    <View style={styles.photoWrapper} key={`${index}`}>
-                      <Image
-                        source={{
-                          uri: `${item}`
-                        }}
-                        style={styles.modalImage}
-                      />
-                    </View>
-                  );
-                })
-              }
-            </ViewPager>
-          </View>
-        </View>
+        <PhotoModalView
+          photoList={myPhotoList}
+          navigation={navigation}
+          setIsModalVisible={setIsModalVisible}
+          focusedPhotoNumber={focusedPhotoNumber}
+        />
       </Modal>
     </View>
   );
@@ -151,45 +119,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 1
   },
-  image: {
+  photo: {
     width: '100%',
     height: '100%'
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    alignItems: 'center'
-  },
-  modalView: {
-    backgroundColor: 'white',
-    borderRadius: 10,
-    width: '90%',
-    height: '80%',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-end'
-  },
-  viewPager: {
-    flex: 1,
-    width: '100%'
-  },
-  photoWrapper: {
-    alignItems: 'center',
-  },
-  modalImage: {
-    width: '100%',
-    height: '50%',
-    aspectRatio: 1.2
-  },
-  buttonText: {
-    color: 'red',
-    fontWeight: 'bold',
-    fontSize: 20,
-    textAlign: 'center'
-  },
-  closeButton: {
-    borderRadius: 400,
-    padding: 10,
-    marginRight: 10
   }
 });

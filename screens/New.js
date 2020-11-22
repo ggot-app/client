@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ViewPager from '@react-native-community/viewpager';
 import { format } from 'date-fns';
 import {
@@ -15,17 +15,14 @@ import {
 
 import Map from '../components/Map';
 import { creatingNewPhoto } from '../utils/api';
-import { closeModal } from '../actions/index';
 
 export default function New({ route, navigation }) {
   const { selectedPhotoList, userMarkedLocation } = route.params;
+  const [ isModalVisible, setIsModalVisible ] = useState(false);
   const [ description, setDescription ] = useState('');
-
-  const dispatch = useDispatch();
 
   const userId = useSelector(state => state.user.userData._id);
   const userEmail = useSelector(state => state.user.userData.email);
-  const modalVisible = useSelector(state => state.modal.isModalOpened);
 
   const currentDate = format(new Date(), 'yyyy-MM-dd');
 
@@ -48,16 +45,31 @@ export default function New({ route, navigation }) {
     published_at: currentDate
   };
 
+  const onChangeLocation = () => navigation.navigate('Location');
+  const settingDescription = description => setDescription(description);
+  const requestNewPhoto = () => {
+    creatingNewPhoto(userId, photoInfo, photoUrlList, setIsModalVisible);
+    setDescription('');
+  };
+  const onChangeMyPage = () => {
+    navigation.navigate('MyPage');
+    navigation.replace('Gallery');
+    setIsModalVisible(!isModalVisible);
+  };
+
   return (
     <View style={styles.contentWrapper}>
       <ViewPager style={styles.viewPagerWrapper} initialPage={0}>
         {
           photoUrlList.map((item, index) => {
             return (
-              <View style={styles.photoWrapper} key={`${index}`}>
+              <View
+                key={index}
+                style={styles.photoWrapper}
+              >
                 <Image
                   source={{
-                    uri: `${item.uri}`
+                    uri: item.uri
                   }}
                   style={styles.image}
                 />
@@ -68,28 +80,25 @@ export default function New({ route, navigation }) {
       </ViewPager>
       <TouchableOpacity
         style={styles.mapWrapper}
-        onPress={() => navigation.navigate('Location')}
+        onPress={onChangeLocation}
       >
         <Map isScrollEnabled={false} />
       </TouchableOpacity>
       <View style={styles.descriptionWrapper}>
         <TextInput
-          style={styles.input1}
+          style={styles.inputText}
           placeholder='당신의 이야기를 입력해주세요.'
           multiline={true}
-          onChangeText={description => setDescription(description)}
+          onChangeText={settingDescription}
           defaultValue={description}
         />
       </View>
-      <View style={styles.buttonWrapper}>
+      <View style={styles.plusButtonWrapper}>
         <TouchableOpacity
-          style={styles.enroll}
-          onPress={() => {
-            creatingNewPhoto(dispatch, userId, photoInfo, photoUrlList);
-            setDescription('');
-          }}
+          style={styles.plusButton}
+          onPress={requestNewPhoto}
         >
-          <Text style={styles.text}>
+          <Text style={styles.plubButtonText}>
             사진등록하기
           </Text>
         </TouchableOpacity>
@@ -97,23 +106,27 @@ export default function New({ route, navigation }) {
       <Modal
         animationType='slide'
         transparent={true}
-        visible={modalVisible}
+        visible={isModalVisible}
       >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>
-              Hi
-            </Text>
+        <View style={styles.modalDim}>
+          <View style={styles.modalContent}>
+            <View style={styles.modalTextBox}>
+              <Text style={styles.modalTextHeader}>
+                사진을
+              </Text>
+              <Text style={styles.modalTextMiddle}>
+                꽂
+              </Text>
+              <Text style={styles.modalTextLast}>
+                았습니다
+              </Text>
+            </View>
             <TouchableHighlight
-              style={{ ...styles.openButton }}
-              onPress={() => {
-                navigation.navigate('MyPage');
-                navigation.replace('Gallery');
-                dispatch(closeModal());
-              }}
+              style={styles.myPageButton}
+              onPress={onChangeMyPage}
             >
-              <Text style={styles.buttonText}>
-                Hide Modal
+              <Text style={styles.myPageButtonText}>
+                My Page
               </Text>
             </TouchableHighlight>
           </View>
@@ -162,60 +175,79 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderColor: 'black'
   },
-  input1: {
+  inputText: {
     height: 100,
     padding: 15,
     fontSize: 15
   },
-  buttonWrapper: {
+  plusButtonWrapper: {
     flex: 0.5,
     width: '95%',
     alignItems: 'center',
     justifyContent: 'center'
   },
-  enroll: {
+  plusButton: {
     width: '100%',
     backgroundColor: '#BEDFF7',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 15
   },
-  text: {
+  plusButtonText: {
     fontSize: 15
   },
-  centeredView: {
+  modalDim: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'black',
-    opacity: 0.7,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
     alignItems: 'center'
   },
-  modalView: {
+  modalContent: {
     margin: 20,
     backgroundColor: 'white',
+    width: '70%',
+    height: '20%',
     borderRadius: 10,
-    width: '90%',
-    height: '30%',
     justifyContent: 'center',
     alignItems: 'center'
   },
-  modalText: {
+  modalTextBox: {
+    flexDirection: 'row',
+    marginTop: 10
+  },
+  modalTextHeader: {
     marginBottom: 15,
     textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: 50
+    padding: 10,
+    fontSize: 15
   },
-  buttonText: {
-    color: 'red',
+  modalTextMiddle: {
+    marginBottom: 15,
+    textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 20,
-    textAlign: 'center'
+    marginTop: 5
   },
-  openButton: {
-    backgroundColor: 'black',
-    marginTop: 80,
-    borderRadius: 10,
-    padding: 20,
+  modalTextLast: {
+    marginBottom: 15,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    padding: 10,
+    fontSize: 15
+  },
+  myPageButton: {
+    backgroundColor: 'rosybrown',
+    width: 200,
+    borderRadius: 50,
+    marginTop: 20,
+    padding: 10,
     elevation: 2
+  },
+  myPageButtonText: {
+    color: 'grey',
+    fontWeight: 'bold',
+    fontSize: 15,
+    textAlign: 'center'
   }
 });

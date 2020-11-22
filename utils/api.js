@@ -55,7 +55,7 @@ const getLogIn = async (dispatch, email, photoUrl) => {
   }
 };
 
-export const creatingNewPhoto = async (dispatch, userId, photoInfo, photoUrlList) => {
+export const creatingNewPhoto = async (userId, photoInfo, photoUrlList, openModal) => {
   const { latitude, longitude } = photoInfo.location;
   const { resistered_by, published_at, description } = photoInfo;
 
@@ -90,7 +90,7 @@ export const creatingNewPhoto = async (dispatch, userId, photoInfo, photoUrlList
     const { result } = response.data;
 
     if (result === SUCCESS) {
-      dispatch(openModal());
+      openModal();
       dispatch(deleteSelectedPhotos());
     }
   } catch (err) {

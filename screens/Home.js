@@ -12,7 +12,7 @@ import PhotoModalView from '../components/PhotoModalView';
 export default function Home({ navigation }) {
   const [ photoList, setPhotoList ] = useState([]);
   const [ refreshing, setRefreshing ] = useState(true);
-  const [ modalVisible, setModalVisible ] = useState(false);
+  const [ isModalVisible, setIsModalVisible ] = useState(false);
   const [ focusedPhotoNumber, setFocusedPhotoNumber ] = useState(0);
 
   const dispatch = useDispatch();
@@ -29,13 +29,11 @@ export default function Home({ navigation }) {
   };
   const renderItem = ({ index, item }) => {
     return (
-      <View
-        style={styles.photoContainer}
-      >
+      <View style={styles.photoContainer}>
         <TouchableOpacity
           style={styles.photoTouchContainer}
           onPress={() => {
-            setModalVisible(true);
+            setIsModalVisible(true);
             setFocusedPhotoNumber(index);
           }}
         >
@@ -81,13 +79,13 @@ export default function Home({ navigation }) {
       <Modal
         animationType='slide'
         transparent={true}
-        visible={modalVisible}
+        visible={isModalVisible}
       >
         <PhotoModalView
           photoList={photoList}
-          focusedPhotoNumber={focusedPhotoNumber}
           navigation={navigation}
-          setModalVisible={setModalVisible}
+          setIsModalVisible={setIsModalVisible}
+          focusedPhotoNumber={focusedPhotoNumber}
         />
       </Modal>
     </View>

@@ -1,5 +1,3 @@
-export const OPEN_MODAL = 'OPEN_MODAL';
-export const CLOSE_MODAL = 'CLOSE_MODAL';
 export const USER_LOGIN = 'USER_LOGIN';
 export const USER_LOGOUT = 'USER_LOGOUT';
 export const COUNT_PHOTO = 'COUNT_PHOTO';

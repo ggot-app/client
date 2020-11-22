@@ -1,11 +1,17 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import React, { useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
+import MapView, { Marker } from 'react-native-maps';
+import {
+  View,
+  Image,
+  StyleSheet,
+  TouchableOpacity
+} from 'react-native';
 
 export default function PhotoMap({ route, navigation }) {
   let mapInstance;
-  const { photoList, focusedPhotoNumber, fromModal } = route.params;
+
+  const { photoList, focusedPhotoNumber } = route.params;
   const [ list, setList ] = useState(photoList);
   const [ focusedNumber, setFocusedNumber ] = useState(focusedPhotoNumber);
 
@@ -13,8 +19,8 @@ export default function PhotoMap({ route, navigation }) {
     if (direction === 'right') {
       if (focusedNumber < list.length -1) {
         mapInstance.animateToRegion({
-          latitude: list[focusedNumber + 1].location.lat,
-          longitude: list[focusedNumber + 1].location.lng,
+          latitude: list[focusedNumber + 1].location[0],
+          longitude: list[focusedNumber + 1].location[1],
           latitudeDelta: 0,
           longitudeDelta: 0.005
         });
@@ -23,8 +29,8 @@ export default function PhotoMap({ route, navigation }) {
     } else if (direction === 'left') {
       if (focusedNumber > 0) {
         mapInstance.animateToRegion({
-          latitude: list[focusedNumber - 1].location.lat,
-          longitude: list[focusedNumber - 1].location.lng,
+          latitude: list[focusedNumber - 1].location[0],
+          longitude: list[focusedNumber - 1].location[1],
           latitudeDelta: 0,
           longitudeDelta: 0.005
         });
@@ -39,33 +45,34 @@ export default function PhotoMap({ route, navigation }) {
         ref={(ref) => mapInstance = ref}
         style={styles.mapView}
         initialRegion={{
-          latitude: list[focusedNumber].location.lat,
-          longitude: list[focusedNumber].location.lng,
+          latitude: list[focusedNumber].location[0],
+          longitude: list[focusedNumber].location[1],
           latitudeDelta: 0,
           longitudeDelta: 0.005
         }}
       >
         {
-          list.map((item, i) => {
+          list.map((item, index) => {
             return (
               <Marker
-                key={item.location.lat}
+                style={styles.mapMarker}
+                key={item.location.latitude}
                 coordinate={{
-                  latitude: item.location.lat,
-                  longitude: item.location.lng,
+                  latitude: item.location[0],
+                  longitude: item.location[1]
                 }}
                 onPress={() => {
-                  setFocusedNumber(i);
+                  setFocusedNumber(index);
                 }}
               >
                 {
-                  i === focusedNumber &&
+                  index === focusedNumber &&
                   <View
                     style={styles.markerDim}
                   >
                     <Image
                       style={styles.markerPhoto}
-                      source={{uri: list[focusedNumber].uriList[0]}}
+                      source={{uri: list[focusedNumber].photo_url_list[0]}}
                     />
                   </View>
                 }
@@ -79,17 +86,25 @@ export default function PhotoMap({ route, navigation }) {
           onPress={() => changePhotoFocus('left')}
           style={styles.currentPhotoChangeButton}
         >
-          <AntDesign name='left' size={24} color='white'/>
+          <AntDesign
+            name='left'
+            size={24}
+            color='white'
+          />
         </TouchableOpacity>
         <Image
           style={styles.currentPhoto}
-          source={{uri: list[focusedNumber].uriList[0]}}
+          source={{uri: list[focusedNumber].photo_url_list[0]}}
         />
         <TouchableOpacity
           onPress={() => changePhotoFocus('right')}
           style={styles.currentPhotoChangeButton}
         >
-          <AntDesign name='right' size={24} color='white'/>
+          <AntDesign
+            name='right'
+            size={24}
+            color='white'
+          />
         </TouchableOpacity>
       </View>
     </View>
@@ -101,6 +116,9 @@ const styles = StyleSheet.create({
     flex: 1,
     height: '100%',
     backgroundColor: 'red'
+  },
+  mapMarker: {
+    zIndex: 90
   },
   mapView: {
     flex: 1,
@@ -115,7 +133,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 50,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   currentPhoto: {
     height: '100%',
@@ -133,7 +151,7 @@ const styles = StyleSheet.create({
   markerPhoto: {
     width: 50,
     height: 50,
-    borderRadius: 100,
+    borderRadius: 100
   },
   markerDim: {
     width: 60,
@@ -142,6 +160,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 100,
-    zIndex: 100,
+    zIndex: 100
   }
 });
