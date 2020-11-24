@@ -47,12 +47,20 @@ export default function NewStackNavigation() {
               </TouchableOpacity>
             </View>
           ),
+          headerStyle: {
+            backgroundColor: '#F2F2F0',
+          },
+          headerTintColor: '#474F59',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          }
         })}
       />
       <NewStack.Screen
         name='New'
         component={New}
         options={({ route, navigation }) => ({
+          headerTitleAlign: 'center',
           headerLeft: () => (
             <View style={styles.locationNextButton}>
               <TouchableOpacity

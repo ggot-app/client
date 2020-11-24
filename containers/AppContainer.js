@@ -74,6 +74,7 @@ export default AppContainer = () => {
   const getLogin = async () => {
     try {
       const loginData = await AsyncStorage.getItem(LOGIN_DATA);
+      // await AsyncStorage.removeItem(LOGIN_DATA);
 
       if (loginData) {
         const { TOKEN, USER } = JSON.parse(loginData);

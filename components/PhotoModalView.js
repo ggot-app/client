@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   modalContent: {
     width: '90%',
     height: '90%',
-    backgroundColor: 'white',
+    backgroundColor: '#F2F2F0',
     borderRadius: 10,
     justifyContent: 'flex-start',
     alignItems: 'flex-end'
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderRadius: 100,
     marginLeft: 5,
-    backgroundColor: 'rosybrown'
+    backgroundColor: '#BF0436'
   },
   indicatorDot: {
     margin: 2,
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
   modalDescription: {
     width: '100%',
     height: 100,
-    backgroundColor: 'white',
+    backgroundColor: '#F2F2F0',
     justifyContent: 'center',
     alignItems: 'center'
   },

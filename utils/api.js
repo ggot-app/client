@@ -5,7 +5,6 @@ import axios from './axios';
 import getEnvVars from '../environment';
 import { SUCCESS, LOGIN_DATA } from '../constants/index';
 import {
-  openModal,
   getUserLogin,
   deleteSelectedPhotos
 } from '../actions/index';
@@ -108,10 +107,14 @@ export const getPhotosByLocation = async coords => {
   }
 };
 
-export const getPhotosByUserId = async user_Id => {
+export const getPhotosByUserId = async (user_Id, pageNumber) => {
   try {
-    const response = await axios.get(`users/${user_Id}/photos`);
-
+    const response = await axios.get(`users/${user_Id}/photos`, {
+      params: {
+        page: pageNumber,
+        limit: 15
+      }
+    });
     return response.data;
   } catch (err) {
     console.warn(err);

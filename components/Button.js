@@ -24,17 +24,22 @@ export default function Button({ title, onChange }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#F2F2F0',
     alignItems: 'center',
     justifyContent: 'center'
   },
   button: {
-    backgroundColor: '#BEDFF7',
+    backgroundColor: '#F2F2F0',
+    borderWidth: 1,
+    borderColor: '#BF0436',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '90%',
+    borderRadius: 25,
+    width: '80%',
     padding: 15
   },
   text: {
-    fontSize: 12
+    fontSize: 12,
+    color: '#474F59'
   }
 });

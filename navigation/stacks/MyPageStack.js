@@ -14,7 +14,15 @@ export default function MyPageStackNavigation() {
         component={MyPage}
         options={{
           title: 'My page',
-          headerTitleAlign: 'center'
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: '#F2F2F0'
+          },
+          headerTintColor: '#474F59',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontFamily: 'googleFont'
+          }
         }}
       />
       <MyPageStack.Screen
@@ -22,7 +30,14 @@ export default function MyPageStackNavigation() {
         component={MyPhoto}
         options={{
           title: 'My Photo',
-          headerTitleAlign: 'center'
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: '#F2F2F0',
+          },
+          headerTintColor: '#474F59',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          }
         }}
       />
     </MyPageStack.Navigator>

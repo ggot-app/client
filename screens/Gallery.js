@@ -91,6 +91,7 @@ export default function Gallery() {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#F2F2F0',
     flex: 1
   },
   photoListContainer: {
@@ -108,6 +109,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 'auto',
     height: 80,
-    backgroundColor: 'white'
+    backgroundColor: '#F2F2F0'
   }
 });

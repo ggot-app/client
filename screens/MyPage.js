@@ -70,7 +70,8 @@ const styles = StyleSheet.create({
   contentWrapper: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#F2F2F0'
   },
   profileContainer: {
     flex: 2,
