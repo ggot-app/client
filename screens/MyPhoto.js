@@ -70,6 +70,7 @@ export default function MyPhoto({ navigation }) {
   }, []);
 
   return (
+
     <View style={styles.myPhotoWrapper}>
       <FlatList
         numColumns={3}
@@ -116,7 +117,6 @@ const styles = StyleSheet.create({
   myPhoto: {
     flex: 1,
     aspectRatio: 1,
-    borderWidth: 1,
     marginBottom: 1
   },
   photo: {

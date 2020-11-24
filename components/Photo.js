@@ -44,7 +44,7 @@ export default function Photo({
 
 const styles = StyleSheet.create({
   photoBox: {
-    margin: 0.5,
+    margin: 1,
     flex: 1,
     aspectRatio: 1
   },

@@ -13,7 +13,6 @@ export default function App() {
   const [ isLoaded, setIsLoaded ] = useState(false);
 
   const getAssets = async () => {
-
   };
 
   const checkPermission = async () => {
@@ -40,10 +39,10 @@ export default function App() {
   }, []);
 
   return !isLoaded ? (
-    <AppLoading/>
+    <AppLoading />
   ) : (
     <Provider store={store}>
-      <AppContainer/>
+      <AppContainer />
     </Provider>
   );
 }

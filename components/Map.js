@@ -23,7 +23,9 @@ export default function Map({ isScrollEnabled }) {
             latitudeDelta: 0,
             longitudeDelta: 0.009,
           }}
-          onPress={(e) => dispatch(setUserLocation(e.nativeEvent.coordinate))}
+          onPress={(e) => {
+            dispatch(setUserLocation(e.nativeEvent.coordinate))
+          }}
         >
           <Marker
             coordinate={{

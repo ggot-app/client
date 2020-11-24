@@ -16,9 +16,9 @@ export default function HomeStackNavigation() {
         options={{
           headerTitle: () => (
             <View
-              style={{ alignItems: 'center', flex: 1 }}
+              style={{ alignItems: 'center', flex: 1, backgroundColor: '#f7685b', height: '100%'}}
             >
-              <Text style={{ color: '#2699FB' }}>
+              <Text style={{ color: 'white' }}>
                 내 주변 꽂
               </Text>
             </View>

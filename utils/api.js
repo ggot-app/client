@@ -70,8 +70,8 @@ export const creatingNewPhoto = async (userId, photoInfo, photoUrlList, openModa
     formdata.append('image', photoProperties);
   });
 
-  formdata.append('latitude', latitude);
-  formdata.append('longitude', longitude);
+  formdata.append('latitude', Number(latitude));
+  formdata.append('longitude', Number(longitude));
   formdata.append('description', description);
   formdata.append('published_at', published_at);
   formdata.append('resistered_by', resistered_by);
@@ -117,3 +117,17 @@ export const getPhotosByUserId = async user_Id => {
     console.warn(err);
   }
 };
+
+export const getDistanceFromLatLonInMeter = (lat1,lng1,lat2,lng2) => {
+  function deg2rad(deg) {
+      return deg * (Math.PI/180);
+  }
+
+  var R = 6371;
+  var dLat = (lat2-lat1) * (Math.PI/180)
+  var dLon = deg2rad(lng2-lng1);
+  var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  var d = R * c;
+  return d * 1000;
+}

@@ -39,7 +39,7 @@ export default function Home({ navigation }) {
         >
           <Image
             style={styles.photo}
-            source={{ uri: item.uriList[0] }}
+            source={{ uri: item.photo_url_list[0] }}
           />
         </TouchableOpacity>
       </View>
@@ -66,7 +66,7 @@ export default function Home({ navigation }) {
           data={photoList}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
-          keyExtractor={item => item.uri}
+          keyExtractor={item => item.published_at}
           numColumns={3}
           refreshControl={
             <RefreshControl
@@ -125,7 +125,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     flex: 1,
-    backgroundColor: 'yellow'
   },
   mapContainer: {
     width: '100%',
