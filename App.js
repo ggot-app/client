@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { AppLoading } from 'expo';
+import * as Font from 'expo-font';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { AppLoading } from 'expo';
 import * as Permissions from 'expo-permissions';
 
 import AppContainer from './containers/AppContainer';
@@ -13,7 +14,9 @@ export default function App() {
   const [ isLoaded, setIsLoaded ] = useState(false);
 
   const getAssets = async () => {
-
+    await Font.loadAsync({
+      'googleFont': require('./assets/fonts/Poppins/Poppins-Medium.ttf')
+    });
   };
 
   const checkPermission = async () => {

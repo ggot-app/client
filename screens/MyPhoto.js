@@ -5,8 +5,6 @@ import {
   Modal,
   Image,
   FlatList,
-  Dimensions,
-  ScrollView,
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
@@ -14,28 +12,13 @@ import {
 import { getPhotosByUserId } from '../utils/api';
 import PhotoModalView from '../components/PhotoModalView';
 
-// const window = Dimensions.get('window');
-// const screen = Dimensions.get('screen');
-
 export default function MyPhoto({ navigation }) {
   const [ myPhotoList, setMyPhotoList ] = useState([]);
   const [ isModalVisible, setIsModalVisible ] = useState(false);
   const [ focusedPhotoNumber, setFocusedPhotoNumber ] = useState(0);
-  // const [ dimensions, setDimenstions ] = useState({ window, screen });
+  const [ page, setPage ] = useState(1);
 
   const user_Id = useSelector(state => state.user.userData._id);
-
-  // const onChange = ({ window, screen }) => {
-  //   setDimenstions({ window, screen });
-  // };
-
-  // useEffect(() => {
-  //   Dimensions.addEventListener('change', onChange);
-
-  //   return () => {
-  //     Dimensions.removeEventListener('change', onChange);
-  //   };
-  // });
 
   const renderItem = ({ index, item }) => {
     return (
@@ -56,13 +39,25 @@ export default function MyPhoto({ navigation }) {
     );
   };
 
+  const fetchedData = async () => {
+    const data = await getPhotosByUserId(user_Id, page);
+    const { photos } = data;
+
+    const newData = myPhotoList.concat(photos);
+
+    setMyPhotoList(newData);
+    setPage(page + 1);
+  };
+
   useEffect(() => {
     (async () => {
       try {
-        const storedData = await getPhotosByUserId(user_Id); // 변수명어쩔..
+        const storedData = await getPhotosByUserId(user_Id, page); // 변수명어쩔..
+        console.log('storedData', storedData);
         const { photos } = storedData;
 
         setMyPhotoList(photos);
+        setPage(page + 1);
       } catch (err) {
         console.warn(err);
       }
@@ -77,10 +72,10 @@ export default function MyPhoto({ navigation }) {
         renderItem={renderItem}
         style={styles.myPhotoList}
         keyExtractor={(item) => item.photo_url_list[0]}
-        // onEndReached={()=> {
-        //   console.log(1);
-        // }}
-        // onEndReachedThreshold={0.5}
+        onEndReached={()=> {
+          fetchedData();
+        }}
+        onEndReachedThreshold={0.5}
       />
       <Modal
         animationType='slide'

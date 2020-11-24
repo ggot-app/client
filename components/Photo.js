@@ -46,7 +46,8 @@ const styles = StyleSheet.create({
   photoBox: {
     margin: 0.5,
     flex: 1,
-    aspectRatio: 1
+    aspectRatio: 1,
+    backgroundColor: '#474F59'
   },
   photoDim: {
     width: '100%',
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
     margin: 5,
     borderRadius: 100,
     textAlign: 'center',
-    backgroundColor: 'rgb(252, 186, 3)',
+    backgroundColor: '#D9737B',
     fontWeight: '500',
     fontSize: 13
   },

@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { StyleSheet, View, RefreshControl, FlatList, Image, TouchableOpacity, Modal } from 'react-native';
 import * as Location from 'expo-location';
+import {
+  View,
+  Modal,
+  Image,
+  FlatList,
+  StyleSheet,
+  RefreshControl,
+  TouchableOpacity,
+} from 'react-native';
 
-import { getPhotosByLocation } from '../utils/api';
 import { setUserLocation } from '../actions/index';
+import { getPhotosByLocation } from '../utils/api';
 
 import Map from '../components/Map';
 import PhotoModalView from '../components/PhotoModalView';
@@ -22,6 +30,7 @@ export default function Home({ navigation }) {
 
     if (userLocation) {
       const result = await getPhotosByLocation(userLocation.coords);
+
       dispatch(setUserLocation(userLocation.coords));
       setPhotoList(result);
       setRefreshing(false);
@@ -96,7 +105,8 @@ const styles = StyleSheet.create({
   contentWrapper: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#020126'
   },
   mapWrapper: {
     width: '100%',

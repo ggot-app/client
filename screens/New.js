@@ -187,8 +187,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   plusButton: {
-    width: '100%',
-    backgroundColor: '#BEDFF7',
+    width: '90%',
+    borderRadius: 25,
+    borderWidth: 1,
+    backgroundColor: '#F6F6F8',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 15
@@ -204,7 +206,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     margin: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#F2F2F0',
     width: '70%',
     height: '20%',
     borderRadius: 10,
@@ -237,12 +239,15 @@ const styles = StyleSheet.create({
     fontSize: 15
   },
   myPageButton: {
-    backgroundColor: 'rosybrown',
     width: 200,
-    borderRadius: 50,
     marginTop: 20,
     padding: 10,
-    elevation: 2
+    elevation: 2,
+    borderWidth: 1,
+    borderRadius: 50,
+    color: '#474F59',
+    borderColor: '#BF0436',
+    backgroundColor: '#F2F2F0'
   },
   myPageButtonText: {
     color: 'grey',
