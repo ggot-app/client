@@ -39,7 +39,7 @@ export const renderGalleryPhotoFlatListItem = (selectedList, item, selectPhoto) 
 };
 
 export const renderGallerySelectedPhotoFlatListItem = (item, deSelectPhoto) => {
-  return ( 
+  return (
     <SelectedPhoto
       item={item}
       deSelectPhoto={deSelectPhoto}

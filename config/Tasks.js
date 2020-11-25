@@ -27,7 +27,7 @@ const Tasks = () => {
         userPhotoList.forEach(item => {
           (async function () {
             const distance = getDistanceFromLatLngInMeter(lat, lng, item.location[0], item.location[1]);
-            if (distance < 500) {
+            if (distance < 10) {
               await schedulePushNotification();
               Location.stopLocationUpdatesAsync(LOCATION_TRACKING);
             }

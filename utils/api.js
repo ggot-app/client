@@ -98,9 +98,15 @@ export const creatingNewPhoto = async (dispatch, userId, photoInfo, photoUrlList
   }
 };
 
-export const getPhotosByLocation = async coords => {
+export const getPhotosByLocation = async (coords, pageNumber) => {
   try {
-    const response = await axios.get(`/photo/location?latitude=${coords.latitude}&longitude=${coords.longitude}`);
+    const response = await axios.get(`/photo/location?latitude=${coords.latitude}&longitude=${coords.longitude}`, {
+      params: {
+        page: pageNumber,
+        limit: 15
+      }
+    });
+    console.log('##', response.data)
     return response.data;
   } catch (err) {
     console.warn(err);

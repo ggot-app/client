@@ -20,6 +20,7 @@ import BackgroundTaskConfig from '../config/Tasks';
 import Map from '../components/Map';
 import PhotoModalView from '../components/PhotoModalView';
 import { renderHomeFlatListItem } from '../components/FlatListRenderItem';
+import { set } from 'date-fns';
 
 BackgroundTaskConfig();
 NotificationConfig();
@@ -30,6 +31,7 @@ const Home = ({ navigation }) => {
   const [ refreshing, setRefreshing ] = useState(true);
   const [ isModalVisible, setIsModalVisible ] = useState(false);
   const [ focusedPhotoNumber, setFocusedPhotoNumber ] = useState(0);
+  const [ page, setPage ] = useState(1);
   const notificationListener = useRef();
   const responseListener = useRef();
 
@@ -39,11 +41,30 @@ const Home = ({ navigation }) => {
     if (userLocation) {
       dispatch(setUserLocation(userLocation.coords));
 
-      const result = await getPhotosByLocation(userLocation.coords);
-      setPhotoList(result.photos);
-      setRefreshing(false);
+      const data = await getPhotosByLocation(userLocation.coords, page);
+      const { photos } = data;
+
+      setPhotoList(photos);
+      // setPage(page + 1);
+      setRefreshing(false)
     }
   };
+
+  const getMorePhotos = async () => {
+    const userLocation = await Location.getCurrentPositionAsync({});
+
+    if (userLocation) {
+      const data = await getPhotosByLocation(userLocation.coords, page);
+      const { photos } = data;
+
+      const newData = photoList.concat(photos);
+
+      setPhotoList(newData);
+      setPage(page + 1);
+    } else {
+      alert('GPS 위치 정보를 확인해주세요');
+    }
+  }
 
   useEffect(() => {
     (async function () {
@@ -53,7 +74,7 @@ const Home = ({ navigation }) => {
       notificationListener.current = Notifications.addNotificationReceivedListener(() => {
       });
       responseListener.current = Notifications.addNotificationResponseReceivedListener(() => {
-        navigation.navigate('MyPage', { screen: 'MyPhoto'});
+        navigation.navigate('MyPage', { screen: 'MyPhoto' });
       });
     })();
 
@@ -64,6 +85,7 @@ const Home = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
+    setPage(1);
     onRefresh();
   }, [ refreshing ]);
 
@@ -91,6 +113,10 @@ const Home = ({ navigation }) => {
               onRefresh={() => setRefreshing(true)}
             />
           }
+          // onEndReached={() => {
+          //   getMorePhotos();
+          // }}
+          // onEndReachedThreshold={0.5}
         />
       </View>
       <Modal

@@ -71,7 +71,7 @@ export default function MyPhoto({ navigation }) {
         renderItem={renderItem}
         style={styles.myPhotoList}
         keyExtractor={(item) => item.photo_url_list[0]}
-        onEndReached={()=> {
+        onEndReached={() => {
           fetchedData();
         }}
         onEndReachedThreshold={0.5}

@@ -27,7 +27,8 @@
         "googleMaps": {
           "apiKey": "AIzaSyDO4G_32ZFA7VsOb6Ey1H9-lbv1jTAs5yY"
         }
-      }
+      },
+      "package": "com.idbd.ggotclient"
     },
     "web": {
       "favicon": "./assets/favicon.png"

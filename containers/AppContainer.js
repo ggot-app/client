@@ -14,8 +14,6 @@ export default AppContainer = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(state => state.user.isloggedIn);
 
-  const isLoggedIn = useSelector(state => state.user.isloggedIn);
-
   const getLogin = async () => {
     try {
       const loginData = await AsyncStorage.getItem(LOGIN_DATA);
