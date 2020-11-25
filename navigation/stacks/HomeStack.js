@@ -15,9 +15,7 @@ export default function HomeStackNavigation() {
         component={Home}
         options={{
           headerTitle: () => (
-            <View
-              style={{ alignItems: 'center', flex: 1, backgroundColor: '#f7685b', height: '100%'}}
-            >
+            <View style={{ alignItems: 'center', flex: 1, height: '100%'}}>
               <Text style={{ color: '#474F59' }}>
                 내 주변 꽂
               </Text>

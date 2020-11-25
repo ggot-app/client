@@ -59,7 +59,7 @@ export default function NewStackNavigation() {
       <NewStack.Screen
         name='New'
         component={New}
-        options={({ route, navigation }) => ({
+        options={({ _, navigation }) => ({
           headerTitleAlign: 'center',
           headerLeft: () => (
             <View style={styles.locationNextButton}>
@@ -77,7 +77,7 @@ export default function NewStackNavigation() {
       <NewStack.Screen
         name='Location'
         component={Location}
-        options={({ route, navigation }) => ({
+        options={({ _, navigation }) => ({
           headerRight: () => (
             <View style={styles.locationNextButton}>
               <TouchableOpacity

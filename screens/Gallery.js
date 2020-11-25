@@ -11,7 +11,7 @@ import {
 import { countPhoto, deCountPhoto } from '../actions/index';
 import { ALERT_NUMBER_OF_POSSIBLE_IMAGE_UPLOADS } from '../constants/index';
 
-import Photo from '../components/Photo';
+import { renderGalleryPhotoFlatListItem, renderGallerySelectedPhotoFlatListItem } from '../components/FlatListRenderItem';
 import SelectedPhoto from '../components/SelectedPhoto';
 
 export default function Gallery() {
@@ -30,23 +30,7 @@ export default function Gallery() {
     if (selectedList.length >= 5) return alert(ALERT_NUMBER_OF_POSSIBLE_IMAGE_UPLOADS);
     return dispatch(countPhoto([ ...selectedList, item ]));
   };
-  const renderPhoto = ({ item }) => {
-    return (
-      <Photo
-        item={item}
-        selectedList={selectedList}
-        selectPhoto={selectPhoto}
-      />
-    );
-  };
-  const renderSelectedPhoto = ({ item }) => {
-    return (
-      <SelectedPhoto
-        item={item}
-        deSelectPhoto={deSelectPhoto}
-      />
-    );
-  };
+
   const getPhotos = async () => {
     try {
       const { assets } = await MediaLibrary.getAssetsAsync({
@@ -71,7 +55,7 @@ export default function Gallery() {
           <FlatList
             style={styles.selectedList}
             data={selectedList}
-            renderItem={renderSelectedPhoto}
+            renderItem={({ item }) => renderGallerySelectedPhotoFlatListItem(item, deSelectPhoto)}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
           />
@@ -80,7 +64,7 @@ export default function Gallery() {
       <SafeAreaView style={styles.photoListContainer}>
         <FlatList
           data={asset}
-          renderItem={renderPhoto}
+          renderItem={({ item }) => renderGalleryPhotoFlatListItem(selectedList, item, selectPhoto)}
           keyExtractor={item => item.uri}
           numColumns={3}
           showsVerticalScrollIndicator={false}

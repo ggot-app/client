@@ -54,8 +54,9 @@ const getLogIn = async (dispatch, email, photoUrl) => {
   }
 };
 
-export const creatingNewPhoto = async (userId, photoInfo, photoUrlList, openModal) => {
+export const creatingNewPhoto = async (dispatch, userId, photoInfo, photoUrlList, openModal) => {
   const { latitude, longitude } = photoInfo.location;
+  console.log(latitude, longitude)
   const { resistered_by, published_at, description } = photoInfo;
 
   const formdata = new FormData();
@@ -69,8 +70,8 @@ export const creatingNewPhoto = async (userId, photoInfo, photoUrlList, openModa
     formdata.append('image', photoProperties);
   });
 
-  formdata.append('latitude', Number(latitude));
-  formdata.append('longitude', Number(longitude));
+  formdata.append('latitude', latitude);
+  formdata.append('longitude', longitude);
   formdata.append('description', description);
   formdata.append('published_at', published_at);
   formdata.append('resistered_by', resistered_by);
@@ -99,8 +100,7 @@ export const creatingNewPhoto = async (userId, photoInfo, photoUrlList, openModa
 
 export const getPhotosByLocation = async coords => {
   try {
-    const response = await axios.get(`/photo/location?lat=${coords.latitude}&lng=${coords.longitude}`);
-
+    const response = await axios.get(`/photo/location?latitude=${coords.latitude}&longitude=${coords.longitude}`);
     return response.data;
   } catch (err) {
     console.warn(err);
@@ -121,7 +121,7 @@ export const getPhotosByUserId = async (user_Id, pageNumber) => {
   }
 };
 
-export const getDistanceFromLatLonInMeter = (lat1,lng1,lat2,lng2) => {
+export const getDistanceFromLatLngInMeter = (lat1,lng1,lat2,lng2) => {
   function deg2rad(deg) {
       return deg * (Math.PI/180);
   }

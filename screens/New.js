@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ViewPager from '@react-native-community/viewpager';
 import { format } from 'date-fns';
 import {
@@ -17,18 +17,18 @@ import Map from '../components/Map';
 import { creatingNewPhoto } from '../utils/api';
 
 export default function New({ route, navigation }) {
+  const dispatch = useDispatch();
   const { selectedPhotoList, userMarkedLocation } = route.params;
   const [ isModalVisible, setIsModalVisible ] = useState(false);
   const [ description, setDescription ] = useState('');
 
   const userId = useSelector(state => state.user.userData._id);
-  const userEmail = useSelector(state => state.user.userData.email);
-
+  const userLocation = useSelector(state => state.user.coords);
   const currentDate = format(new Date(), 'yyyy-MM-dd');
 
   const markedLocation = {
-    latitude: userMarkedLocation?.latitude,
-    longitude: userMarkedLocation?.longitude
+    latitude: userMarkedLocation ? userMarkedLocation.latitude : userLocation.latitude,
+    longitude: userMarkedLocation ? userMarkedLocation.longitude : userLocation.longitude
   };
 
   const photoUrlList = selectedPhotoList.map(item => {
@@ -39,7 +39,7 @@ export default function New({ route, navigation }) {
   });
 
   const photoInfo = {
-    resistered_by: userEmail,
+    resistered_by: userId,
     location: markedLocation,
     description: description,
     published_at: currentDate
