@@ -44,7 +44,6 @@ export default function MyPhoto({ navigation }) {
     const { photos } = data;
 
     const newData = myPhotoList.concat(photos);
-
     setMyPhotoList(newData);
     setPage(page + 1);
   };

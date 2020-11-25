@@ -9,17 +9,13 @@ const HomeStack = createStackNavigator();
 
 export default function HomeStackNavigation() {
   return (
-    <HomeStack.Navigator
-      screenOptions
-    >
+    <HomeStack.Navigator>
       <HomeStack.Screen
         name='Home'
         component={Home}
         options={{
           headerTitle: () => (
-            <View
-              style={{ alignItems: 'center', flex: 1, backgroundColor: '#f7685b', height: '100%'}}
-            >
+            <View style={{ alignItems: 'center', flex: 1, height: '100%'}}>
               <Text style={{ color: '#474F59' }}>
                 내 주변 꽂
               </Text>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AppLoading } from 'expo';
+import Constants from 'expo-constants';
 import * as Font from 'expo-font';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -23,7 +24,8 @@ export default function App() {
     const { status } = await Permissions.askAsync(
       Permissions.LOCATION,
       Permissions.CAMERA,
-      Permissions.CAMERA_ROLL
+      Permissions.CAMERA_ROLL,
+      Permissions.NOTIFICATIONS
     );
 
     if (status !== 'granted') alert('접근 권한을 설정해주세요');

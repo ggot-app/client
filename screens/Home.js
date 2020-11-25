@@ -1,59 +1,67 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import * as Location from 'expo-location';
+import * as Notifications from 'expo-notifications';
 import {
   View,
   Modal,
-  Image,
   FlatList,
   StyleSheet,
   RefreshControl,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native';
 
 import { setUserLocation } from '../actions/index';
 import { getPhotosByLocation } from '../utils/api';
+import NotificationConfig, { registerForPushNotificationsAsync } from '../config/Notification'
+import { startLocationTracking } from '../config/LocationTracking';
+import BackgroundTaskConfig from '../config/Tasks';
 
 import Map from '../components/Map';
 import PhotoModalView from '../components/PhotoModalView';
+import { renderHomeFlatListItem } from '../components/FlatListRenderItem';
 
-export default function Home({ navigation }) {
+BackgroundTaskConfig();
+NotificationConfig();
+
+const Home = ({ navigation }) => {
+  const dispatch = useDispatch();
   const [ photoList, setPhotoList ] = useState([]);
   const [ refreshing, setRefreshing ] = useState(true);
   const [ isModalVisible, setIsModalVisible ] = useState(false);
   const [ focusedPhotoNumber, setFocusedPhotoNumber ] = useState(0);
-
-  const dispatch = useDispatch();
+  const notificationListener = useRef();
+  const responseListener = useRef();
 
   const onRefresh = async () => {
     const userLocation = await Location.getCurrentPositionAsync({});
 
     if (userLocation) {
-      const result = await getPhotosByLocation(userLocation.coords);
-
       dispatch(setUserLocation(userLocation.coords));
-      setPhotoList(result);
+
+      const result = await getPhotosByLocation(userLocation.coords);
+      setPhotoList(result.photos);
       setRefreshing(false);
     }
   };
-  const renderItem = ({ index, item }) => {
-    return (
-      <View style={styles.photoContainer}>
-        <TouchableOpacity
-          style={styles.photoTouchContainer}
-          onPress={() => {
-            setIsModalVisible(true);
-            setFocusedPhotoNumber(index);
-          }}
-        >
-          <Image
-            style={styles.photo}
-            source={{ uri: item.photo_url_list[0] }}
-          />
-        </TouchableOpacity>
-      </View>
-    );
-  };
+
+  useEffect(() => {
+    (async function () {
+      await registerForPushNotificationsAsync();
+      startLocationTracking();
+
+      notificationListener.current = Notifications.addNotificationReceivedListener(() => {
+      });
+      responseListener.current = Notifications.addNotificationResponseReceivedListener(() => {
+        navigation.navigate('MyPage', { screen: 'MyPhoto'});
+      });
+    })();
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener);
+      Notifications.removeNotificationSubscription(responseListener);
+    };
+  }, []);
 
   useEffect(() => {
     onRefresh();
@@ -64,16 +72,16 @@ export default function Home({ navigation }) {
       <View style={styles.mapWrapper}>
         <TouchableOpacity
           style={styles.mapContainer}
-          onPress={() => navigation.navigate('PhotoMap', { photoList: photoList, focusedPhotoNumber: 0, fromModal: false })}
+          onPress={() => navigation.navigate('PhotoMap', { photoList: photoList, focusedPhotoNumber: 0 })}
         >
-          <Map isScrollEnabled={false} />
+          <Map isScrollEnabled={false}/>
         </TouchableOpacity>
       </View>
       <View style={styles.photoListWrapper}>
         <FlatList
           style={styles.photoList}
           data={photoList}
-          renderItem={renderItem}
+          renderItem={({ index, item }) => renderHomeFlatListItem(index, item, setIsModalVisible, setFocusedPhotoNumber)}
           showsVerticalScrollIndicator={false}
           keyExtractor={item => item.published_at}
           numColumns={3}
@@ -101,12 +109,14 @@ export default function Home({ navigation }) {
   );
 }
 
+export default Home;
+
 const styles = StyleSheet.create({
   contentWrapper: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#020126'
+    backgroundColor: '#020126',
   },
   mapWrapper: {
     width: '100%',
@@ -122,19 +132,10 @@ const styles = StyleSheet.create({
     padding: 1,
     backgroundColor: 'white'
   },
-  photoContainer: {
-    flex: 1,
-    aspectRatio: 1,
-    padding: 1
-  },
-  photoTouchContainer: {
-    width: '100%',
-    height: '100%'
-  },
   photo: {
     width: '100%',
     height: '100%',
-    flex: 1,
+    flex: 1
   },
   mapContainer: {
     width: '100%',

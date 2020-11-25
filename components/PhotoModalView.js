@@ -19,17 +19,13 @@ export default function PhotoModalView({
   const [ currentPhotoNumber, setCurrentPhotoNumber ] = useState(0);
 
   const closingModal = () => setIsModalVisible(false);
-  const onChangeCurrentPhotoNumber = (e) => {
-    setCurrentPhotoNumber(e.nativeEvent.position);
-  };
+  const onChangeCurrentPhotoNumber = e => setCurrentPhotoNumber(e.nativeEvent.position);
   const onChangePhotoMap = () => {
     setIsModalVisible(false);
-    navigation.navigate(
-      'PhotoMap',
-      {
-        photoList,
-        focusedPhotoNumber
-      });
+    navigation.navigate('PhotoMap', {
+      photoList,
+      focusedPhotoNumber
+    });
   };
 
   return (
@@ -78,10 +74,9 @@ export default function PhotoModalView({
                   style={
                     [
                       styles.indicatorDot,
-                      currentPhotoNumber === index ?
-                      styles.indicatorDotCurrent
-                       :
-                      styles.indicatorDot
+                      currentPhotoNumber === index
+                        ? styles.indicatorDotCurrent
+                        : styles.indicatorDot
                     ]
                   }
                 />
