@@ -17,10 +17,12 @@ import Map from '../components/Map';
 import { creatingNewPhoto } from '../utils/api';
 
 export default function New({ route, navigation }) {
-  const dispatch = useDispatch();
   const { selectedPhotoList, userMarkedLocation } = route.params;
+
   const [ isModalVisible, setIsModalVisible ] = useState(false);
   const [ description, setDescription ] = useState('');
+
+  const dispatch = useDispatch();
 
   const userId = useSelector(state => state.user.userData._id);
   const userLocation = useSelector(state => state.user.coords);

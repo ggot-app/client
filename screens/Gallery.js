@@ -10,9 +10,10 @@ import {
 
 import { countPhoto, deCountPhoto } from '../actions/index';
 import { ALERT_NUMBER_OF_POSSIBLE_IMAGE_UPLOADS } from '../constants/index';
-
-import { renderGalleryPhotoFlatListItem, renderGallerySelectedPhotoFlatListItem } from '../components/FlatListRenderItem';
-import SelectedPhoto from '../components/SelectedPhoto';
+import {
+  renderGalleryPhotoFlatListItem,
+  renderGallerySelectedPhotoFlatListItem
+} from '../components/FlatListRenderItem';
 
 export default function Gallery() {
   const [ asset, setAsset ] = useState(null);
@@ -23,20 +24,23 @@ export default function Gallery() {
 
   const deSelectPhoto = (_, item) => {
     const filteredSelectedList = selectedList.filter(el => el.uri !== item.uri);
+
     return dispatch(deCountPhoto(filteredSelectedList));
   };
   const selectPhoto = (_, item) => {
     if (selectedList.filter(el => el.uri === item.uri).length) return deSelectPhoto(_, item);
+
     if (selectedList.length >= 5) return alert(ALERT_NUMBER_OF_POSSIBLE_IMAGE_UPLOADS);
+
     return dispatch(countPhoto([ ...selectedList, item ]));
   };
-
   const getPhotos = async () => {
     try {
       const { assets } = await MediaLibrary.getAssetsAsync({
         first: 18,
         sortBy: MediaLibrary.SortBy.creationTime,
       });
+
       setAsset(assets);
     } catch (err) {
       console.warn(err);

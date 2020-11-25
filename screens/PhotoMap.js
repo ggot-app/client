@@ -9,10 +9,10 @@ import {
 } from 'react-native';
 
 export default function PhotoMap({ route, navigation }) {
-  const mapRef = useRef();
-
   const { photoList, focusedPhotoNumber } = route.params;
   const [ focusedNumber, setFocusedNumber ] = useState(focusedPhotoNumber);
+
+  const mapRef = useRef();
 
   const changePhotoFocus = direction => {
     if (direction === 'right') {

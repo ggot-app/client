@@ -13,9 +13,9 @@ import {
 
 import { setUserLocation } from '../actions/index';
 import { getPhotosByLocation } from '../utils/api';
-import NotificationConfig, { registerForPushNotificationsAsync } from '../config/Notification'
 import { startLocationTracking } from '../config/LocationTracking';
 import BackgroundTaskConfig from '../config/Tasks';
+import NotificationConfig, { registerForPushNotificationsAsync } from '../config/Notification';
 
 import Map from '../components/Map';
 import PhotoModalView from '../components/PhotoModalView';
@@ -25,11 +25,13 @@ BackgroundTaskConfig();
 NotificationConfig();
 
 const Home = ({ navigation }) => {
-  const dispatch = useDispatch();
   const [ photoList, setPhotoList ] = useState([]);
   const [ refreshing, setRefreshing ] = useState(true);
   const [ isModalVisible, setIsModalVisible ] = useState(false);
   const [ focusedPhotoNumber, setFocusedPhotoNumber ] = useState(0);
+
+  const dispatch = useDispatch();
+
   const notificationListener = useRef();
   const responseListener = useRef();
 
@@ -40,6 +42,7 @@ const Home = ({ navigation }) => {
       dispatch(setUserLocation(userLocation.coords));
 
       const result = await getPhotosByLocation(userLocation.coords);
+
       setPhotoList(result.photos);
       setRefreshing(false);
     }
@@ -48,6 +51,7 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     (async function () {
       await registerForPushNotificationsAsync();
+
       startLocationTracking();
 
       notificationListener.current = Notifications.addNotificationReceivedListener(() => {
@@ -107,7 +111,7 @@ const Home = ({ navigation }) => {
       </Modal>
     </View>
   );
-}
+};
 
 export default Home;
 

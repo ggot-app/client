@@ -46,8 +46,10 @@ const getLogIn = async (dispatch, email, photoUrl) => {
       };
 
       await AsyncStorage.setItem(LOGIN_DATA, JSON.stringify(loginData));
+
       dispatch(getUserLogin(ggotUser));
-      axios.defaults.headers.common['Authorization'] = token; // 적당한 위치가 아님
+
+      axios.defaults.headers.common['Authorization'] = token;
     }
   } catch (err) {
     console.log(err);
@@ -56,7 +58,6 @@ const getLogIn = async (dispatch, email, photoUrl) => {
 
 export const creatingNewPhoto = async (dispatch, userId, photoInfo, photoUrlList, openModal) => {
   const { latitude, longitude } = photoInfo.location;
-  console.log(latitude, longitude)
   const { resistered_by, published_at, description } = photoInfo;
 
   const formdata = new FormData();
@@ -94,13 +95,14 @@ export const creatingNewPhoto = async (dispatch, userId, photoInfo, photoUrlList
       dispatch(deleteSelectedPhotos());
     }
   } catch (err) {
-    console.log(err);
+    console.wran(err);
   }
 };
 
 export const getPhotosByLocation = async coords => {
   try {
     const response = await axios.get(`/photo/location?latitude=${coords.latitude}&longitude=${coords.longitude}`);
+
     return response.data;
   } catch (err) {
     console.warn(err);
@@ -121,16 +123,17 @@ export const getPhotosByUserId = async (user_Id, pageNumber) => {
   }
 };
 
-export const getDistanceFromLatLngInMeter = (lat1,lng1,lat2,lng2) => {
+export const getDistanceFromLatLngInMeter = (lat1, lng1, lat2, lng2) => {
   function deg2rad(deg) {
-      return deg * (Math.PI/180);
+    return deg * (Math.PI/180);
   }
 
-  var R = 6371;
-  var dLat = (lat2-lat1) * (Math.PI/180)
-  var dLon = deg2rad(lng2-lng1);
-  var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2);
-  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-  var d = R * c;
+  const R = 6371;
+  const dLat = (lat2-lat1) * (Math.PI/180);
+  const dLon = deg2rad(lng2-lng1);
+  const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  const d = R * c;
+
   return d * 1000;
-}
+};

@@ -44,6 +44,7 @@ export default function MyPhoto({ navigation }) {
     const { photos } = data;
 
     const newData = myPhotoList.concat(photos);
+
     setMyPhotoList(newData);
     setPage(page + 1);
   };
@@ -51,7 +52,7 @@ export default function MyPhoto({ navigation }) {
   useEffect(() => {
     (async () => {
       try {
-        const storedData = await getPhotosByUserId(user_Id, page); // 변수명어쩔..
+        const storedData = await getPhotosByUserId(user_Id, page);
 
         const { photos } = storedData;
 

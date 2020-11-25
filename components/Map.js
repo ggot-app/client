@@ -31,7 +31,7 @@ export default function Map({ isScrollEnabled }) {
           <Marker
             coordinate={{
               latitude: userLocation.latitude,
-              longitude: userLocation.longitude,
+              longitude: userLocation.longitude
             }}
           />
         </MapView>

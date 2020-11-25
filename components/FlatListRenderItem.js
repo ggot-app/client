@@ -39,7 +39,7 @@ export const renderGalleryPhotoFlatListItem = (selectedList, item, selectPhoto) 
 };
 
 export const renderGallerySelectedPhotoFlatListItem = (item, deSelectPhoto) => {
-  return ( 
+  return (
     <SelectedPhoto
       item={item}
       deSelectPhoto={deSelectPhoto}
@@ -60,6 +60,6 @@ const styles = StyleSheet.create({
   homePhoto: {
     width: '100%',
     height: '100%',
-    flex: 1,
-  },
+    flex: 1
+  }
 });
