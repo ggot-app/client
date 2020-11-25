@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from 'react';
-<<<<<<< HEAD
-import { AppLoading, Image, View } from 'expo';
-=======
 import { AppLoading } from 'expo';
-import Constants from 'expo-constants';
->>>>>>> notification-refactor
 import * as Font from 'expo-font';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import * as Permissions from 'expo-permissions';
-import { Asset } from 'expo-asset';
-import * as SplashScreen from 'expo-splash-screen';
 
 import AppContainer from './containers/AppContainer';
 import reducer from './reducers/index';
