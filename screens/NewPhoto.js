@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 
 import Map from '../components/Map';
-import { creatingNewPhoto } from '../utils/api';
+import { createNewPhoto } from '../utils/api';
 
 export default function NewPhoto({ route, navigation }) {
   const { selectedPhotoList, userMarkedLocation } = route.params;
@@ -47,10 +47,11 @@ export default function NewPhoto({ route, navigation }) {
     published_at: currentDate
   };
 
+
   const onChangeLocation = () => navigation.navigate('Location');
   const settingDescription = description => setDescription(description);
   const requestNewPhoto = () => {
-    creatingNewPhoto(userId, photoInfo, photoUrlList, dispatch, setIsModalVisible);
+    createNewPhoto(userId, photoInfo, photoUrlList, dispatch, setIsModalVisible);
     setDescription('');
   };
   const onChangeMyPage = () => {

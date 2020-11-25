@@ -34,6 +34,8 @@ export default function Home({ navigation }) {
   const notificationListener = useRef();
   const responseListener = useRef();
 
+  const dispatch = useDispatch();
+
   const onRefresh = async () => {
     const userLocation = await Location.getCurrentPositionAsync({});
 

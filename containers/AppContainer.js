@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
@@ -12,6 +13,7 @@ import TabNavigation from '../navigation/TabNavigation';
 
 export default AppContainer = () => {
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector(state => state.user.isloggedIn);
 
   const getLogin = async () => {
     try {

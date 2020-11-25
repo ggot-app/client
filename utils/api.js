@@ -56,7 +56,7 @@ const getLogIn = async (dispatch, email, photoUrl) => {
   }
 };
 
-export const creatingNewPhoto = async (dispatch, userId, photoInfo, photoUrlList, openModal) => {
+export const createNewPhoto = async (userId, photoInfo, photoUrlList, dispatch, openModal) => {
   const { latitude, longitude } = photoInfo.location;
   const { resistered_by, published_at, description } = photoInfo;
 
@@ -107,7 +107,6 @@ export const getPhotosByLocation = async (coords, pageNumber) => {
         limit: 15
       }
     });
-    console.log('##', response.data)
     return response.data;
   } catch (err) {
     console.warn(err);
