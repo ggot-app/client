@@ -16,27 +16,28 @@ const Tasks = () => {
     if (error) return console.warn('background tracking error');
 
     if (data) {
-      const loginData = await AsyncStorage.getItem(LOGIN_DATA);
+      try {
+        const loginData = await AsyncStorage.getItem(LOGIN_DATA);
 
-      if (loginData) {
-        const { locations } = data;
+        if (loginData) {
+          const { locations } = data;
 
-        let lat = locations[0].coords.latitude;
-        let lng = locations[0].coords.longitude;
+          let lat = locations[0].coords.latitude;
+          let lng = locations[0].coords.longitude;
 
-        userPhotoList = JSON.parse(loginData).USER.photos;
+          userPhotoList = JSON.parse(loginData).USER.photos;
 
-        userPhotoList.forEach(item => {
-          (async function () {
-            const distance = getDistanceFromLatLngInMeter(lat, lng, item.location[0], item.location[1]);
+          // userPhotoList.forEach(async item => {
+              const distance = getDistanceFromLatLngInMeter(lat, lng, userPhotoListç.location[0], item.location[1]);
 
-            if (distance < 500) {
-              await schedulePushNotification();
-
-              Location.stopLocationUpdatesAsync(LOCATION_TRACKING);
-            }
-          })();
-        });
+              if (distance < 500) {
+                await schedulePushNotification();
+                await Location.stopLocationUpdatesAsync(LOCATION_TRACKING);
+              }
+          // });
+        }
+      } catch (error) {
+        console.warn(error);
       }
     }
   });

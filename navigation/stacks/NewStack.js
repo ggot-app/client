@@ -8,7 +8,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import New from '../../screens/New';
+import NewPhoto from '../../screens/NewPhoto';
 import Gallery from '../../screens/Gallery';
 import Location from '../../screens/Location';
 
@@ -36,7 +36,7 @@ export default function NewStackNavigation() {
                 }
               </Text>
               <TouchableOpacity
-                onPress={() => navigation.navigate('New', { selectedPhotoList })}
+                onPress={() => navigation.navigate('NewPhoto', { selectedPhotoList })}
                 style={styles.gelleryNextButton}
               >
                 <Text style={{ color: '#2699FB' }}>
@@ -57,8 +57,8 @@ export default function NewStackNavigation() {
         })}
       />
       <NewStack.Screen
-        name='New'
-        component={New}
+        name='NewPhoto'
+        component={NewPhoto}
         options={({ _, navigation }) => ({
           headerTitleAlign: 'center',
           headerLeft: () => (
@@ -81,7 +81,7 @@ export default function NewStackNavigation() {
           headerRight: () => (
             <View style={styles.locationNextButton}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('New', { userMarkedLocation })}
+                onPress={() => navigation.navigate('NewPhoto', { userMarkedLocation })}
               >
               <Text>
                 설정

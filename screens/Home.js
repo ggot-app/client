@@ -24,7 +24,7 @@ import { renderHomeFlatListItem } from '../components/FlatListRenderItem';
 BackgroundTaskConfig();
 NotificationConfig();
 
-const Home = ({ navigation }) => {
+export default function Home({ navigation }) {
   const [ photoList, setPhotoList ] = useState([]);
   const [ refreshing, setRefreshing ] = useState(true);
   const [ isModalVisible, setIsModalVisible ] = useState(false);
@@ -111,9 +111,7 @@ const Home = ({ navigation }) => {
       </Modal>
     </View>
   );
-};
-
-export default Home;
+}
 
 const styles = StyleSheet.create({
   contentWrapper: {

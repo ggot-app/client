@@ -19,7 +19,7 @@ export default function App() {
     });
   };
 
-  const checkPermission = async () => {
+  const askPermission = async () => {
     const { status } = await Permissions.askAsync(
       Permissions.LOCATION,
       Permissions.CAMERA,
@@ -27,20 +27,28 @@ export default function App() {
       Permissions.NOTIFICATIONS
     );
 
-    if (status !== 'granted') alert('접근 권한을 설정해주세요');
+    if (status !== 'granted') {
+      alert('접근 권한을 설정해주세요');
+      checkPermissions();
+    }
   };
-  const preLoad = async () => {
-    try {
-      getAssets();
-      checkPermission();
-    } catch (e) {
-      console.warn(e);
+  const checkPermissions = async () => {
+    const { status } = await Permissions.getAsync(
+      Permissions.LOCATION,
+      Permissions.CAMERA,
+      Permissions.CAMERA_ROLL,
+      Permissions.NOTIFICATIONS
+    );
+
+    if (status !== 'granted') {
+      askPermission();
+    } else {
+      setIsLoaded(true);
     }
   };
 
   useEffect(() => {
-    preLoad();
-    setIsLoaded(true);
+    checkPermissions();
   }, []);
 
   return !isLoaded ? (

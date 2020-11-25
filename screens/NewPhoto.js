@@ -16,7 +16,7 @@ import {
 import Map from '../components/Map';
 import { creatingNewPhoto } from '../utils/api';
 
-export default function New({ route, navigation }) {
+export default function NewPhoto({ route, navigation }) {
   const { selectedPhotoList, userMarkedLocation } = route.params;
 
   const [ isModalVisible, setIsModalVisible ] = useState(false);
