@@ -10,6 +10,7 @@ import {
 
 export default function PhotoMap({ route, navigation }) {
   const mapRef = useRef();
+
   const { photoList, focusedPhotoNumber } = route.params;
   const [ focusedNumber, setFocusedNumber ] = useState(focusedPhotoNumber);
 
@@ -22,6 +23,7 @@ export default function PhotoMap({ route, navigation }) {
           latitudeDelta: 0,
           longitudeDelta: 0.001
         });
+
         setFocusedNumber(focusedNumber + 1);
       }
     } else if (direction === 'left') {
@@ -32,6 +34,7 @@ export default function PhotoMap({ route, navigation }) {
           latitudeDelta: 0,
           longitudeDelta: 0.001
         });
+
         setFocusedNumber(focusedNumber - 1);
       }
     }

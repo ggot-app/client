@@ -6,8 +6,9 @@ import MapView, { Marker } from 'react-native-maps';
 import { setUserLocation } from '../actions/index';
 
 export default function Map({ isScrollEnabled }) {
-  const userLocation = useSelector(state => state.user.coords);
   const dispatch = useDispatch();
+
+  const userLocation = useSelector(state => state.user.coords);
 
   return (
     <View style={styles.contentWrapper}>
@@ -24,7 +25,7 @@ export default function Map({ isScrollEnabled }) {
             longitudeDelta: 0.009,
           }}
           onPress={(e) => {
-            dispatch(setUserLocation(e.nativeEvent.coordinate))
+            dispatch(setUserLocation(e.nativeEvent.coordinate));
           }}
         >
           <Marker

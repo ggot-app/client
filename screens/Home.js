@@ -64,7 +64,11 @@ export default function Home({ navigation }) {
       <View style={styles.mapWrapper}>
         <TouchableOpacity
           style={styles.mapContainer}
-          onPress={() => navigation.navigate('PhotoMap', { photoList: photoList, focusedPhotoNumber: 0, fromModal: false })}
+          onPress={() => navigation.navigate('PhotoMap', {
+            photoList: photoList,
+            focusedPhotoNumber: 0,
+            fromModal: false
+          })}
         >
           <Map isScrollEnabled={false} />
         </TouchableOpacity>
@@ -134,7 +138,7 @@ const styles = StyleSheet.create({
   photo: {
     width: '100%',
     height: '100%',
-    flex: 1,
+    flex: 1
   },
   mapContainer: {
     width: '100%',

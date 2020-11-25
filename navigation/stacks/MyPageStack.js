@@ -32,11 +32,11 @@ export default function MyPageStackNavigation() {
           title: 'My Photo',
           headerTitleAlign: 'center',
           headerStyle: {
-            backgroundColor: '#F2F2F0',
+            backgroundColor: '#F2F2F0'
           },
           headerTintColor: '#474F59',
           headerTitleStyle: {
-            fontWeight: 'bold',
+            fontWeight: 'bold'
           }
         }}
       />

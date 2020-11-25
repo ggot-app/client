@@ -5,5 +5,5 @@ import selectedPhotos from './selectedPhotos';
 
 export default combineReducers({
   user,
-  selectedPhotos,
+  selectedPhotos
 });

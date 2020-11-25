@@ -48,7 +48,7 @@ export default function New({ route, navigation }) {
   const onChangeLocation = () => navigation.navigate('Location');
   const settingDescription = description => setDescription(description);
   const requestNewPhoto = () => {
-    creatingNewPhoto(userId, photoInfo, photoUrlList, setIsModalVisible);
+    creatingNewPhoto(userId, photoInfo, photoUrlList, dispatch, setIsModalVisible);
     setDescription('');
   };
   const onChangeMyPage = () => {

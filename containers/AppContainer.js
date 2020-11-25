@@ -1,20 +1,20 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Constants from 'expo-constants';
 import { AppState } from 'react-native';
+import * as Location from 'expo-location';
+import * as TaskManger from 'expo-task-manager';
 import * as Permissions from 'expo-permissions';
+import * as Notifications from 'expo-notifications';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Notifications from 'expo-notifications';
-import * as TaskManger from 'expo-task-manager';
-import * as Location from 'expo-location';
 
 import Login from '../components/LogIn';
 import AxiosInstance from '../utils/axios';
-import { getDistanceFromLatLonInMeter } from '../utils/api';
+import TabNavigation from '../navigation/TabNavigation';
 import { getUserLogin } from '../actions/index';
 import { LOGIN_DATA } from '../constants/index';
-import TabNavigation from '../navigation/TabNavigation';
+import { getDistanceFromLatLonInMeter } from '../utils/api';
 
 const LOCATION_TRACKING = 'location-tracking';
 
@@ -45,8 +45,8 @@ TaskManger.defineTask(LOCATION_TRACKING, async ({ data, error }) => {
     const { locations } = data;
     let lat = locations[0].coords.latitude;
     let lng = locations[0].coords.longitude;
-    console.log(lat, lng)
-    console.log('##', AppState.currentState)
+    console.log(lat, lng);
+    console.log('##', AppState.currentState);
 
     // userPhotoList.filter(item => {
       const mockLat = 37.5059812;
@@ -65,16 +65,17 @@ TaskManger.defineTask(LOCATION_TRACKING, async ({ data, error }) => {
 export default AppContainer = () => {
   const [ expoPushToken, setExpoPushToken ] = useState('');
   const [ notification, setNotification ] = useState(false);
+
   const notificationListener = useRef();
   const responseListener = useRef();
 
-  const isLoggedIn = useSelector(state => state.user.isloggedIn);
   const dispatch = useDispatch();
+
+  const isLoggedIn = useSelector(state => state.user.isloggedIn);
 
   const getLogin = async () => {
     try {
       const loginData = await AsyncStorage.getItem(LOGIN_DATA);
-      // await AsyncStorage.removeItem(LOGIN_DATA);
 
       if (loginData) {
         const { TOKEN, USER } = JSON.parse(loginData);
@@ -138,19 +139,24 @@ async function schedulePushNotification() {
 
 async function registerForPushNotificationsAsync() {
   let token;
+
   if (Constants.isDevice) {
     const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+
     let finalStatus = existingStatus;
 
     if (existingStatus !== 'granted') {
       const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+
       finalStatus = status;
     }
 
     if (finalStatus !== 'granted') {
       alert('Failed to get push token for push notification');
+
       return;
     }
+
     token = (await Notifications.getExpoPushTokenAsync()).data;
   } else {
     alert('Must use physical device for push notifications');

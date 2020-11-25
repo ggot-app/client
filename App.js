@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { AppLoading } from 'expo';
+import { AppLoading, Image, View } from 'expo';
 import * as Font from 'expo-font';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import * as Permissions from 'expo-permissions';
+import { Asset } from 'expo-asset';
+import * as SplashScreen from 'expo-splash-screen';
 
 import AppContainer from './containers/AppContainer';
 import reducer from './reducers/index';
@@ -43,7 +45,7 @@ export default function App() {
   }, []);
 
   return !isLoaded ? (
-    <AppLoading />
+    <AppLoading/>
   ) : (
     <Provider store={store}>
       <AppContainer />

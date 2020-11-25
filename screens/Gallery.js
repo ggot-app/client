@@ -15,9 +15,10 @@ import Photo from '../components/Photo';
 import SelectedPhoto from '../components/SelectedPhoto';
 
 export default function Gallery() {
+  const [ asset, setAsset ] = useState(null);
+
   const dispatch = useDispatch();
 
-  const [ asset, setAsset ] = useState(null);
   const selectedList = useSelector(state => state.selectedPhotos.selectedList);
 
   const deSelectPhoto = (_, item) => {

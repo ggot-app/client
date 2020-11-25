@@ -52,7 +52,7 @@ export default function NewStackNavigation() {
           },
           headerTintColor: '#474F59',
           headerTitleStyle: {
-            fontWeight: 'bold',
+            fontWeight: 'bold'
           }
         })}
       />

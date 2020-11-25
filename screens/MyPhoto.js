@@ -53,7 +53,7 @@ export default function MyPhoto({ navigation }) {
     (async () => {
       try {
         const storedData = await getPhotosByUserId(user_Id, page); // 변수명어쩔..
-        console.log('storedData', storedData);
+
         const { photos } = storedData;
 
         setMyPhotoList(photos);
@@ -65,7 +65,6 @@ export default function MyPhoto({ navigation }) {
   }, []);
 
   return (
-
     <View style={styles.myPhotoWrapper}>
       <FlatList
         numColumns={3}

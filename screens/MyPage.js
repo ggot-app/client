@@ -13,9 +13,9 @@ import { LOGIN_DATA } from '../constants';
 import { getUserLogout } from '../actions/index';
 
 export default function MyPage({ navigation }) {
-  const userData = useSelector(state => state.user.userData);
-
   const dispatch = useDispatch();
+
+  const userData = useSelector(state => state.user.userData);
 
   const logOut = () => {
     (async function () {
@@ -28,12 +28,11 @@ export default function MyPage({ navigation }) {
 
     dispatch(getUserLogout());
   };
-  // 이 func 라는 변수명 수정해야함
-  const buttonProperties = [
-    {title: '내 꽃', func: () => navigation.navigate('MyPhoto')},
-    {title: '남 꽃', func: () => console.log('남 꽃 버튼입니다')},
-    {title: '로그아웃', func: logOut},
-    {title: '회원탈퇴', func: () => console.log('회원탈퇴 버튼입니다')}
+  const onChangeMyPhoto = () => navigation.navigate('MyPhoto');
+
+  const buttonTypes = [
+    {title: '내 꽂', property: onChangeMyPhoto},
+    {title: '로그아웃', property: logOut}
   ];
 
   return (
@@ -51,11 +50,11 @@ export default function MyPage({ navigation }) {
       </View>
       <View style={styles.buttonContainer}>
         {
-          buttonProperties.map((item, key) => {
+          buttonTypes.map((item, key) => {
             return (
               <Button
                 title={item.title}
-                onChange={item.func}
+                onChange={item.property}
                 key={key}
               />
             );

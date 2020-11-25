@@ -34,6 +34,7 @@ module.exports = {
         'no-undef': 'off',
         'no-unused-vars': 'off',
         'react/prop-types': 'off',
-        'react/display-name': 'off'
+        'react/display-name': 'off',
+        'no-useless-escape': 'off'
     }
 };
