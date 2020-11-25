@@ -16,7 +16,8 @@ import {
 } from '../components/FlatListRenderItem';
 
 export default function Gallery() {
-  const [ asset, setAsset ] = useState(null);
+  const [ photosInUserGallery, setPhotosInUserGallery ] = useState(null);
+  const [ mediaLibaryCurrentPage, setMediaLibaryCurrentPage ] = useState('');
 
   const dispatch = useDispatch();
 
@@ -36,12 +37,35 @@ export default function Gallery() {
   };
   const getPhotos = async () => {
     try {
-      const { assets } = await MediaLibrary.getAssetsAsync({
+      const { assets, endCursor, hasNextPage } = await MediaLibrary.getAssetsAsync({
         first: 18,
         sortBy: MediaLibrary.SortBy.creationTime,
       });
 
-      setAsset(assets);
+      if (hasNextPage) {
+        setMediaLibaryCurrentPage(endCursor);
+      }
+
+      setPhotosInUserGallery(assets);
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+  const getNextPagePhotos = async () => {
+    try {
+      const { assets, endCursor, hasNextPage } = await MediaLibrary.getAssetsAsync({
+        first: 18,
+        after: mediaLibaryCurrentPage,
+        sortBy: MediaLibrary.SortBy.creationTime,
+      });
+
+      if (hasNextPage) {
+        setMediaLibaryCurrentPage(endCursor);
+      }
+
+      const newGalleryList = photosInUserGallery.concat(assets);
+
+      setPhotosInUserGallery(newGalleryList);
     } catch (err) {
       console.warn(err);
     }
@@ -49,7 +73,7 @@ export default function Gallery() {
 
   useEffect(() => {
     getPhotos();
-  });
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -67,11 +91,15 @@ export default function Gallery() {
       }
       <SafeAreaView style={styles.photoListContainer}>
         <FlatList
-          data={asset}
+          data={photosInUserGallery}
           renderItem={({ item }) => renderGalleryPhotoFlatListItem(selectedList, item, selectPhoto)}
           keyExtractor={item => item.uri}
           numColumns={3}
           showsVerticalScrollIndicator={false}
+          onEndReached={() => {
+            getNextPagePhotos();
+          }}
+          onEndReachedThreshold={0.5}
         />
       </SafeAreaView>
     </View>
