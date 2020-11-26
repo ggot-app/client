@@ -47,7 +47,7 @@ export default function Home({ navigation }) {
 
       setPhotoList(photos);
       // setPage(page + 1);
-      setRefreshing(false)
+      setRefreshing(false);
     }
   };
 
@@ -65,7 +65,7 @@ export default function Home({ navigation }) {
     } else {
       alert('GPS 위치 정보를 확인해주세요');
     }
-  }
+  };
 
   useEffect(() => {
     (async function () {

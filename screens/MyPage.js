@@ -11,6 +11,7 @@ import {
 import Button from '../components/Button';
 import { LOGIN_DATA } from '../constants';
 import { getUserLogout } from '../actions/index';
+import { signOutWithGoogleAsync } from '../utils/api';
 
 export default function MyPage({ navigation }) {
   const dispatch = useDispatch();
@@ -20,13 +21,12 @@ export default function MyPage({ navigation }) {
   const logOut = () => {
     (async function () {
       try {
+        await signOutWithGoogleAsync(dispatch);
         await AsyncStorage.removeItem(LOGIN_DATA);
       } catch (error) {
         console.warn(e);
       }
     })();
-
-    dispatch(getUserLogout());
   };
   const onChangeMyPhoto = () => navigation.navigate('MyPhoto');
 

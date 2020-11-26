@@ -1,4 +1,4 @@
-import * as Google from 'expo-google-app-auth';
+import * as GoogleSignIn from 'expo-google-sign-in';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import axios from './axios';
@@ -6,28 +6,43 @@ import getEnvVars from '../environment';
 import { SUCCESS, LOGIN_DATA } from '../constants/index';
 import {
   getUserLogin,
+  getUserLogout,
   deleteSelectedPhotos
 } from '../actions/index';
 
 const { GOOGLE_API_ID } = getEnvVars();
 
-export const signInWithGoogleAsync = async dispatch => {
+export const signInWithGoogleAsync = async (dispatch) => {
   try {
-    const result = await Google.logInAsync({
-      androidClientId: GOOGLE_API_ID,
-      scopes: ['profile', 'email']
-    });
+    await GoggleSignIn.askForPlayServicesAsync();
 
-    if (result.type === 'success') {
-      const { email, photoUrl } = result.user;
-
-      return getLogIn(dispatch, email, photoUrl);
-    } else {
-      return { cancelled: true };
+    const { type, user } = await GoggleSignIn.signInAsync();
+    console.log('signInWithGoogleAsync', user); // test용
+    if (type === 'success') {
+      _syncUserWithStateAsync(dispatch);
     }
-  } catch (err) {
-    return { error: true };
+
+  } catch ({ message }) {
+      alert('login: Error:' + message);
   }
+};
+
+const _syncUserWithStateAsync = async dispatch => {
+  try {
+    const user = await GoogleSignIn.signInSilentlyAsync();
+    console.log('_syncUserWithStateAsync', user); // test용
+    const { email, photoUrl } = user;
+
+    return getLogIn(dispatch, email, photoUrl);
+  } catch (err) {
+    console.wran(err);
+  }
+};
+
+export const signOutWithGoogleAsync = async dispatch => {
+  await GoogleSignIn.signOutAsync();
+
+  dispatch(getUserLogout());
 };
 
 const getLogIn = async (dispatch, email, photoUrl) => {
