@@ -1,16 +1,17 @@
-import 'react-native-gesture-handler';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import AxiosInstance from '../utils/axios';
-import { getUserLogin } from '../actions/index';
 import { LOGIN_DATA } from '../constants/index';
+import { getUserLogin } from '../actions/index';
 
-import Login from '../components/LogIn';
+import LogIn from '../screens/LogIn';
 import TabNavigation from '../navigation/TabNavigation';
 
-export default AppContainer = () => {
+const RootStack = createStackNavigator();
+
+export default function RootNavigation() {
   const dispatch = useDispatch();
 
   const isLoggedIn = useSelector(state => state.user.isloggedIn);
@@ -35,8 +36,13 @@ export default AppContainer = () => {
     getLogin();
   }, []);
 
-  if (!isLoggedIn) return <Login />;
   return (
-    <TabNavigation />
+    <RootStack.Navigator>
+      {
+        !isLoggedIn
+          ? <RootStack.Screen name='Login' component={LogIn} />
+          : <RootStack.Screen name='TabNavigation' component={TabNavigation} />
+      }
+    </RootStack.Navigator>
   );
-};
+}

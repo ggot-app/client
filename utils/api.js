@@ -122,6 +122,7 @@ export const getPhotosByLocation = async (coords, pageNumber) => {
         limit: 15
       }
     });
+    console.log(response);
     return response.data;
   } catch (err) {
     console.warn(err);

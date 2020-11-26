@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-
+import { NavigationContainer } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
@@ -7,8 +7,9 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import * as Permissions from 'expo-permissions';
 
-import AppContainer from './containers/AppContainer';
 import reducer from './reducers/index';
+
+import RootNavigation from './navigation/RootNavigation';
 
 const store = createStore(reducer);
 
@@ -54,11 +55,11 @@ export default function App() {
     checkPermissions();
   }, []);
 
-  return !isLoaded ? (
-    <AppLoading/>
-  ) : (
-    <Provider store={store}>
-      <AppContainer />
-    </Provider>
-  );
+  return !isLoaded
+    ? <AppLoading/>
+    : <Provider store={store}>
+        <NavigationContainer>
+          <RootNavigation />
+        </NavigationContainer>
+      </Provider>
 }
