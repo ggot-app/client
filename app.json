@@ -28,7 +28,8 @@
           "apiKey": "AIzaSyDO4G_32ZFA7VsOb6Ey1H9-lbv1jTAs5yY"
         }
       },
-      "package": "com.idbd.ggotclient"
+      "package": "com.idbd.ggotclient",
+      "useNextNotificationsApi": true
     },
     "web": {
       "favicon": "./assets/favicon.png"

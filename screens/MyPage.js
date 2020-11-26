@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Facebook from 'expo-facebook';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,24 +11,17 @@ import {
 
 import Button from '../components/Button';
 import { LOGIN_DATA } from '../constants';
-import { getUserLogout } from '../actions/index';
 
 export default function MyPage({ navigation }) {
-  const dispatch = useDispatch();
-
   const userData = useSelector(state => state.user.userData);
 
-  const logOut = () => {
-    (async function () {
-      try {
-        await AsyncStorage.removeItem(LOGIN_DATA);
-        await Facebook.logOutAsync();
-
-        dispatch(getUserLogout());
-      } catch (error) {
-        console.warn(e);
-      }
-    })();
+  const logOut = async () => {
+    try {
+      await AsyncStorage.removeItem(LOGIN_DATA);
+      await Facebook.logOutAsync();
+    } catch (e) {
+      console.warn(e);
+    }
   };
   const onChangeMyPhoto = () => navigation.navigate('MyPhoto');
 
@@ -41,9 +34,7 @@ export default function MyPage({ navigation }) {
     <View style={styles.contentWrapper}>
       <View style={styles.profileContainer}>
         <Image
-          source={{
-            uri: `${userData.profile_url}`
-          }}
+          source={{ uri: userData.profile_url}}
           style={styles.image}
         />
         <Text style={styles.emailContainer}>

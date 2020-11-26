@@ -14,11 +14,13 @@ export default function user(state = initialState, action) {
   switch (action.type) {
     case USER_LOGIN:
       return {
+        ...state,
         isloggedIn: true,
         userData: action.data
       };
     case USER_LOGOUT:
       return {
+        ...state,
         isloggedIn: false,
         userData: null
       };

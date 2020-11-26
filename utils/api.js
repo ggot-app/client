@@ -29,7 +29,7 @@ export const getLogIn = async (dispatch, email, photoUrl) => {
       axios.defaults.headers.common['Authorization'] = token;
     }
   } catch (err) {
-    console.log(err);
+    console.warn(err);
   }
 };
 
@@ -72,7 +72,7 @@ export const createNewPhoto = async (userId, photoInfo, photoUrlList, dispatch, 
       dispatch(deleteSelectedPhotos());
     }
   } catch (err) {
-    console.wran(err);
+    console.warn(err);
   }
 };
 
@@ -84,7 +84,6 @@ export const getPhotosByLocation = async (coords, pageNumber) => {
         limit: 15
       }
     });
-    console.log(response);
     return response.data;
   } catch (err) {
     console.warn(err);

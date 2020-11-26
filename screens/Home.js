@@ -45,7 +45,6 @@ export default function Home({ navigation }) {
       const { photos } = data;
 
       setPhotoList(photos);
-      // setPage(page + 1);
       setRefreshing(false);
     }
   };

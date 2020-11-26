@@ -22,13 +22,11 @@ export const registerForPushNotificationsAsync = async () => {
 
     if (existingStatus !== 'granted') {
       const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-
       finalStatus = status;
     }
 
     if (finalStatus !== 'granted') {
       alert('Failed to get push token for push notification');
-
       return;
     }
 

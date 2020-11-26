@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import AxiosInstance from '../utils/axios';
 import { LOGIN_DATA } from '../constants/index';
 import { getUserLogin } from '../actions/index';
 
@@ -13,7 +14,6 @@ const RootStack = createStackNavigator();
 
 export default function RootNavigation() {
   const dispatch = useDispatch();
-
   const isLoggedIn = useSelector(state => state.user.isloggedIn);
 
   const getLogin = async () => {
@@ -40,7 +40,7 @@ export default function RootNavigation() {
     <RootStack.Navigator>
       {
         !isLoggedIn
-          ? <RootStack.Screen name='Login' component={LogIn} />
+          ? <RootStack.Screen name='LogIn' component={LogIn} />
           : <RootStack.Screen name='TabNavigation' component={TabNavigation} />
       }
     </RootStack.Navigator>
