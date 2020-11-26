@@ -1,4 +1,5 @@
 import 'react-native-gesture-handler';
+
 import React, { useEffect, useState } from 'react';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';

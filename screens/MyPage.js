@@ -10,7 +10,6 @@ import {
 
 import Button from '../components/Button';
 import { LOGIN_DATA } from '../constants';
-import { getUserLogout } from '../actions/index';
 import { signOutWithGoogleAsync } from '../utils/api';
 
 export default function MyPage({ navigation }) {
