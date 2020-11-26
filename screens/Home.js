@@ -20,7 +20,6 @@ import NotificationConfig, { registerForPushNotificationsAsync } from '../config
 import Map from '../components/Map';
 import PhotoModalView from '../components/PhotoModalView';
 import { renderHomeFlatListItem } from '../components/FlatListRenderItem';
-import { set } from 'date-fns';
 
 BackgroundTaskConfig();
 NotificationConfig();

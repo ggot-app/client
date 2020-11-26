@@ -14,10 +14,10 @@ const { GOOGLE_API_ID } = getEnvVars();
 
 export const signInWithGoogleAsync = async (dispatch) => {
   try {
-    await GoggleSignIn.askForPlayServicesAsync();
+    await GoogleSignIn.askForPlayServicesAsync();
 
-    const { type, user } = await GoggleSignIn.signInAsync();
-    console.log('signInWithGoogleAsync', user); // test용
+    const { type, user } = await GoogleSignIn.signInAsync();
+
     if (type === 'success') {
       _syncUserWithStateAsync(dispatch);
     }
@@ -30,7 +30,7 @@ export const signInWithGoogleAsync = async (dispatch) => {
 const _syncUserWithStateAsync = async dispatch => {
   try {
     const user = await GoogleSignIn.signInSilentlyAsync();
-    console.log('_syncUserWithStateAsync', user); // test용
+
     const { email, photoUrl } = user;
 
     return getLogIn(dispatch, email, photoUrl);
