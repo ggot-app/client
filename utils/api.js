@@ -1,51 +1,13 @@
-import * as GoogleSignIn from 'expo-google-sign-in';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import axios from './axios';
-import getEnvVars from '../environment';
 import { SUCCESS, LOGIN_DATA } from '../constants/index';
 import {
   getUserLogin,
-  getUserLogout,
   deleteSelectedPhotos
 } from '../actions/index';
 
-const { GOOGLE_API_ID } = getEnvVars();
-
-export const signInWithGoogleAsync = async (dispatch) => {
-  try {
-    await GoogleSignIn.askForPlayServicesAsync();
-
-    const { type, user } = await GoogleSignIn.signInAsync();
-
-    if (type === 'success') {
-      _syncUserWithStateAsync(dispatch);
-    }
-
-  } catch ({ message }) {
-      alert('login: Error:' + message);
-  }
-};
-
-const _syncUserWithStateAsync = async dispatch => {
-  try {
-    const user = await GoogleSignIn.signInSilentlyAsync();
-
-    const { email, photoUrl } = user;
-
-    return getLogIn(dispatch, email, photoUrl);
-  } catch (err) {
-    console.wran(err);
-  }
-};
-
-export const signOutWithGoogleAsync = async dispatch => {
-  await GoogleSignIn.signOutAsync();
-
-  dispatch(getUserLogout());
-};
-
-const getLogIn = async (dispatch, email, photoUrl) => {
+export const getLogIn = async (dispatch, email, photoUrl) => {
   try {
     const response = await axios.post('/user/login', {
       email: email,

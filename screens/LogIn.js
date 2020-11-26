@@ -7,7 +7,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import { signInWithGoogleAsync } from '../utils/api';
+import { signInFacebook } from '../utils/facebookLogIn';
 
 export default function LogIn() {
   const dispatch = useDispatch();
@@ -16,9 +16,9 @@ export default function LogIn() {
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.loginButton}
-        onPress={() => signInWithGoogleAsync(dispatch)}
+        onPress={() => signInFacebook(dispatch)}
       >
-        <Text>google login</Text>
+        <Text>FACEBOOK LOGIN</Text>
       </TouchableOpacity>
     </View>
   );
