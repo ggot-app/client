@@ -1,5 +1,5 @@
 import React from 'react';
-import {useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import * as Facebook from 'expo-facebook';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
@@ -10,18 +10,27 @@ import {
 } from 'react-native';
 
 import Button from '../components/Button';
+import { getUserLogout } from '../actions/index';
 import { LOGIN_DATA } from '../constants/index';
 
+const { FACEBOOK_APP_ID } = getEnvVars();
+
 export default function MyPage({ navigation }) {
+  const dispatch = useDispatch();
   const userData = useSelector(state => state.user.userData);
 
   const logOut = async () => {
     try {
-      await AsyncStorage.removeItem(LOGIN_DATA);
+      await Facebook.initializeAsync({
+        appId: FACEBOOK_APP_ID
+      });
       await Facebook.logOutAsync();
+      await AsyncStorage.removeItem(LOGIN_DATA);
     } catch (err) {
       console.warn(err);
     }
+
+    dispatch(getUserLogout());
   };
   const onChangeMyPhoto = () => navigation.navigate('MyPhoto');
 
@@ -31,6 +40,7 @@ export default function MyPage({ navigation }) {
   ];
 
   return (
+    userData &&
     <View style={styles.contentWrapper}>
       <View style={styles.profileContainer}>
         <Image

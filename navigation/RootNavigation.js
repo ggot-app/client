@@ -13,6 +13,7 @@ import TabNavigation from '../navigation/TabNavigation';
 const RootStack = createStackNavigator();
 
 export default function RootNavigation() {
+  console.log('root');
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(state => state.user.isloggedIn);
 

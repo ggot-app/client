@@ -4,7 +4,9 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  ImageBackground,
+  Image
 } from 'react-native';
 
 import { signInFacebook } from '../utils/facebookLogIn';
@@ -14,12 +16,20 @@ export default function LogIn() {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.loginButton}
-        onPress={() => signInFacebook(dispatch)}
-      >
-        <Text>FACEBOOK LOGIN</Text>
-      </TouchableOpacity>
+      <ImageBackground
+        source={require('../assets/images/splash.png')}
+        style={styles.imageBackground}
+        >
+        <TouchableOpacity
+          style={styles.loginButtonContainer}
+          onPress={() => signInFacebook(dispatch)}
+        >
+          <Image
+            style={styles.loginButton}
+            source={require('../assets/images/loginButton.png')}
+          />
+        </TouchableOpacity>
+      </ImageBackground>
     </View>
   );
 }
@@ -27,12 +37,22 @@ export default function LogIn() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    height: '100%',
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center'
   },
-  loginButton: {
+  loginButtonContainer: {
     backgroundColor: '#DDDDDD',
-    padding: 10
+  },
+  loginButton: {
+    width: 280,
+    height: 50
+  },
+  imageBackground: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
