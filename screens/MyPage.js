@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import {useSelector } from 'react-redux';
 import * as Facebook from 'expo-facebook';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   Text,
   View,
   Image,
-  StyleSheet,
+  StyleSheet
 } from 'react-native';
 
 import Button from '../components/Button';
-import { LOGIN_DATA } from '../constants';
+import { LOGIN_DATA } from '../constants/index';
 
 export default function MyPage({ navigation }) {
   const userData = useSelector(state => state.user.userData);
@@ -19,8 +19,8 @@ export default function MyPage({ navigation }) {
     try {
       await AsyncStorage.removeItem(LOGIN_DATA);
       await Facebook.logOutAsync();
-    } catch (e) {
-      console.warn(e);
+    } catch (err) {
+      console.warn(err);
     }
   };
   const onChangeMyPhoto = () => navigation.navigate('MyPhoto');

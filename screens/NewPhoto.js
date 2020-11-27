@@ -47,7 +47,6 @@ export default function NewPhoto({ route, navigation }) {
     published_at: currentDate
   };
 
-
   const onChangeLocation = () => navigation.navigate('Location');
   const settingDescription = description => setDescription(description);
   const requestNewPhoto = () => {

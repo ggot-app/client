@@ -30,7 +30,6 @@ export default function Gallery() {
   };
   const selectPhoto = (_, item) => {
     if (selectedList.filter(el => el.uri === item.uri).length) return deSelectPhoto(_, item);
-
     if (selectedList.length >= 5) return alert(ALERT_NUMBER_OF_POSSIBLE_IMAGE_UPLOADS);
 
     return dispatch(countPhoto([ ...selectedList, item ]));

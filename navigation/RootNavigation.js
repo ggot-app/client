@@ -27,8 +27,8 @@ export default function RootNavigation() {
 
         AxiosInstance.defaults.headers.common['Authorization'] = TOKEN;
       }
-    } catch (error) {
-      console.warn(error);
+    } catch (err) {
+      console.warn(err);
     }
   };
 
@@ -37,7 +37,11 @@ export default function RootNavigation() {
   }, []);
 
   return (
-    <RootStack.Navigator>
+    <RootStack.Navigator
+      screenOptions={{
+      headerShown: false
+    }}
+    >
       {
         !isLoggedIn
           ? <RootStack.Screen name='LogIn' component={LogIn} />

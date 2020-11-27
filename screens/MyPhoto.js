@@ -38,7 +38,6 @@ export default function MyPhoto({ navigation }) {
       </View>
     );
   };
-
   const fetchedData = async () => {
     const data = await getPhotosByUserId(user_Id, page);
     const { photos } = data;

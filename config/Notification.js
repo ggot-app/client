@@ -2,12 +2,19 @@ import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 
+import {
+  ALERT_FAIL_NOTIFICATION,
+  ALERT_USE_PHYSICAL_DEVICE,
+  NOTIFICATION_TITLE,
+  NOTIFICATION_MESSAGE
+} from '../constants/index';
+
 export default NotificationConfig = () => {
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
       shouldShowAlert: true,
       shouldPlaySound: false,
-      shouldSetBadge: false,
+      shouldSetBadge: false
     })
   });
 };
@@ -22,17 +29,19 @@ export const registerForPushNotificationsAsync = async () => {
 
     if (existingStatus !== 'granted') {
       const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+
       finalStatus = status;
     }
 
     if (finalStatus !== 'granted') {
-      alert('Failed to get push token for push notification');
+      alert(ALERT_FAIL_NOTIFICATION);
+
       return;
     }
 
     token = (await Notifications.getExpoPushTokenAsync()).data;
   } else {
-    alert('Must use physical device for push notifications');
+    alert(ALERT_USE_PHYSICAL_DEVICE);
   }
 
   if (Platform.OS === 'android') {
@@ -50,8 +59,8 @@ export const registerForPushNotificationsAsync = async () => {
 export const schedulePushNotification = async () => {
   await Notifications.scheduleNotificationAsync({
     content: {
-      title: '이 근처 당신의 사진이 \"꽂\" 혔습니다.',
-      body: '여기서의 추억을 기억하시나요?',
+      title: NOTIFICATION_TITLE,
+      body: NOTIFICATION_MESSAGE,
       data: { data: 'goes' }
     },
     trigger: { seconds: 2 }

@@ -5,7 +5,7 @@ import {
 } from '../constants/actionTypes';
 
 const initialState = {
-  selectedList: [],
+  selectedList: []
 };
 
 export default function selectedPhotos(state = initialState, action) {

@@ -9,7 +9,7 @@ export const startLocationTracking = async () => {
       distanceInterval: 0,
       foregroundService: {
         notificationTitle: '꽂',
-        notificationColor: 'black',
+        notificationColor: 'black'
       }
   });
 };

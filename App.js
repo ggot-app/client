@@ -7,8 +7,8 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import * as Permissions from 'expo-permissions';
 
+import { ALERT_SET_PERMISSION } from './constants/index';
 import reducer from './reducers/index';
-
 import RootNavigation from './navigation/RootNavigation';
 
 const store = createStore(reducer);
@@ -31,7 +31,7 @@ export default function App() {
     );
 
     if (status !== 'granted') {
-      alert('접근 권한을 설정해주세요');
+      alert(ALERT_SET_PERMISSION);
       checkPermissions();
     }
   };
@@ -55,11 +55,12 @@ export default function App() {
     checkPermissions();
   }, []);
 
-  return !isLoaded
+  return (!isLoaded
     ? <AppLoading/>
     : <Provider store={store}>
         <NavigationContainer>
           <RootNavigation />
         </NavigationContainer>
       </Provider>
+  );
 }

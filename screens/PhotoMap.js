@@ -5,11 +5,12 @@ import {
   View,
   Image,
   StyleSheet,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native';
 
-export default function PhotoMap({ route, navigation }) {
+export default function PhotoMap({ route }) {
   const { photoList, focusedPhotoNumber } = route.params;
+
   const [ focusedNumber, setFocusedNumber ] = useState(focusedPhotoNumber);
 
   const mapRef = useRef();

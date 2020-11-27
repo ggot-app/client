@@ -11,10 +11,10 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+import BackgroundTaskConfig from '../config/Tasks';
 import { setUserLocation } from '../actions/index';
 import { getPhotosByLocation } from '../utils/api';
 import { startLocationTracking } from '../config/LocationTracking';
-import BackgroundTaskConfig from '../config/Tasks';
 import NotificationConfig, { registerForPushNotificationsAsync } from '../config/Notification';
 
 import Map from '../components/Map';
@@ -29,9 +29,9 @@ export default function Home({ navigation }) {
   const [ refreshing, setRefreshing ] = useState(true);
   const [ isModalVisible, setIsModalVisible ] = useState(false);
   const [ focusedPhotoNumber, setFocusedPhotoNumber ] = useState(0);
-  const [ page, setPage ] = useState(1);
-  const notificationListener = useRef();
+
   const responseListener = useRef();
+  const notificationListener = useRef();
 
   const dispatch = useDispatch();
 
@@ -41,27 +41,11 @@ export default function Home({ navigation }) {
     if (userLocation) {
       dispatch(setUserLocation(userLocation.coords));
 
-      const data = await getPhotosByLocation(userLocation.coords, page);
+      const data = await getPhotosByLocation(userLocation.coords);
       const { photos } = data;
 
       setPhotoList(photos);
       setRefreshing(false);
-    }
-  };
-
-  const getMorePhotos = async () => {
-    const userLocation = await Location.getCurrentPositionAsync({});
-
-    if (userLocation) {
-      const data = await getPhotosByLocation(userLocation.coords, page);
-      const { photos } = data;
-
-      const newData = photoList.concat(photos);
-
-      setPhotoList(newData);
-      setPage(page + 1);
-    } else {
-      alert('GPS 위치 정보를 확인해주세요');
     }
   };
 
@@ -85,9 +69,8 @@ export default function Home({ navigation }) {
   }, []);
 
   useEffect(() => {
-    setPage(1);
     onRefresh();
-  }, [ refreshing ]);
+  }, [refreshing]);
 
   return (
     <View style={styles.contentWrapper}>
@@ -105,7 +88,7 @@ export default function Home({ navigation }) {
           data={photoList}
           renderItem={({ index, item }) => renderHomeFlatListItem(index, item, setIsModalVisible, setFocusedPhotoNumber)}
           showsVerticalScrollIndicator={false}
-          keyExtractor={item => item.published_at}
+          keyExtractor={item => item.photo_url_list[0]}
           numColumns={3}
           refreshControl={
             <RefreshControl
@@ -113,10 +96,6 @@ export default function Home({ navigation }) {
               onRefresh={() => setRefreshing(true)}
             />
           }
-          // onEndReached={() => {
-          //   getMorePhotos();
-          // }}
-          // onEndReachedThreshold={0.5}
         />
       </View>
       <Modal

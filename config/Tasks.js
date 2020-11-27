@@ -20,13 +20,16 @@ const Tasks = () => {
 
       if (loginData) {
         const { locations } = data;
+
         let lat = locations[0].coords.latitude;
         let lng = locations[0].coords.longitude;
 
         userPhotoList = JSON.parse(loginData).USER.photos;
+
         userPhotoList.forEach(item => {
           (async function () {
             const distance = getDistanceFromLatLngInMeter(lat, lng, item.location[0], item.location[1]);
+
             if (distance < 10) {
               await schedulePushNotification();
               Location.stopLocationUpdatesAsync(LOCATION_TRACKING);

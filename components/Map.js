@@ -22,7 +22,7 @@ export default function Map({ isScrollEnabled }) {
             latitude: userLocation.latitude,
             longitude: userLocation.longitude,
             latitudeDelta: 0,
-            longitudeDelta: 0.009,
+            longitudeDelta: 0.009
           }}
           onPress={(e) => {
             dispatch(setUserLocation(e.nativeEvent.coordinate));
