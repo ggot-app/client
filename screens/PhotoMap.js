@@ -1,20 +1,23 @@
 import React, { useState, useRef } from 'react';
 import { Marker } from 'react-native-maps';
+import { AntDesign } from '@expo/vector-icons';
 import MapView from 'react-native-map-clustering';
 import {
   View,
   Image,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  Modal,
+  Text
 } from 'react-native';
 
 export default function PhotoMap({ route }) {
   const { photoList, focusedPhotoNumber } = route.params;
-
+  const [ isModalVisible, setIsModalVisible ] = useState(false);
   const [ focusedNumber, setFocusedNumber ] = useState(focusedPhotoNumber);
-
   const mapRef = useRef();
 
+  const closingModal = () => setIsModalVisible(false);
   const changePhotoFocus = direction => {
     if (direction === 'right') {
       if (focusedNumber < photoList.length -1) {
@@ -92,7 +95,7 @@ export default function PhotoMap({ route }) {
             }
           />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => setIsModalVisible(true)}>
           <Image
             style={styles.currentPhoto}
             source={{uri: photoList[focusedNumber].photo_url_list[0]}}
@@ -109,6 +112,40 @@ export default function PhotoMap({ route }) {
           />
         </TouchableOpacity>
       </View>
+      <Modal
+        animationType='slide'
+        transparent={true}
+        visible={isModalVisible}
+      >
+        <View
+          style={styles.modalDim}
+          onPress={closingModal}
+        >
+          <View style={styles.modalContent}>
+            <TouchableOpacity
+              style={styles.modalCloseButton}
+              onPress={closingModal}
+            >
+              <AntDesign
+                name="closecircleo"
+                size={24}
+                color='black'
+              />
+            </TouchableOpacity>
+            <View style={styles.modalImageBox}>
+              <Image
+                style={styles.modalImage}
+                source={{ uri: photoList[focusedNumber].photo_url_list[0] }}
+              />
+            </View>
+            <View style={styles.modalDescription}>
+              <Text>
+                {photoList[focusedNumber].description}
+              </Text>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -176,5 +213,38 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 100,
     zIndex: 100
-  }
+  },
+  modalDim: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.8)'
+  },
+  modalContent: {
+    width: '90%',
+    height: '65%',
+    backgroundColor: '#F2F2F0',
+    borderRadius: 10,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-end'
+  },
+  modalCloseButton: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingRight: 10
+  },
+  modalImageBox: {
+    alignItems: 'center'
+  },
+  modalImage: {
+    width: '100%',
+    aspectRatio: 1
+  },
+  modalDescription: {
+    width: '100%',
+    height: 100,
+    backgroundColor: '#F2F2F0',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
 });
