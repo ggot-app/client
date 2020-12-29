@@ -35,12 +35,9 @@
 </br>
 
 # 1️⃣ PART 1 꽂 FEATURE STORY
-
 </br>
 
 ## 👀 1-1.  "꽂" 피운 계기
-***
-
 </br>
 
 영화나 드라마에서 타임캡슐안에 무언가를 넣고, 나중에 오픈을 하러가는 장면이 많이 나옵니다.  
@@ -56,21 +53,15 @@
 </br>
 
 ## 📆 1-2. 작업기간
-***
-
 </br>
 
 ### 🔥 [ 기획 / 구상 ] 11/9 ~ 11/11(3일)
-
 </br>
 
 ### 🌪 [ 개발 ] 11/13 ~ 11/26(2주)
-
 </br>
 
 ## 🧩 1-3. "꽂" 피운 기술(STACK)
-***
-
 </br>
 
 - CLIENT SIDE  
@@ -97,8 +88,6 @@
 </br>
 
 ## 🏃‍♂️ 1-4. "꽂" 물 주는 방법("꽂" 실행 하는 방법)
-***
-
 </br>
 
 1. Local 환경에서 실행 하기 위해선, 다음 사항이 필요합니다.  
@@ -108,7 +97,6 @@
 1-4. [AWS S3](https://aws.amazon.com/ko/s3/)  
 
 2. 1이 준비되었다면, 아래와 같이 설정해주세요.
-
 </br>
 
 ```
@@ -175,12 +163,9 @@ git clone https://github.com/ggot-app/ggot-app-server.git
 
 6. npm run dev
 ```
-
 </br>
 
 ## 💡 1-5. "꽂" 기능 살펴보기
-***
-
 </br>
 
 - "현재" 내 위치를 기반으로한 SNS  
@@ -232,14 +217,10 @@ git clone https://github.com/ggot-app/ggot-app-server.git
   실제 개발에서 쓰이는 서비스를 사용해 봄으로써, 어떤 FLOW로 저장이 되는지 확인해 볼 수 있었습니다.  
 
 ## 😎 1-6. 초기 "꽂" 과 결과물 "꽂" 의 달성 지표
-***
-
 </br>
 
 
 ## 💪 1-7. "꽂" 발전하기
-***
-
 </br>
 
 - 짧은 동영상 저장 기능 추가   
@@ -254,13 +235,10 @@ git clone https://github.com/ggot-app/ggot-app-server.git
 </br>
 
 ## 🗂 2-1. "꽂" 분담 내역 ⇒ 페이지별
-***
-
 </br>
 
 - 꽂 APP은 "페이지별"로 분담하여 개발을 했고.  
 아래와 같이 페이지가 구성되어있습니다.
-
   </br>
 
   👉 휴대폰 내 컨텐츠에 대한 PERMISSION / LOGIN  
@@ -268,11 +246,9 @@ git clone https://github.com/ggot-app/ggot-app-server.git
   👉 NEW - Gallery  
   👉 NEW - 등록 PAGE  
   👉 My Page - My PHOTO / LOGOUT  
-
   </br>
 
 - 다음과 같이 개발을 분담하였습니다.
-
   </br>
 
   ### 🐑 신다희  
@@ -280,7 +256,6 @@ git clone https://github.com/ggot-app/ggot-app-server.git
   휴대폰 내 컨텐츠에 대한 PERMISSION / LOGIN  
   My Page - My PHOTO  
   NEW - 등록 PAGE  
-
   </br>
 
   ### 🐔 이영준  
@@ -292,8 +267,6 @@ git clone https://github.com/ggot-app/ggot-app-server.git
 </br>
 
 ## 🥶 2-2. (각자 맡았던 기능을 구현하며 어려웠던 점)
-***
-
 </br>
 
 ### 🐑  신다희
@@ -303,8 +276,6 @@ git clone https://github.com/ggot-app/ggot-app-server.git
 </br>
 
 ## 🤔 2-3. "꽂" Git 일기
-***
-
 </br>
 
 ###  🔮 Version 1
@@ -318,7 +289,6 @@ git clone https://github.com/ggot-app/ggot-app-server.git
 
       그 때도 이상한 flow라고 생각했지만, 지금 생각해보면 왜 이렇게 했나...싶은 flow였다.  
       팀으로 git 을 해보는게 처음이었기때문에 참참 미숙했다...!
-
 </br>
 
 ### 🔮 Version 2
@@ -335,7 +305,6 @@ git clone https://github.com/ggot-app/ggot-app-server.git
 
       또한 merge를 하고 Confilct가 날 때마다 혼자 해결하기보다는
       파트너와 소통을 많이해야, 파트너의 코드를 삭제하는 불상사를 막을 수 있다.
-
 </br>
 
 ### 🔮 Version 3
@@ -352,12 +321,9 @@ git clone https://github.com/ggot-app/ggot-app-server.git
 
       또한 merge를 하고 Confilct가 날 때마다 혼자 해결하기보다는
       파트너와 소통을 많이해야, 파트너의 코드를 삭제하는 불상사를 막을 수 있다.
-
 </br>
 
 ## 🎖 2-4. "꽂"을 마무리하며
-***
-
 </br>
 
 ### 🐑  신다희
@@ -385,7 +351,6 @@ git clone https://github.com/ggot-app/ggot-app-server.git
 
     으레 사회생활을 하다보면 느낄 수 있는 것들이지만,  
     개발 할 때에도 이런 자세들이 필요하구나를 깨달을 수 있었던 협업이었습니다.
-
 </br>
 
 2. 잊지못할 GIT
@@ -409,8 +374,6 @@ git clone https://github.com/ggot-app/ggot-app-server.git
     Thanks to
     git을 이해하지 못할 때마다 이해 될 때까지  
     그림그려가며 열심히 설명해준 파트너님에게 감사를 표합니다.
-
-
 </br>
 
 ### 🐔  이영준
