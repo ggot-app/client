@@ -1,5 +1,5 @@
 # 🌺 꽂
-<img src='https://drive.google.com/uc?id=1gsB_cCXYP7EzPtkh7ViwtsUOZIvzoNL5' alt='thumbnail'>
+<img src='https://drive.google.com/uc?id=1HlxCQUJoZW8YroxkyCVx4LlkQkGSnzRr' alt='thumbnail'>
 
 - "꽂" 은 사진타임캡슐 컨셉의 위치기반 SNS 어플리케이션 입니다.
 
@@ -162,7 +162,7 @@ git clone https://github.com/ggot-app/ggot-app-server.git
   그룹화된 마커를 클릭하면 해당 그룹안에 마커들을 볼 수 있습니다.
 
 - 내가 꽂은 사진 위치를 기준으로 반경 3km 이내를 지나갈 경우 NOTIFICATION   
-  <img src='https://drive.google.com/uc?id=1GqUnstiB0Ed4nwbTJVQCINw7pEaQh159' alt='saveImg'><img src='https://drive.google.com/uc?id=14lgVdzeyset9Q6HP_e60Fvyuf6YXJo_t' alt='notification'>   
+  <img src='https://drive.google.com/uc?id=1GqUnstiB0Ed4nwbTJVQCINw7pEaQh159' alt='saveImg'><img src='https://drive.google.com/uc?id=13yYLfLHmWJSsnE9GRkTNIAgRIaLEZsSu' alt='notification'>   
 
   예전에 올린 SNS게시물들 기억나시나요?  
 
@@ -185,7 +185,8 @@ git clone https://github.com/ggot-app/ggot-app-server.git
  사용자가 사진을 저장할 때, AWS S3 BUCKET에 저장이 됩니다.  
   실제 개발에서 쓰이는 서비스를 사용해 봄으로써, 어떤 FLOW로 저장이 되는지 확인해 볼 수 있었습니다.  
 
-✅ 프로젝트 발표영상에서 더 자세히 확인하실수 있습니다. [시연영상 보기](https://youtu.be/E4fxMUSdBdE)
+
+ > ✅ 프로젝트 발표영상에서 더 자세히 확인하실수 있습니다. [시연영상 보기](https://youtu.be/E4fxMUSdBdE)
 
 ## 💪 1-6. "꽂" 발전하기
 
@@ -360,25 +361,18 @@ git clone https://github.com/ggot-app/ggot-app-server.git
 
       2. 잊지못할 GIT
 
-          매번 혼자 개발을 하다보니 늘 쓰던 git command만 쓰곤 했습니다.  
-          시간을 내서 따로 공부를 해야하는데 엄두는 나지 않고...  
-          그래서 git은 늘 어렵고, 어려운 그런...것이었습니다.
+        매번 혼자 개발을 하다보니 늘 쓰던 git command만 쓰곤 했습니다.  
+        시간을 내서 따로 공부를 해야하는데 엄두는 나지 않고...  
+        그래서 git은 늘 어렵고, 어려운 그런...것이었습니다.
 
-          하지만 둘이서 개발을 하다보니 merge는 일상이 되었고,  
-          한 번은 개발하기도 바쁜데 하루를 통으로 git 공부를 했던 적도 있었습니다.  
+        하지만 둘이서 개발을 하다보니 merge는 일상이 되었고,  
+        한 번은 개발하기도 바쁜데 하루를 통으로 git 공부를 했던 적도 있었습니다.  
 
-          그 때는 개발에 시간을 쏟아야 되는데 git때문에 하루를 날려서 너무 아깝게 생각했는데  
-          돌이켜 생각해보니, 그 때 그 시간이 꼭 필요한 시간이었습니다.
+        그 때는 개발에 시간을 쏟아야 되는데 git때문에 하루를 날려서 너무 아깝게 생각했는데  
+        돌이켜 생각해보니, 그 때 그 시간이 꼭 필요한 시간이었습니다.
 
-          그렇다고해서 지금 git master가 되었고 ...그런 것은 "절대" 아닙니다.  
-          다만 늘 어렵고 어려웠던 git이 실험하고, 공부해보고 싶은 존재로 바뀌었달까?!  
-          그것이 가장 큰 수확이 아닐까 싶습니다.
-
-          그리고....
-
-          Thanks to  
-          git을 이해하지 못할 때마다 이해 될 때까지  
-          그림그려가며 열심히 설명해준 파트너님에게 감사를 표합니다.
+        그렇다고해서 지금 git master가 되었고 ...그런 것은 "절대" 아닙니다.  
+        다만 늘 어렵고 어려웠던 git이 실험하고, 공부해보고 싶은 존재로 바뀌었습니다.
 
 ### 🐔  이영준
 
