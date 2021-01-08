@@ -1,4 +1,6 @@
 # 🌺 꽂
+<img src='https://drive.google.com/uc?id=1gsB_cCXYP7EzPtkh7ViwtsUOZIvzoNL5' alt='thumbnail'>
+
 - "꽂" 은 사진타임캡슐 컨셉의 위치기반 SNS 어플리케이션 입니다.
 
 # ✍️ 목차
@@ -45,6 +47,7 @@
 ### 🔥 [ 기획 / 구상 ] 11/9 ~ 11/11(3일)
 
 ### 🌪 [ 개발 ] 11/13 ~ 11/26(2주)
+
 
 ## 🧩 1-3. "꽂" 피운 기술(STACK)
 
@@ -145,21 +148,22 @@ git clone https://github.com/ggot-app/ggot-app-server.git
 ## 💡 1-5. "꽂" 기능 살펴보기
 
 - "현재" 내 위치를 기반으로한 SNS  
-  <사진 삽입>  
+  <img src='https://drive.google.com/uc?id=1s4wzFcm4Bf14TFXOtv4RAVDcRAw0_sU3' alt='home'>   
   APP에 접속시, 내 현재 위치를 기준으로 3Km 반경에 꽂힌 사진들만 확인 할 수 있습니다.
 
   저 멀리에 있는 사람들이 올린 사진을 보고 부러워하기 보다는  
   현재 내가 있는 위치, 그 시간에만 집중할 수 있도록 하고 싶었습니다.
 
 - MAP CLUSTERING을 통한 SNS 시각화  
-  <사진 삽입>  
+  <img src='https://drive.google.com/uc?id=1Me6akMUAeocPJLu-Likii5JLmUxGKsGr' alt='mapClustering'>   
   지도 위에 너무 많이 꽂힌 사진을 보면 클릭하는 것조차 피곤해 질 때가 있습니다.  
   그래서 사용자가 지도를 확대/축소 할 때, 비슷한 위치에 있는 것들이 그룹화가 되어 지도위에 표기됩니다.
 
   그룹화된 마커를 클릭하면 해당 그룹안에 마커들을 볼 수 있습니다.
 
-- 내가 꽂은 사진 위치를 기준으로 반경 3km 이내를 지나갈 경우 NOTIFICATION  
-  <사진 삽입>  
+- 내가 꽂은 사진 위치를 기준으로 반경 3km 이내를 지나갈 경우 NOTIFICATION   
+  <img src='https://drive.google.com/uc?id=1GqUnstiB0Ed4nwbTJVQCINw7pEaQh159' alt='saveImg'><img src='https://drive.google.com/uc?id=14lgVdzeyset9Q6HP_e60Fvyuf6YXJo_t' alt='notification'>   
+
   예전에 올린 SNS게시물들 기억나시나요?  
 
   스크롤을 많이 내려 찾아보기가 힘들기도하고,  
@@ -171,16 +175,17 @@ git clone https://github.com/ggot-app/ggot-app-server.git
   그 알림이 사용자에게 감동이 되는 시간이 되기를 바랍니다.  
 
 - NOTIFICATION 클릭시 해당 사진 모달 오픈기능  
-  <사진 삽입>  
   PUSH 알림에서 끝나는 것이 아니라, 해당 사진과 그 사진을 꽂은 위치또한 함께 띄워줍니다.
 
 - MY PHOTO 페이지에서 내가 꽂은 사진 확인가능  
-  <사진 삽입>  
+  <img src='https://drive.google.com/uc?id=1rmqMqI4F1pC_C6NooaBXFYkHkTqRY7y8' alt='myPhoto'>  
   사용자가 꽂은 사진은  My Page - My Photo에서 확인 할 수 있습니다.
 
 - AWS S3를 통한 사용자 사진 저장  
  사용자가 사진을 저장할 때, AWS S3 BUCKET에 저장이 됩니다.  
   실제 개발에서 쓰이는 서비스를 사용해 봄으로써, 어떤 FLOW로 저장이 되는지 확인해 볼 수 있었습니다.  
+
+✅ 프로젝트 발표영상에서 더 자세히 확인하실수 있습니다. [시연영상 보기](https://youtu.be/E4fxMUSdBdE)
 
 ## 💪 1-6. "꽂" 발전하기
 
@@ -269,7 +274,7 @@ git clone https://github.com/ggot-app/ggot-app-server.git
 
       ✅ 맨 처음 생각이 들었던 방법은   
 
-      해당 사진 데이터 배열에서 한 아이템에 대해서 반경 n km이내의 아이템 개수가 10개가 넘으면 묶는 방식으로 클러스터링을 진행하였지만   
+      해당사진 데이터 배열에서 한 아이템에 대한 반경 n km이내의 아이템 개수가 10개가 넘으면 묶는 방식으로 클러스터링을 진행하였고,   
       직접 함수를 만들어서 진행해본 결과 시간 시간 복잡도가 증가 (최대 O(n^2))로 인해 속도가 굉장히 느렸습니다.   
 
       ✅ 두 번째 방법은   
@@ -384,8 +389,8 @@ git clone https://github.com/ggot-app/ggot-app-server.git
       이때 어플리케이션의 전체적인 플로우를 그려가면서 필요한 기능들을 하나씩 정의 하였고 개발하기 충분하다고 생각했습니다.   
 
       그러나 기획을 마치고 막상 개발단계로 들어갔을때 작성해 놓은 기획서를 보면서도 매번 수정하거나 예상하지 못했던 문제들이 발생해   
-      기획했던대로 개발을 하지 못하여 다른 방향을 생각하여야 할 때가 있었습니다. 또한 별로 중요하게 여기지 않았던 자잘한 기능들 또한   
-      막상 개발단계에서는 적지 않은 작업량을 가져다주었습니다.   
+      기획했던대로 개발을 하지 못하여 다른 방향을 생각하여야 할 때가 있었습니다. 또한 별로 중요하게 여기지 않았던 자잘한 기능들   
+      또한 막상 개발단계에서는 적지 않은 작업량을 가져다주었습니다.   
 
       이러한 문제들은 전체적으로 시간을 부족하게 만드는 결과를 가져왔습니다.   
 
