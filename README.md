@@ -317,19 +317,17 @@ git clone https://github.com/ggot-app/ggot-app-server.git
       파트너와 소통을 많이해야, 파트너의 코드를 삭제하는 불상사를 막을 수 있다.
 
 ### 🔮 Version 3
-      - Local의 master를 최신상태로 pull 한다.
-      - 기능별로 brach를 따서 작업하고, 작업이 완료되면 Remote에 branch를 push 한다.
-      - 파트너에게 Remote push 여부를 확인하고(내 Local의 master가 최신인지 아닌지 확인)
-        Remote 상태가 변경되었다면 내 Local을 최신 상태로 pull 한다.
-      - 그리고 작업한 branch를 merge 한다.
-      - Conflict가 발생하면 해결하고, 해결 후에 add/commit, remote에 push를 한다.
+      - Server master는 restrict 모드 ⇒ master에 직접 push X, pull request 이용
+      - Client master는 master에 직접 push
 
       **
-      Local의 master가 어떤 상태인지를 확인하는 것이 중요하다는 것을 알았다.
-      그렇게 해야 merge를 할 때, Conflict가 발생할지 안 할지 가늠할수 있다.
+      처음에는 restrict모드가 불편했다.
+      push 를 할 때마다 작업하고 있는 파트너에게 approve를 요청하는 것이
+      방해가되는것 같아 신경이 쓰였기때문이다.
 
-      또한 merge를 하고 Confilct가 날 때마다 혼자 해결하기보다는
-      파트너와 소통을 많이해야, 파트너의 코드를 삭제하는 불상사를 막을 수 있다.
+      하지만 pull request가 익숙해지니 git은 똑똑하다며 찬양하고있는 것을 발견했다.
+      파트너에게 요청을 할 때마다 파트너도 코드를 살펴 볼 수 있는 기회였고, 
+      변경된 사항을 기록으로 남길 수 있어서 나중에도 살펴볼 수 있다는 장점이 있었다.
 
 ## 🎖 2-4. "꽂"을 마무리하며
 
